@@ -1,47 +1,47 @@
 
 
-const getUsuarios = async (req, res) => {
+const getCarritos = async (req, res) => {
     try{
-        res.status(200).send('todos los usuarios');
+        res.status(200).send('todos los Carritos');
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const getUsuario = async (req, res) => {
+const getCarrito = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el usuario ${id}`);
+        res.status(200).send(`aca esta el Carrito ${id}`);
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const postUsuario = async (req, res) => {
+const postCarrito = async (req, res) => {
     try{
-        res.status(200).send('se creo el usuario');
+        res.status(200).send('se creo el Carrito');
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const putUsuario = async (req, res) => {
+const putCarrito = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`se modifico el usuario ${id}`);
+        res.status(200).send(`se modifico el Carrito ${id}`);
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const deleteUsuario = async (req, res) => {
+const deleteCarrito = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`se elimino el usuario ${id}`);
+        res.status(200).send(`se elimino el Carrito ${id}`);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -49,9 +49,9 @@ const deleteUsuario = async (req, res) => {
 }
 
 module.exports = {
-    getUsuarios,
-    getUsuario,
-    postUsuario,
-    putUsuario,
-    deleteUsuario
+    getCarritos,
+    getCarrito,
+    postCarrito,
+    putCarrito,
+    deleteCarrito
 }

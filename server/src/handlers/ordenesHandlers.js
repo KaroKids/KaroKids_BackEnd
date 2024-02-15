@@ -1,47 +1,48 @@
 
 
-const getUsuarios = async (req, res) => {
+const getOrdenes = async (req, res) => {
     try{
-        res.status(200).send('todos los usuarios');
+        const result = await todasLasOrdenes();
+        res.status(200).json(result);
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const getUsuario = async (req, res) => {
+const getOrden = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el usuario ${id}`);
+        res.status(200).send(`aca esta la orden ${id}`);
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const postUsuario = async (req, res) => {
+const postOrden = async (req, res) => {
     try{
-        res.status(200).send('se creo el usuario');
+        res.status(200).send('se creo la orden');
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const putUsuario = async (req, res) => {
+const putOrden = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`se modifico el usuario ${id}`);
+        res.status(200).send(`se modifico la orden ${id}`);
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const deleteUsuario = async (req, res) => {
+const deleteOrden = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`se elimino el usuario ${id}`);
+        res.status(200).send(`se elimino la orden ${id}`);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -49,9 +50,9 @@ const deleteUsuario = async (req, res) => {
 }
 
 module.exports = {
-    getUsuarios,
-    getUsuario,
-    postUsuario,
-    putUsuario,
-    deleteUsuario
+    getOrdenes,
+    getOrden,
+    postOrden,
+    putOrden,
+    deleteOrden
 }

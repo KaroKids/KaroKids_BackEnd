@@ -1,47 +1,47 @@
 
 
-const getUsuarios = async (req, res) => {
+const getRoles = async (req, res) => {
     try{
-        res.status(200).send('todos los usuarios');
+        res.status(200).send('todos los Roles');
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const getUsuario = async (req, res) => {
+const getRol = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el usuario ${id}`);
+        res.status(200).send(`aca esta el Rol ${id}`);
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const postUsuario = async (req, res) => {
+const postRol = async (req, res) => {
     try{
-        res.status(200).send('se creo el usuario');
+        res.status(200).send('se creo el Rol');
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const putUsuario = async (req, res) => {
+const putRol = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`se modifico el usuario ${id}`);
+        res.status(200).send(`se modifico el Rol ${id}`);
     }
     catch(error){
         res.status(400).json({error: error.message});
     }
 }
 
-const deleteUsuario = async (req, res) => {
+const deleteRol = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`se elimino el usuario ${id}`);
+        res.status(200).send(`se elimino el Rol ${id}`);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -49,9 +49,9 @@ const deleteUsuario = async (req, res) => {
 }
 
 module.exports = {
-    getUsuarios,
-    getUsuario,
-    postUsuario,
-    putUsuario,
-    deleteUsuario
+    getRoles,
+    getRol,
+    postRol,
+    putRol,
+    deleteRol
 }
