@@ -1,6 +1,6 @@
 
 
-const getProducto_descuentos_descuentos = async (req, res) => {
+const getProductos_descuentos= async (req, res) => {
     try{
         res.status(200).send('todos los Producto_descuentos_descuentos');
     }
@@ -49,7 +49,7 @@ const deleteProducto_descuento = async (req, res) => {
 }
 
 module.exports = {
-    getProducto_descuentos_descuentos,
+    getProductos_descuentos,
     getProducto_descuento,
     postProducto_descuento,
     putProducto_descuento,

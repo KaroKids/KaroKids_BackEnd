@@ -1,6 +1,6 @@
 
 
-const getProducto_favoritos_favoritos = async (req, res) => {
+const getProductos_favoritos = async (req, res) => {
     try{
         res.status(200).send('todos los Producto_favoritos_favoritos');
     }
@@ -49,7 +49,7 @@ const deleteProducto_favorito = async (req, res) => {
 }
 
 module.exports = {
-    getProducto_favoritos_favoritos,
+    getProductos_favoritos,
     getProducto_favorito,
     postProducto_favorito,
     putProducto_favorito,

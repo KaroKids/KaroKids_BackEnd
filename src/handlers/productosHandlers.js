@@ -1,8 +1,9 @@
-
+const { crearProducto, todosLosProductos, traerProducto } = require ('../controllers/productosControllers')
 
 const getProductos = async (req, res) => {
     try{
-        res.status(200).send('todos los productos');
+        const aux = await todosLosProductos()
+        res.status(200).json(aux);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -12,7 +13,8 @@ const getProductos = async (req, res) => {
 const getProducto = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el producto ${id}`);
+        const aux = await traerProducto(id)
+        res.status(200).json(aux);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -20,9 +22,11 @@ const getProducto = async (req, res) => {
 }
 
 const postProducto = async (req, res) => {
+    const {nombre, descripcion, imagen_principal, imagenes_secundarias, video, precio, destacado, inactivo} = req.body
     try{
-        res.status(200).send('se creo el producto');
-    }
+        const aux = await crearProducto(nombre, descripcion, imagen_principal, imagenes_secundarias, video, precio, destacado, inactivo)
+        res.status(200).json(aux);
+    }   
     catch(error){
         res.status(400).json({error: error.message});
     }

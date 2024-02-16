@@ -1,11 +1,11 @@
 const {Router} = require('express');
-const { getpromociones, postPromocion, putPromocion, deletePromocion, getPromocion } = require('../handlers/promocionesHandlers');
-const promociones = Router();
+const { getPromociones, getPromocion, putPromocion, deletePromocion, postPromocion } = require('../handlers/PromocionesHandlers');
+const Promociones = Router();
 
-promociones.get('/',getpromociones)
-promociones.get('/:id',getPromocion)
-promociones.post('/',postPromocion)
-promociones.put('/:id',putPromocion)
-promociones.delete('/:id',deletePromocion)
+Promociones.get('/',getPromociones)
+Promociones.get('/:id',getPromocion)
+Promociones.post('/',postPromocion)
+Promociones.put('/:id',putPromocion)
+Promociones.delete('/:id',deletePromocion)
 
-module.exports = promociones;
+module.exports = Promociones;

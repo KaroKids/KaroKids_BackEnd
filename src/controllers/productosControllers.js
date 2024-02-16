@@ -4,6 +4,7 @@ const todosLosProductos = async () =>{
     const aux = await Productos.findAll();
     return(aux);
 }
+
 const traerProducto = async (id) =>{
     const aux = await Productos.findByPk(id);
     if(aux === null){
@@ -33,8 +34,8 @@ const modificarProducto = async (id) =>{
       
 }
 
-const crearProducto = async (Producto) =>{
-    return await Productos.create(Producto);
+const crearProducto = async (nombre, descripcion, imagen_principal, imagenes_secundarias, video, precio, destacado, inactivo) =>{
+    return await Productos.create({nombre, descripcion, imagen_principal, imagenes_secundarias, video, precio, destacado, inactivo});
 }
 
 const filtrarProductos = async () =>{
