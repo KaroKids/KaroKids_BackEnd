@@ -14,6 +14,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(200),
         allowNull: false, //Añadimos imagen por defecto?
       },
+      // usuario_id: FK
       nombres: {
         type: DataTypes.STRING(50),
         allowNull: false,
@@ -32,7 +33,7 @@ module.exports = (sequelize) => {
       },
       genero: {
         type: DataTypes.ENUM,
-        values: ["Masculino", "Femenino"],
+        values: ["masculino", "femenino"],
         allowNull: false,
       },
       telefono_principal: {

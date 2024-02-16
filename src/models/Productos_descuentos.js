@@ -10,6 +10,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: UUIDV4,
       },
+      //producto_id: FK
       descuento: {
         type: DataTypes.FLOAT,
         allowNull: true,

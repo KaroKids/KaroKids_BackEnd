@@ -10,6 +10,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: UUIDV4,
       },
+      //categoria_id: FK
       nombre: {
         type: DataTypes.STRING(50),
         allowNull: false,
@@ -23,7 +24,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       imagenes_secundarias: {
-        type: DataTypes.STRING, //Array de strings
+        type: DataTypes.ARRAY(DataTypes.STRING), //Array de strings
         allowNull: false,
       },
       video: {
