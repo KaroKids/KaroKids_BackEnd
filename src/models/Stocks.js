@@ -1,20 +1,19 @@
 const { DataTypes, UUIDV4 } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('Configuracion', {
-    pk: {
+  sequelize.define('Stocks', {
+    stock_id: {
       type : DataTypes.UUID,
       primaryKey: true,
       allowNull: false,
       defaultValue: UUIDV4
     },
-    codigo: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    valor: {
-        type: DataTypes.STRING,
-        allowNull: true
+    //producto_id: FK
+    //talla_id: FK
+    //color_id: FK
+    cantidad_producto: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
   },
   {
