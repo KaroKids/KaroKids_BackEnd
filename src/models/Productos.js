@@ -32,7 +32,6 @@ module.exports = (sequelize) => {
     precio: {
       type: DataTypes.FLOAT,
       allowNull: false,
-      unique: true,
     },
     destacado: {
         type: DataTypes.BOOLEAN,
