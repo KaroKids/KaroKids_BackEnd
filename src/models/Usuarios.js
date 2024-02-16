@@ -10,6 +10,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: UUIDV4,
       },
+      //rol_id: FK
       email: {
         type: DataTypes.STRING(150),
         allowNull: false,

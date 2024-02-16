@@ -10,10 +10,12 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: UUIDV4,
       },
-      tipo_direccion: {
-        type: DataTypes.ENUM,
-        values: ["Facturación", "Envío"],
-        allowNull: false,
+      //entidad_id: FK
+      tipo_facturacion: {
+        type: DataTypes.BOOLEAN
+      },
+      tipo_envio: {
+        type: DataTypes.BOOLEAN
       },
       pais: {
         type: DataTypes.STRING(100),
