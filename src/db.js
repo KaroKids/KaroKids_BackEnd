@@ -31,9 +31,28 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-// const { Driver, Team, User } = sequelize.models;
-// Driver.belongsToMany(Team, { through: "driver_team" });
-// Team.belongsToMany(Driver, { through: "driver_team" });
+const {
+  Categorias,
+  Colores,
+  Direcciones,
+  Entidad,
+  Productos_Categorias,
+  Productos_Descuentos,
+  Productos,
+  Roles,
+  Stock,
+  Tallas,
+  Usuarios,
+} = sequelize.models;
+
+Usuarios.hasOne(Entidad, { foreignKey: "usuario_id" });
+
+Entidad.hasMany(Direcciones, { foreignKey: "entidad_id" });
+
+Roles.hasMany(Usuarios, { foreignKey: "rol_id" });
+
+Usuarios.belongsToMany(Productos, { through: "Productos_Favoritos" });
+Productos.belongsToMany(Usuarios, { through: "Productos_Favoritos" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
