@@ -2,17 +2,19 @@ const { DataTypes, UUIDV4 } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Roles",
+    "Stocks",
     {
-      rol_id: {
+      stock_id: {
         type: DataTypes.UUID,
         primaryKey: true,
         allowNull: false,
         defaultValue: UUIDV4,
       },
-      rol: {
-        type: DataTypes.ENUM,
-        values: ["administrador", "cliente"],
+      //producto_id: FK
+      //talla_id: FK
+      //color_id: FK
+      cantidad_producto: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },

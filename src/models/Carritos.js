@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
     },
     //usuario_id: FK
     productos: {
-        type: DataTypes.ARRAY,
+        type: DataTypes.ARRAY(DataTypes.JSON), //Array de JSONs
         allowNull: false
     },
     inactivo: {
