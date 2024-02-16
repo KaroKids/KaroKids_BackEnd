@@ -31,14 +31,56 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-// const { Driver, Team, User } = sequelize.models;
-// Driver.belongsToMany(Team, { through: "driver_team" });
-// Team.belongsToMany(Driver, { through: "driver_team" });
+const {
+  Categorias,
+  Colores,
+  Direcciones,
+  Entidades,
+  Productos_Descuentos,
+  Productos,
+  Roles,
+  Stocks,
+  Tallas,
+  Usuarios,
+} = sequelize.models;
+
+// Relaciones de tablas
+Usuarios.hasOne(Entidades, { foreignKey: "usuario_id" });
+////////////////////////////////////////////////
+Entidades.hasMany(Direcciones, { foreignKey: "entidad_id" });
+////////////////////////////////////////////////
+Roles.hasMany(Usuarios, { foreignKey: "rol_id" });
+////////////////////////////////////////////////
+Usuarios.belongsToMany(Productos, {
+  foreignKey: "usuario_id",
+  through: "Productos_Favoritos",
+});
+Productos.belongsToMany(Usuarios, {
+  foreignKey: "producto_id",
+  through: "Productos_Favoritos",
+});
+////////////////////////////////////////////////
+Productos.belongsToMany(Categorias, {
+  foreignKey: "producto_id",
+  through: "Productos_Categorias",
+});
+Categorias.belongsToMany(Productos, {
+  foreignKey: "categoria_id",
+  through: "Productos_Categorias",
+});
+////////////////////////////////////////////////
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
-  // Driver,
-  // Team,
-  // User,
+  Categorias,
+  Colores,
+  Direcciones,
+  Entidades,
+  Productos_Descuentos,
+  Productos,
+  Roles,
+  Stocks,
+  Tallas,
+  Usuarios,
 };
