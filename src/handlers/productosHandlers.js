@@ -1,8 +1,9 @@
 const { crearProducto, todosLosProductos, traerProducto } = require ('../controllers/productosControllers')
 
 const getProductos = async (req, res) => {
+    const {paginaActual} = req.query
     try{
-        const response = await todosLosProductos()
+        const response = await todosLosProductos(paginaActual)
         res.status(200).json(response);
     }
     catch(error){
