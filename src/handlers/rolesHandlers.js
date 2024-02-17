@@ -1,9 +1,14 @@
 const { todosLosRoles, traerRol, crearRol } = require("../controllers/rolesController");
+const { cargaColores, cargaTallas, cargaCategorias, cargaProductos } = require("../utils/cargaDatos");
 
 
 const getRoles = async (req, res) => {
     try{
-        const response = await todosLosRoles()
+        //ACA SE CREAN COLORES, CATEGORIAS, PRODUCTOS, TALLAS
+const aux = cargaColores();
+const aux2 = cargaTallas();
+const aux3 = cargaCategorias();
+const aux4 = cargaProductos();
         res.status(200).json(response);
     }
     catch(error){
