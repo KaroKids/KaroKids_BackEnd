@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { Sequelize } = require("sequelize");
+const {cargaCategorias, cargaColores, cargaProductos, cargaTallas} = require ('./utils/cargaDatos')
 
 const fs = require("fs");
 const path = require("path");
@@ -68,7 +69,7 @@ Categorias.belongsToMany(Productos, {
   foreignKey: "categoria_id",
   through: "Productos_Categorias",
 });
-////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 //ACA SE CREAN COLORES, CATEGORIAS, PRODUCTOS, TALLAS
 cargaColores();
