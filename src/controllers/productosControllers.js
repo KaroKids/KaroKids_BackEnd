@@ -1,8 +1,11 @@
 const { Productos } = require('../db');
+const { resultadosPaginados } = require('../utils/paginacion');
 
-const todosLosProductos = async () =>{
-    const response = await Productos.findAll();
-    return(response);
+const todosLosProductos = async (paginaActual) =>{
+    // const response = await Productos.findAll();
+    // return(response);
+    const itemsPorPagina = 5;
+    return resultadosPaginados(paginaActual, itemsPorPagina, Productos);
 }
 
 const traerProducto = async (id) =>{

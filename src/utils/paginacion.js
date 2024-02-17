@@ -14,7 +14,7 @@ const resultadosPaginados = async (paginaActual, itemsPorPagina, modeloActual) =
     try {
         const limitAttribute = itemsPorPagina
         const totalElementos = await modeloActual.count()
-        const totalPaginas = Match.ceil(totalElementos / limitAttribute) //Este parámetro se va a utilizar para manejar apropiadamente los últimos elementos disponibles para visualizar en el Front, por eso no se usa acá y simplemente se retorna.
+        const totalPaginas = Math.ceil(totalElementos / limitAttribute) //Este parámetro se va a utilizar para manejar apropiadamente los últimos elementos disponibles para visualizar en el Front, por eso no se usa acá y simplemente se retorna.
         const offseAttribute = (paginaActual - 1) * limitAttribute
 
         const elementosPaginados = await modeloActual.findAll({
@@ -22,9 +22,13 @@ const resultadosPaginados = async (paginaActual, itemsPorPagina, modeloActual) =
             limit: limitAttribute
         })
 
-        return (elementosPaginados, totalPaginas)
+        return ({elementosPaginados, totalPaginas})
 
     } catch (error) {
         throw new Error ('Error al obtener los usuarios paginados: ' + error.message)
     }
+}
+
+module.exports = {
+    resultadosPaginados
 }
