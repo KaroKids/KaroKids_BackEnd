@@ -34,7 +34,7 @@ const modificarTalla = async (id) =>{
 }
 
 const crearTalla = async (talla) =>{
-    return await Tallas.create(talla);
+    return await Tallas.create({talla});
 }
 
 const filtrarTallas = async () =>{
