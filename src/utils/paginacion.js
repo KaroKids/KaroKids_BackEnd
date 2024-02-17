@@ -18,11 +18,11 @@ const resultadosPaginados = async (
 	try {
 		const limitAttribute = itemsPorPagina;
 		const totalElementos = await modeloActual.count();
-		const totalPaginas = Match.ceil(totalElementos / limitAttribute); //Este parámetro se va a utilizar para manejar apropiadamente los últimos elementos disponibles para visualizar en el Front, por eso no se usa acá y simplemente se retorna.
-		const offseAttribute = (paginaActual - 1) * limitAttribute;
+		const totalPaginas = Math.ceil(totalElementos / limitAttribute); //Este parámetro se va a utilizar para manejar apropiadamente los últimos elementos disponibles para visualizar en el Front, por eso no se usa acá y simplemente se retorna.
+		const offsetAttribute = (paginaActual - 1) * limitAttribute;
 
 		const elementosPaginados = await modeloActual.findAll({
-			offset: offseAttribute,
+			offset: offsetAttribute,
 			limit: limitAttribute,
 		});
 
