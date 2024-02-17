@@ -69,7 +69,7 @@ Categorias.belongsToMany(Productos, {
   foreignKey: "categoria_id",
   through: "Productos_Categorias",
 });
-////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
 //ACA SE CREAN COLORES, CATEGORIAS, PRODUCTOS, TALLAS
 cargaColores();
