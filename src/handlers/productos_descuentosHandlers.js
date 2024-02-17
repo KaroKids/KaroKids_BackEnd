@@ -23,9 +23,9 @@ const getProducto_descuento = async (req, res) => {
 }
 
 const postProducto_descuento = async (req, res) => {
-    const {a} = req.body;
+    const {descuento} = req.body;
     try{
-        const response = await crearProducto_descuento(a)
+        const response = await crearProducto_descuento(descuento)
         res.status(200).json(response);
     }
     catch(error){

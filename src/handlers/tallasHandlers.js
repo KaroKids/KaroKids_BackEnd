@@ -23,9 +23,9 @@ const getTalla = async (req, res) => {
 }
 
 const postTalla = async (req, res) => {
-    const {a} = req.body;
+    const {talla} = req.body;
     try{
-        const response = await crearTalla(a);
+        const response = await crearTalla(talla);
         res.status(200).json(response);
     }
     catch(error){

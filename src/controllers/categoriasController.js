@@ -33,8 +33,8 @@ const modificarCategoria = async (id) =>{
       
 }
 
-const crearCategoria = async (Categoria) =>{
-    return await Categorias.create(Categoria);
+const crearCategoria = async (categoria) =>{
+    return await Categorias.create(categoria);
 }
 
 const filtrarCategorias = async () =>{

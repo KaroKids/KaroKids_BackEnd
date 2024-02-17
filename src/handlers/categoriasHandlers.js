@@ -23,9 +23,9 @@ const getCategoria = async (req, res) => {
 }
 
 const postCategoria = async (req, res) => {
-    const {a} = req.body;
+    const {categoria} = req.body;
     try{
-        const response = await crearCategoria(a)
+        const response = await crearCategoria(categoria)
         res.status(200).json(response);
     }
     catch(error){

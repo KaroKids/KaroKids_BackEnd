@@ -33,8 +33,8 @@ const modificarColor = async (id) =>{
       
 }
 
-const crearColor = async (Color) =>{
-    return await Colores.create(Color);
+const crearColor = async (color) =>{
+    return await Colores.create(color);
 }
 
 const filtrarColores = async () =>{
