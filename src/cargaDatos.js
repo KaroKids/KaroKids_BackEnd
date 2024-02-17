@@ -5,7 +5,7 @@ const { crearTalla } = require("./controllers/tallasControllers");
 
 
 const cargaColores = ()=>{
-    const colores = ["gray", "black", "white", "green", "orange", "blue", "red", "pink", "sky", "brown", "yellow"];
+    const colores = ["grey", "black", "white", "green", "orange", "blue", "red", "pink", "sky", "brown", "yellow"];
     colores.map((color)=>{
         return crearColor(color);
     })
