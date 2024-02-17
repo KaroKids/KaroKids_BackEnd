@@ -1,7 +1,7 @@
-const { crearColor } = require("./controllers/coloresController");
-const { crearCategoria } = require("./controllers/categoriasController");
-const { crearProducto } = require("./controllers/productosControllers");
-const { crearTalla } = require("./controllers/tallasControllers");
+const { crearColor } = require("../controllers/coloresController");
+const { crearCategoria } = require("../controllers/categoriasController");
+const { crearProducto } = require("../controllers/productosControllers");
+const { crearTalla } = require("../controllers/tallasControllers");
 
 
 const cargaColores = ()=>{
