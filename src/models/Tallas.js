@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
         defaultValue: UUIDV4,
       },
       talla: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(7),
         allowNull: false,
       },
     },
