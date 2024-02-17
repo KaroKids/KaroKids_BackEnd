@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { Sequelize } = require("sequelize");
-const {cargaCategorias, cargaColores, cargaProductos, cargaTallas} = require ('./utils/cargaDatos')
+
 
 const fs = require("fs");
 const path = require("path");
@@ -71,11 +71,7 @@ Categorias.belongsToMany(Productos, {
 });
 //////////////////////////////////////////////////
 
-//ACA SE CREAN COLORES, CATEGORIAS, PRODUCTOS, TALLAS
-cargaColores();
-cargaTallas();
-cargaCategorias();
-cargaProductos();
+
 ////////////////////////////
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
