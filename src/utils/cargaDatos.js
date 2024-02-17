@@ -21,7 +21,7 @@ const cargaTallas = ()=>{
 
 
 const cargaCategorias = ()=>{
-    const categorias = ["recien nacido", "bebe", "junior", "kids"];
+    const categorias = ["recien nacido", "bebe", "junior", "infantil"];
     categorias.map((categoria)=>{
         return crearCategoria(categoria);
     })
