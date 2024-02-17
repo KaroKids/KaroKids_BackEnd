@@ -33,8 +33,8 @@ const modificarProducto_descuento = async (id) =>{
       
 }
 
-const crearProducto_descuento = async (Producto_descuento) =>{
-    return await Productos_Descuentos.create(Producto_descuento);
+const crearProducto_descuento = async (descuento) =>{
+    return await Productos_Descuentos.create(descuento);
 }
 
 const filtrarProductos_descuento = async () =>{
