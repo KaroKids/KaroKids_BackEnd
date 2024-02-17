@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const { getPromociones, getPromocion, putPromocion, deletePromocion, postPromocion } = require('../handlers/PromocionesHandlers');
+const { getPromociones, getPromocion, putPromocion, deletePromocion, postPromocion } = require('../handlers/promocionesHandlers');
 const promociones = Router();
 
 promociones.get('/',getPromociones)

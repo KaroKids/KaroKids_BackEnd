@@ -33,8 +33,8 @@ const modificarStock = async (id) =>{
       
 }
 
-const crearStock = async (Stock) =>{
-    return await Stocks.create(Stock);
+const crearStock = async (cantidad_producto, producto_id, talla_id, color_id) =>{
+    return await Stocks.create({cantidad_producto, producto_id, talla_id, color_id});
 }
 
 const filtrarStocks = async () =>{
