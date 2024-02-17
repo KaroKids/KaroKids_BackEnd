@@ -33,3 +33,5 @@ const resultadosPaginados = async (
 		);
 	}
 };
+
+module.exports = resultadosPaginados;
