@@ -1,8 +1,10 @@
+const { todasLasTallas, traerTalla, crearTalla } = require("../controllers/tallasControllers");
 
 
 const getTallas = async (req, res) => {
     try{
-        res.status(200).send('todos los Tallas');
+        const response = await todasLasTallas();
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -12,7 +14,8 @@ const getTallas = async (req, res) => {
 const getTalla = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el Talla ${id}`);
+        const response = await traerTalla(id);
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -20,8 +23,10 @@ const getTalla = async (req, res) => {
 }
 
 const postTalla = async (req, res) => {
+    const {a} = req.body;
     try{
-        res.status(200).send('se creo el Talla');
+        const response = await crearTalla(a);
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});

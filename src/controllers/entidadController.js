@@ -1,22 +1,22 @@
-const { Entidad } = require('../db');
+const { Entidades } = require('../db');
 
 const todasLasEntidades = async () =>{
-    const aux = await Entidad.findAll();
-    return(aux);
+    const response = await Entidades.findAll();
+    return(response);
 }
 const traerEntidad = async (id) =>{
-    const aux = await Entidad.findByPk(id);
-    if(aux === null){
+    const response = await Entidades.findByPk(id);
+    if(response === null){
        return('la Entidad no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 
 const borrarEntidad = async (id) =>{
    
-    await Entidad.destroy({
+    await Entidades.destroy({
         where: {
           id: id
         }
@@ -25,7 +25,7 @@ const borrarEntidad = async (id) =>{
 }
 
 const modificarEntidad = async (id) =>{
-    await Entidad.update({
+    await Entidades.update({
         where: {
           id: id
         }
@@ -34,7 +34,7 @@ const modificarEntidad = async (id) =>{
 }
 
 const crearEntidad = async (Entidad) =>{
-    return await Entidad.create(Entidad);
+    return await Entidades.create(Entidad);
 }
 
 const filtrarEntidad = async () =>{

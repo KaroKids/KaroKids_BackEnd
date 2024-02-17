@@ -1,17 +1,17 @@
 const { Productos } = require('../db');
 
 const todosLosProductos = async () =>{
-    const aux = await Productos.findAll();
-    return(aux);
+    const response = await Productos.findAll();
+    return(response);
 }
 
 const traerProducto = async (id) =>{
-    const aux = await Productos.findByPk(id);
-    if(aux === null){
+    const response = await Productos.findByPk(id);
+    if(response === null){
        return('la Producto no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 

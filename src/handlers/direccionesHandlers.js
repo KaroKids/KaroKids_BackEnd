@@ -1,8 +1,10 @@
+const { todasLasDirecciones, traerDireccion, crearDireccion } = require("../controllers/direccionesController");
 
 
 const getDirecciones = async (req, res) => {
     try{
-        res.status(200).send('todos los Direcciones');
+        const response = await todasLasDirecciones()
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -12,7 +14,8 @@ const getDirecciones = async (req, res) => {
 const getDireccion = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el Direccion ${id}`);
+        const response = await traerDireccion(id)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -20,8 +23,10 @@ const getDireccion = async (req, res) => {
 }
 
 const postDireccion = async (req, res) => {
+    const {a} = req.body;
     try{
-        res.status(200).send('se creo el Direccion');
+        const response = await crearDireccion(a)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});

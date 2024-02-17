@@ -1,16 +1,16 @@
 const { Direcciones } = require('../db');
 
 const todasLasDirecciones = async () =>{
-    const aux = await Direcciones.findAll();
-    return(aux);
+    const response = await Direcciones.findAll();
+    return(response);
 }
 const traerDireccion = async (id) =>{
-    const aux = await Direcciones.findByPk(id);
-    if(aux === null){
+    const response = await Direcciones.findByPk(id);
+    if(response === null){
        return('la Direccion no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 

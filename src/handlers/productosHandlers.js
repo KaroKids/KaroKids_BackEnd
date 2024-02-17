@@ -2,8 +2,8 @@ const { crearProducto, todosLosProductos, traerProducto } = require ('../control
 
 const getProductos = async (req, res) => {
     try{
-        const aux = await todosLosProductos()
-        res.status(200).json(aux);
+        const response = await todosLosProductos()
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -13,8 +13,8 @@ const getProductos = async (req, res) => {
 const getProducto = async (req, res) => {
     const {id} = req.params;
     try{
-        const aux = await traerProducto(id)
-        res.status(200).json(aux);
+        const response = await traerProducto(id)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -24,8 +24,8 @@ const getProducto = async (req, res) => {
 const postProducto = async (req, res) => {
     const {nombre, descripcion, imagen_principal, imagenes_secundarias, video, precio, destacado, inactivo} = req.body
     try{
-        const aux = await crearProducto(nombre, descripcion, imagen_principal, imagenes_secundarias, video, precio, destacado, inactivo)
-        res.status(200).json(aux);
+        const response = await crearProducto(nombre, descripcion, imagen_principal, imagenes_secundarias, video, precio, destacado, inactivo)
+        res.status(200).json(response);
     }   
     catch(error){
         res.status(400).json({error: error.message});

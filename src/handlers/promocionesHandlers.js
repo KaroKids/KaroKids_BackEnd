@@ -1,8 +1,10 @@
+const { todasLasPromociones, traerPromocion, crearPromocion } = require("../controllers/promocionesControllers");
 
 
 const getPromociones = async (req, res) => {
     try{
-        res.status(200).send('todos los Promociones');
+        const response = await todasLasPromociones()
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -12,7 +14,8 @@ const getPromociones = async (req, res) => {
 const getPromocion = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el Promocion ${id}`);
+        const response = await traerPromocion(id)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -20,8 +23,10 @@ const getPromocion = async (req, res) => {
 }
 
 const postPromocion = async (req, res) => {
+    const {a} = req.body;
     try{
-        res.status(200).send('se creo el Promocion');
+        const response = await crearPromocion(a)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});

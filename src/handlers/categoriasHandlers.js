@@ -1,8 +1,10 @@
+const { todasLasCategorias, traerCategoria } = require("../controllers/categoriasController");
 
 
 const getCategorias = async (req, res) => {
     try{
-        res.status(200).send('todos los Categorias');
+        const response = await todasLasCategorias()
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -12,7 +14,8 @@ const getCategorias = async (req, res) => {
 const getCategoria = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el Categoria ${id}`);
+        const response = await traerCategoria(id)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -20,8 +23,10 @@ const getCategoria = async (req, res) => {
 }
 
 const postCategoria = async (req, res) => {
+    const {a} = req.body;
     try{
-        res.status(200).send('se creo el Categoria');
+        const response = await crearCategoria(a)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});

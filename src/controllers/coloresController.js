@@ -1,16 +1,16 @@
 const { Colores } = require('../db');
 
 const todosLosColores = async () =>{
-    const aux = await Colores.findAll();
-    return(aux);
+    const response = await Colores.findAll();
+    return(response);
 }
 const traerColor = async (id) =>{
-    const aux = await Colores.findByPk(id);
-    if(aux === null){
+    const response = await Colores.findByPk(id);
+    if(response === null){
        return('la Color no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 

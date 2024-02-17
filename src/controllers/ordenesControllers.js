@@ -1,16 +1,16 @@
 const { Ordenes } = require('../db');
 
 const todasLasOrdenes = async () =>{
-    const aux = await Ordenes.findAll();
-    return(aux);
+    const response = await Ordenes.findAll();
+    return(response);
 }
 const traerOrden = async (id) =>{
-    const aux = await Ordenes.findByPk(id);
-    if(aux === null){
+    const response = await Ordenes.findByPk(id);
+    if(response === null){
        return('la orden no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 

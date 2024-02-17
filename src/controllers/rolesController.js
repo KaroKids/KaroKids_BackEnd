@@ -1,16 +1,16 @@
 const { Roles } = require('../db');
 
 const todosLosRoles = async () =>{
-    const aux = await Roles.findAll();
-    return(aux);
+    const response = await Roles.findAll();
+    return(response);
 }
 const traerRol = async (id) =>{
-    const aux = await Roles.findByPk(id);
-    if(aux === null){
+    const response = await Roles.findByPk(id);
+    if(response === null){
        return('la Rol no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 

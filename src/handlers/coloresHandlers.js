@@ -1,8 +1,10 @@
+const { todosLosColores, traerColor, crearColor } = require("../controllers/coloresController");
 
 
 const getColores = async (req, res) => {
     try{
-        res.status(200).send('todos los Colores');
+        const response = await todosLosColores()
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -12,7 +14,8 @@ const getColores = async (req, res) => {
 const getColor = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el Color ${id}`);
+        const response = await traerColor(id)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -20,8 +23,10 @@ const getColor = async (req, res) => {
 }
 
 const postColor = async (req, res) => {
+    const {a} = req.body;
     try{
-        res.status(200).send('se creo el Color');
+        const response = await crearColor(a)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
