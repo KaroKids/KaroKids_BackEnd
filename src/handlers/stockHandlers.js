@@ -23,9 +23,9 @@ const getStock = async (req, res) => {
 }
 
 const postStock = async (req, res) => {
-    const {cantidad_producto} = req.body;
+    const {cantidad_producto, color_id, talla_id, producto_id} = req.body;
     try{
-        const response = await crearStock(cantidad_producto);
+        const response = await crearStock(cantidad_producto, color_id, talla_id, producto_id);
         res.status(200).json(response);
     }
     catch(error){
