@@ -1,8 +1,10 @@
+const { todosLosStocks, traerStock, crearStock } = require("../controllers/stockControllers");
 
 
 const getStocks = async (req, res) => {
     try{
-        res.status(200).send('todos los Stocks');
+        const response = await todosLosStocks();
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -12,7 +14,8 @@ const getStocks = async (req, res) => {
 const getStock = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el Stock ${id}`);
+        const response = await traerStock(id);
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -20,8 +23,10 @@ const getStock = async (req, res) => {
 }
 
 const postStock = async (req, res) => {
+    const {a} = req.body;
     try{
-        res.status(200).send('se creo el Stock');
+        const response = await crearStock(a);
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});

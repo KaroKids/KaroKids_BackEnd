@@ -1,16 +1,16 @@
 const { Categorias } = require('../db');
 
 const todasLasCategorias = async () =>{
-    const aux = await Categorias.findAll();
-    return(aux);
+    const response = await Categorias.findAll();
+    return(response);
 }
 const traerCategoria = async (id) =>{
-    const aux = await Categorias.findByPk(id);
-    if(aux === null){
+    const response = await Categorias.findByPk(id);
+    if(response === null){
        return('la Categoria no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 

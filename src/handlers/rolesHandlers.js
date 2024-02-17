@@ -1,8 +1,10 @@
+const { todosLosRoles, traerRol, crearRol } = require("../controllers/rolesController");
 
 
 const getRoles = async (req, res) => {
     try{
-        res.status(200).send('todos los Roles');
+        const response = await todosLosRoles()
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -12,7 +14,8 @@ const getRoles = async (req, res) => {
 const getRol = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el Rol ${id}`);
+        const response = await traerRol(id);
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -20,8 +23,10 @@ const getRol = async (req, res) => {
 }
 
 const postRol = async (req, res) => {
+    const {a} = req.body;
     try{
-        res.status(200).send('se creo el Rol');
+        const response = await crearRol(a)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});

@@ -1,8 +1,10 @@
+const { todasLasEntidades, traerEntidad, crearEntidad } = require("../controllers/entidadController");
 
 
 const getEntidades = async (req, res) => {
     try{
-        res.status(200).send('todos los Entidades');
+        const response = await todasLasEntidades()
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -12,7 +14,8 @@ const getEntidades = async (req, res) => {
 const getEntidad = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el Entidad ${id}`);
+        const response = await traerEntidad(id)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -20,8 +23,10 @@ const getEntidad = async (req, res) => {
 }
 
 const postEntidad = async (req, res) => {
+    const {a} = req.body;
     try{
-        res.status(200).send('se creo el Entidad');
+        const response = await crearEntidad(a)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
