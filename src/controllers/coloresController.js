@@ -34,7 +34,7 @@ const modificarColor = async (id) =>{
 }
 
 const crearColor = async (color) =>{
-    return await Colores.create(color);
+    return await Colores.create({color});
 }
 
 const filtrarColores = async () =>{
