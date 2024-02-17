@@ -33,8 +33,8 @@ const modificarCarrito = async (id) =>{
       
 }
 
-const crearCarrito = async (Carrito) =>{
-    return await Carritos.create(Carrito);
+const crearCarrito = async (carrito) =>{
+    return await Carritos.create({carrito});
 }
 
 const filtrarCarritos = async () =>{
