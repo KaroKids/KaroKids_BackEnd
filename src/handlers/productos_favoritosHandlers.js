@@ -1,8 +1,10 @@
+const { todosLosProductos_favoritos, traerProducto_favorito, crearProducto_favorito } = require("../controllers/productos_favoritosControllers");
 
 
 const getProductos_favoritos = async (req, res) => {
     try{
-        res.status(200).send('todos los Producto_favoritos_favoritos');
+        const response = await todosLosProductos_favoritos()
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -12,7 +14,8 @@ const getProductos_favoritos = async (req, res) => {
 const getProducto_favorito = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el Producto_favorito ${id}`);
+        const response = await traerProducto_favorito(id);
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -20,8 +23,10 @@ const getProducto_favorito = async (req, res) => {
 }
 
 const postProducto_favorito = async (req, res) => {
+    const {a} = req.body;
     try{
-        res.status(200).send('se creo el Producto_favorito');
+        const response = await crearProducto_favorito(a)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});

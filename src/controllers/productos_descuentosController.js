@@ -1,22 +1,22 @@
-const { Productos_descuento } = require('../db');
+const { Productos_Descuentos} = require('../db');
 
 const todosLosProductos_descuento = async () =>{
-    const aux = await Productos_descuento.findAll();
-    return(aux);
+    const response = await Productos_Descuentos.findAll();
+    return(response);
 }
 const traerProducto_descuento = async (id) =>{
-    const aux = await Productos_descuento.findByPk(id);
-    if(aux === null){
+    const response = await Productos_Descuentos.findByPk(id);
+    if(response === null){
        return('la Producto_descuento no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 
 const borrarProducto_descuento = async (id) =>{
    
-    await Productos_descuento.destroy({
+    await Productos_Descuentos.destroy({
         where: {
           id: id
         }
@@ -25,7 +25,7 @@ const borrarProducto_descuento = async (id) =>{
 }
 
 const modificarProducto_descuento = async (id) =>{
-    await Productos_descuento.update({
+    await Productos_Descuentos.update({
         where: {
           id: id
         }
@@ -33,8 +33,8 @@ const modificarProducto_descuento = async (id) =>{
       
 }
 
-const crearProducto_descuento = async (Producto_descuento) =>{
-    return await Productos_descuento.create(Producto_descuento);
+const crearProducto_descuento = async (descuento) =>{
+    return await Productos_Descuentos.create(descuento);
 }
 
 const filtrarProductos_descuento = async () =>{

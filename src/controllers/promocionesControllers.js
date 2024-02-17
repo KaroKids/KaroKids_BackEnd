@@ -1,16 +1,16 @@
 const { Promociones } = require('../db');
 
 const todasLasPromociones = async () =>{
-    const aux = await Promociones.findAll();
-    return(aux);
+    const response = await Promociones.findAll();
+    return(response);
 }
 const traerPromocion = async (id) =>{
-    const aux = await Promociones.findByPk(id);
-    if(aux === null){
+    const response = await Promociones.findByPk(id);
+    if(response === null){
        return('la Promocion no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 

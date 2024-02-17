@@ -1,22 +1,22 @@
-const { Productos_favoritos } = require('../db');
+const { Productos_Favoritos } = require('../db');
 
 const todosLosProductos_favoritos = async () =>{
-    const aux = await Productos_favoritos.findAll();
-    return(aux);
+    const response = await Productos_Favoritos.findAll();
+    return(response);
 }
 const traerProducto_favorito = async (id) =>{
-    const aux = await Productos_favoritos.findByPk(id);
-    if(aux === null){
+    const response = await Productos_Favoritos.findByPk(id);
+    if(response === null){
        return('la Producto_favorito no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 
 const borrarProducto_favorito = async (id) =>{
    
-    await Productos_favoritos.destroy({
+    await Productos_Favoritos.destroy({
         where: {
           id: id
         }
@@ -25,7 +25,7 @@ const borrarProducto_favorito = async (id) =>{
 }
 
 const modificarProducto_favorito = async (id) =>{
-    await Productos_favoritos.update({
+    await Productos_Favoritos.update({
         where: {
           id: id
         }
@@ -34,7 +34,7 @@ const modificarProducto_favorito = async (id) =>{
 }
 
 const crearProducto_favorito = async (Producto_favorito) =>{
-    return await Productos_favoritos.create(Producto_favorito);
+    return await Productos_Favoritos.create(Producto_favorito);
 }
 
 const filtrarProductos_favoritos = async () =>{
