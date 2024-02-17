@@ -1,16 +1,16 @@
 const { Carritos } = require('../db');
 
 const todosLosCarritos = async () =>{
-    const aux = await Carritos.findAll();
-    return(aux);
+    const response = await Carritos.findAll();
+    return(response);
 }
 const traerCarrito = async (id) =>{
-    const aux = await Carritos.findByPk(id);
-    if(aux === null){
+    const response = await Carritos.findByPk(id);
+    if(response === null){
        return('la Carrito no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 

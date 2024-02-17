@@ -1,16 +1,16 @@
 const { Usuarios } = require('../db');
 
-const todasLasUsuarios = async () =>{
-    const aux = await Usuarios.findAll();
-    return(aux);
+const todosLosUsuarios = async () =>{
+    const response = await Usuarios.findAll();
+    return(response);
 }
 const traerUsuario = async (id) =>{
-    const aux = await Usuarios.findByPk(id);
-    if(aux === null){
+    const response = await Usuarios.findByPk(id);
+    if(response === null){
        return('la Usuario no existe');
     }else{
        
-       return(aux);
+       return(response);
     }
 }
 
@@ -42,7 +42,7 @@ const filtrarUsuarios = async () =>{
 }
 
 module.exports = {
-    todasLasUsuarios,
+    todosLosUsuarios,
     traerUsuario,
     borrarUsuario,
     modificarUsuario,

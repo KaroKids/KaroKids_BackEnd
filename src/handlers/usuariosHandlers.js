@@ -1,8 +1,10 @@
+const { crearUsuario, todosLosUsuarios, traerUsuario } = require("../controllers/usuariosControllers");
 
 
 const getUsuarios = async (req, res) => {
     try{
-        res.status(200).send('todos los usuarios');
+        const response = await todosLosUsuarios()
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -12,7 +14,8 @@ const getUsuarios = async (req, res) => {
 const getUsuario = async (req, res) => {
     const {id} = req.params;
     try{
-        res.status(200).send(`aca esta el usuario ${id}`);
+        const response = await traerUsuario(id)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -20,8 +23,10 @@ const getUsuario = async (req, res) => {
 }
 
 const postUsuario = async (req, res) => {
+    const {a} = req.body;
     try{
-        res.status(200).send('se creo el usuario');
+        const response = await crearUsuario(a)
+        res.status(200).json(response);
     }
     catch(error){
         res.status(400).json({error: error.message});
