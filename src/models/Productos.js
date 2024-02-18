@@ -56,5 +56,9 @@ module.exports = (sequelize) => {
 			allowNull: false,
 			defaultValue: "0",
 		},
+		stock: {
+			type: DataTypes.JSON,
+			allowNull: false,
+		},
 	});
 };

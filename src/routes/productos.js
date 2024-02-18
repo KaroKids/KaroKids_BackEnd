@@ -5,8 +5,9 @@ const {
   deleteProducto,
   postProducto,
 } = require("../handlers/productosHandlers");
+const productosFiltrados = require("../controllers/ProductosFiltradosControllers2");
 const productos = Router();
-const productosFiltrados = require("../controllers/productosFiltradosController");
+
 
 productos.get("/", productosFiltrados);
 productos.get("/:id", getProducto);

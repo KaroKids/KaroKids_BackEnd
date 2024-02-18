@@ -1,4 +1,4 @@
-const { todasLasCategorias, traerCategoria } = require("../controllers/categoriasController");
+const { todasLasCategorias, traerCategoria, crearCategoria } = require("../controllers/categoriasController");
 
 
 const getCategorias = async (req, res) => {

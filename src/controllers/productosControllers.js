@@ -1,3 +1,6 @@
+
+    // const response = await Productos.findAll();
+    // return(response);
 const { Productos } = require("../db");
 const resultadosPaginados = require("../utils/paginacion");
 
@@ -41,7 +44,8 @@ const crearProducto = async (
 	genero,
 	precio,
 	destacado,
-	inactivo
+	inactivo,
+	stock
 ) => {
 	return await Productos.create({
 		nombre,
@@ -54,6 +58,7 @@ const crearProducto = async (
 		precio,
 		destacado,
 		inactivo,
+		stock
 	});
 };
 
