@@ -9,22 +9,33 @@
 //OFFSET = (pagina - 1) * LIMIT
 
 //SELECT * FROM tabla OFFSET 0 LIMIT 10 ---> Devolverá lo que se encuentre entre OFFSET y LIMIT. En este caso, los primeros 10 elementos.
+const { Stocks, Colores, Tallas } = require("../db");
 
-const resultadosPaginados = async (paginaActual, itemsPorPagina, modeloActual) => {
-    try {
-        const limitAttribute = itemsPorPagina
-        const totalElementos = await modeloActual.count()
-        const totalPaginas = Match.ceil(totalElementos / limitAttribute) //Este parámetro se va a utilizar para manejar apropiadamente los últimos elementos disponibles para visualizar en el Front, por eso no se usa acá y simplemente se retorna.
-        const offseAttribute = (paginaActual - 1) * limitAttribute
+const resultadosPaginados = async (
+	paginaActual,
+	itemsPorPagina,
+	array
+	
+) => {
 
-        const elementosPaginados = await modeloActual.findAll({
-            offset: offseAttribute,
-            limit: limitAttribute
-        })
+	try {
+		let limitAttribute = itemsPorPagina;
+		let totalElementos = array.length;
+		let totalPaginas = Math.ceil(totalElementos / limitAttribute); //Este parámetro se va a utilizar para manejar apropiadamente los últimos elementos disponibles para visualizar en el Front, por eso no se usa acá y simplemente se retorna.
+		const offsetAttribute = (paginaActual - 1) * limitAttribute;
+		limitAttribute = offsetAttribute + limitAttribute
 
-        return (elementosPaginados, totalPaginas)
+		console.log(totalElementos)
+		console.log(totalPaginas)
+		console.log(offsetAttribute)
+		console.log(limitAttribute)
+		const elementosPaginados = array.slice(offsetAttribute, limitAttribute)
+		return { elementosPaginados, totalPaginas };
+	} catch (error) {
+		throw new Error(
+			"Error al obtener los usuarios paginados: " + error.message
+		);
+	}
+};
 
-    } catch (error) {
-        throw new Error ('Error al obtener los usuarios paginados: ' + error.message)
-    }
-}
+module.exports = resultadosPaginados;
