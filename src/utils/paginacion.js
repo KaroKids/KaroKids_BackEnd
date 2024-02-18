@@ -18,38 +18,12 @@ const resultadosPaginados = async (
   whereProducto,
   whereStock
 ) => {
-  // try {
-  //   const limitAttribute = itemsPorPagina;
-  //   let totalElementos = await modeloActual.count();
-  //   let totalPaginas = Math.ceil(totalElementos / limitAttribute); //Este parámetro se va a utilizar para manejar apropiadamente los últimos elementos disponibles para visualizar en el Front, por eso no se usa acá y simplemente se retorna.
-  //   const offsetAttribute = (paginaActual - 1) * limitAttribute;
-
-  //   const elementosPaginados = await modeloActual.findAll({
-  //     include: [
-  //       {
-  //         model: Stocks,
-  //       },
-  //     ],
-  //     offset: offsetAttribute,
-  //     limit: limitAttribute,
-  //   });
-
-  //   return { elementosPaginados, totalPaginas };
-  // } catch (error) {
-  //   throw new Error(
-  //     "Error al obtener los usuarios paginados: " + error.message
-  //   );
-  // }
   try {
     const limitAttribute = itemsPorPagina;
     let totalElementos = await modeloActual.count();
     let totalPaginas = Math.ceil(totalElementos / limitAttribute); //Este parámetro se va a utilizar para manejar apropiadamente los últimos elementos disponibles para visualizar en el Front, por eso no se usa acá y simplemente se retorna.
     const offsetAttribute = (paginaActual - 1) * limitAttribute;
 
-    console.log(
-      Object.keys(whereProducto).length,
-      Object.keys(whereStock).length
-    );
     if (whereProducto) {
       const filter = await modeloActual.findAll({
         include: [

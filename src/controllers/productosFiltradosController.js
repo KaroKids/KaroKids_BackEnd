@@ -23,16 +23,6 @@ async function productosFiltrados(req, res) {
     if (minPrecio && maxPrecio)
       whereProducto.precio = { [Op.between]: [minPrecio, maxPrecio] };
 
-    // const filter = await Productos.findAll({
-    //   include: [
-    //     {
-    //       model: Stocks,
-    //       where: whereStock,
-    //     },
-    //   ],
-    //   where: whereProducto,
-    // });
-
     const productosFiltrados = await resultadosPaginados(
       paginaActual,
       2,
@@ -43,7 +33,7 @@ async function productosFiltrados(req, res) {
 
     res.json(productosFiltrados);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 }
 
