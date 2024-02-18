@@ -7,17 +7,6 @@ const {
 const { Colores, Tallas, Stocks } = require("../db");
 
 const getProductos = async (req, res) => {
-<<<<<<< HEAD
-    const {paginaActual} = req.query
-    try{
-        const response = await todosLosProductos(paginaActual)
-        res.status(200).json(response);
-    }
-    catch(error){
-        res.status(400).json({error: error.message});
-    }
-}
-=======
 	const { paginaActual } = req.query;
 	try {
 		const response = await todosLosProductos(paginaActual);
@@ -26,7 +15,6 @@ const getProductos = async (req, res) => {
 		res.status(400).json({ error: error.message });
 	}
 };
->>>>>>> 08d5f4e81e0e21ee7cbf5ea1f5e7ecf9039b8242
 
 const getProducto = async (req, res) => {
 	const { id } = req.params;
