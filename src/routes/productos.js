@@ -1,9 +1,9 @@
 const { Router } = require("express");
 const {
-	getProducto,
-	putProducto,
-	deleteProducto,
-	postProducto,
+  getProducto,
+  putProducto,
+  deleteProducto,
+  postProducto,
 } = require("../handlers/productosHandlers");
 const productos = Router();
 const productosFiltrados = require("../controllers/productosFiltradosController");
