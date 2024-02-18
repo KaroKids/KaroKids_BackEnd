@@ -1,6 +1,5 @@
 const { todosLosRoles, traerRol, crearRol } = require("../controllers/rolesController");
 
-
 const getRoles = async (req, res) => {
     try{
         const response = await todosLosRoles()
@@ -14,7 +13,7 @@ const getRoles = async (req, res) => {
 const getRol = async (req, res) => {
     const {id} = req.params;
     try{
-        const response = await traerRol(id);
+        const response = await traerRol(id)
         res.status(200).json(response);
     }
     catch(error){
