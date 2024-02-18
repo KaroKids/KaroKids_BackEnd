@@ -8,6 +8,10 @@ const { Colores, Tallas, Stocks } = require("../db");
 
 const getProductos = async (req, res) => {
 	const { paginaActual } = req.query;
+	if(!paginaActual){
+		paginaActual = 1;
+	}
+	console.log(paginaActual)
 	try {
 		const response = await todosLosProductos(paginaActual);
 		res.status(200).json(response);
@@ -38,13 +42,9 @@ const postProducto = async (req, res) => {
 		precio,
 		destacado,
 		inactivo,
-		color,
-		talla,
-		cantidad_producto,
+		stock
 	} = req.body;
 	try {
-		const idColor = await Colores.findAll({ where: { color: color } });
-		const idTalla = await Tallas.findAll({ where: { talla: talla } });
 		const response = await crearProducto(
 			nombre,
 			descripcion,
@@ -55,15 +55,11 @@ const postProducto = async (req, res) => {
 			genero,
 			precio,
 			destacado,
-			inactivo
+			inactivo,
+			stock
 		);
-		const stock = await Stocks.create({
-			cantidad_producto: cantidad_producto,
-			color_id: idColor[0].color_id,
-			talla_id: idTalla[0].talla_id,
-			producto_id: response.producto_id,
-		});
-		res.status(200).json({ response, stock });
+		
+		res.status(200).json(response);
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}

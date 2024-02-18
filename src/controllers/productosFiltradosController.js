@@ -3,22 +3,30 @@ const { Productos } = require("../db");
 const resultadosPaginados = require("../utils/paginacion");
 
 async function productosFiltrados(req, res) {
+	
 	try {
-		const { genero, talla, color, minPrecio, maxPrecio, paginaActual } =
+		const {edad, genero, talla, color, minPrecio, maxPrecio } =
 			req.query;
+			let {paginaActual} = req.query;
+		if(!paginaActual){
+			paginaActual = 1;
+		}
 
 		const filtros = {};
+		if (edad) {
+			filtros.genero = genero;
+		}
 
 		if (genero) {
 			filtros.genero = genero;
 		}
 
 		if (talla) {
-			filtros["$Stocks.Talla.talla$"] = talla;
+			filtros.talla = talla;
 		}
 
 		if (color) {
-			filtros["$Stocks.Color.color$"] = color;
+			filtros.color = color;
 		}
 
 		if (minPrecio && maxPrecio) {

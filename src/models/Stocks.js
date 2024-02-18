@@ -12,5 +12,13 @@ module.exports = (sequelize) => {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
+		colorStock: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		tallaStock: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
 	});
 };

@@ -14,50 +14,22 @@ const { Stocks, Colores, Tallas } = require("../db");
 const resultadosPaginados = async (
 	paginaActual,
 	itemsPorPagina,
-	modeloActual,
-	filtros
+	array
+	
 ) => {
+
 	try {
-		const limitAttribute = itemsPorPagina;
-		let totalElementos = await modeloActual.count();
+		let limitAttribute = itemsPorPagina;
+		let totalElementos = array.length;
 		let totalPaginas = Math.ceil(totalElementos / limitAttribute); //Este parámetro se va a utilizar para manejar apropiadamente los últimos elementos disponibles para visualizar en el Front, por eso no se usa acá y simplemente se retorna.
 		const offsetAttribute = (paginaActual - 1) * limitAttribute;
+		limitAttribute = offsetAttribute + limitAttribute
 
-		if (filtros) {
-			const elementosPaginados = await modeloActual.findAll({
-				include: [
-					{
-						model: Stocks,
-						// include: [
-						// 	{ model: Tallas, attributes: ["talla"] },
-						// 	{ model: Colores, attributes: ["color"] },
-						// ],
-					},
-				],
-
-				where: filtros,
-				offset: offsetAttribute,
-				limit: limitAttribute,
-			});
-			totalElementos = await modeloActual.count({ where: filtros });
-			totalPaginas = Math.ceil(totalElementos / limitAttribute);
-			return { elementosPaginados, totalPaginas };
-		}
-
-		const elementosPaginados = await modeloActual.findAll({
-			include: [
-				{
-					model: Stocks,
-					// 	include: [
-					// 		{ model: Tallas, attributes: ["talla"] },
-					// 		{ model: Colores, attributes: ["color"] },
-					// 	],
-				},
-			],
-			offset: offsetAttribute,
-			limit: limitAttribute,
-		});
-
+		console.log(totalElementos)
+		console.log(totalPaginas)
+		console.log(offsetAttribute)
+		console.log(limitAttribute)
+		const elementosPaginados = array.slice(offsetAttribute, limitAttribute)
 		return { elementosPaginados, totalPaginas };
 	} catch (error) {
 		throw new Error(
