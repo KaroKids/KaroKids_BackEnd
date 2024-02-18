@@ -37,6 +37,8 @@ const crearProducto = async (
 	imagen_principal,
 	imagenes_secundarias,
 	video,
+	edad,
+	genero,
 	precio,
 	destacado,
 	inactivo
@@ -47,6 +49,8 @@ const crearProducto = async (
 		imagen_principal,
 		imagenes_secundarias,
 		video,
+		edad,
+		genero,
 		precio,
 		destacado,
 		inactivo,

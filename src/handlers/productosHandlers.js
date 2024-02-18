@@ -4,6 +4,8 @@ const {
 	traerProducto,
 } = require("../controllers/productosControllers");
 
+const { Colores, Tallas, Stocks } = require("../db");
+
 const getProductos = async (req, res) => {
 	const { paginaActual } = req.query;
 	try {
@@ -31,22 +33,37 @@ const postProducto = async (req, res) => {
 		imagen_principal,
 		imagenes_secundarias,
 		video,
+		edad,
+		genero,
 		precio,
 		destacado,
 		inactivo,
+		color,
+		talla,
+		cantidad_producto,
 	} = req.body;
 	try {
+		const idColor = await Colores.findAll({ where: { color: color } });
+		const idTalla = await Tallas.findAll({ where: { talla: talla } });
 		const response = await crearProducto(
 			nombre,
 			descripcion,
 			imagen_principal,
 			imagenes_secundarias,
 			video,
+			edad,
+			genero,
 			precio,
 			destacado,
 			inactivo
 		);
-		res.status(200).json(response);
+		const stock = await Stocks.create({
+			cantidad_producto: cantidad_producto,
+			color_id: idColor[0].color_id,
+			talla_id: idTalla[0].talla_id,
+			producto_id: response.producto_id,
+		});
+		res.status(200).json({ response, stock });
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}
