@@ -94,13 +94,13 @@ async function productosFiltrados(req, res) {
     if (!paginaActual) {
       paginaActual = 1;
     }
-    console.log(edad);
-    console.log(genero);
-    console.log(talla);
-    console.log(color);
-    console.log(minPrecio);
-    console.log(maxPrecio);
-    console.log(paginaActual);
+    // console.log("Edad " + edad);
+    // console.log("Genero " + genero);
+    // console.log("Talla " + talla);
+    // console.log("Color " + color);
+    // console.log("minPrecio " + minPrecio);
+    // console.log("maxPrecio " + maxPrecio);
+    // console.log("página actual " + paginaActual);
 
     let array = [];
 
