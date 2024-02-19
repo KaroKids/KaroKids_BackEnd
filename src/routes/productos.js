@@ -5,7 +5,7 @@ const {
   deleteProducto,
   postProducto,
 } = require("../handlers/productosHandlers");
-const productosFiltrados = require("../controllers/ProductosFiltradosControllers2");
+const productosFiltrados = require("../controllers/productosFiltradosControllers");
 const productos = Router();
 
 
