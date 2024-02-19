@@ -1,4 +1,5 @@
 const { Productos } = require("../db");
+const { Op } = require("sequelize");
 const resultadosPaginados = require("../utils/paginacion");
 
 const filtrarEdad = (edad, array1) => {
@@ -87,7 +88,8 @@ const filtrarPrecio = (minPrecio, maxPrecio, array1) => {
 
 async function productosFiltrados(req, res) {
   try {
-    const { edad, genero, talla, color, minPrecio, maxPrecio } = req.query;
+    const { edad, genero, talla, color, minPrecio, maxPrecio, nombre } =
+      req.query;
     let { paginaActual } = req.query;
     if (!paginaActual) {
       paginaActual = 1;
@@ -99,7 +101,17 @@ async function productosFiltrados(req, res) {
     console.log(minPrecio);
     console.log(maxPrecio);
     console.log(paginaActual);
-    var array = await Productos.findAll();
+
+    let array = [];
+
+    if (nombre) {
+      array = await Productos.findAll({
+        where: { nombre: { [Op.iLike]: `%${nombre}%` } },
+      });
+    } else {
+      array = await Productos.findAll();
+    }
+
     array = array.map((a) => a.dataValues);
 
     array = filtrarEdad(edad, array);
