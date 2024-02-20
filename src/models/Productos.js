@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
 			defaultValue: UUIDV4,
 		},
 		nombre: {
-			type: DataTypes.STRING(50),
+			type: DataTypes.STRING, //Se eliminó la limitación de caracteres.
 			allowNull: false,
 		},
 		descripcion: {
@@ -17,22 +17,11 @@ module.exports = (sequelize) => {
 			allowNull: false,
 		},
 		imagen_principal: {
-			// type: DataTypes.STRING,
-			// allowNull: false,
-			//!(Esto no sé si es realmente imprescindible en nuesrto caso)
-			//* Al parecer, se debe cambiar la configuración del modelo para que la DB almacene estos dos parámetros que creo que retorna Cloudinary.
-			public_id: {
-				type: DataTypes.STRING,
-				allowNull: false
-			},
-			url: {
-				type: DataTypes.STRING,
-				allowNull: false
-			}
+			type: DataTypes.STRING,
+			allowNull: false,
 		},
 		imagenes_secundarias: {
-			type: DataTypes.ARRAY(DataTypes.JSON), //Array de JSONs
-			allowNull: false,
+			type: DataTypes.ARRAY(DataTypes.STRING), //Array de strings
 		},
 		video: {
 			type: DataTypes.STRING,

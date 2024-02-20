@@ -4,9 +4,16 @@
 const { Productos } = require("../db");
 const resultadosPaginados = require("../utils/paginacion");
 
-//* Requerimos la configuración de Cloudinary de la carpeta "utils".
-//!NOTA: Previamente, en el FrontEnd, por lo general convierten la imagen a Base64. En este video (https://www.youtube.com/watch?v=FsD_gUbYsb8), en el minuto 1:44, se puede ver como se convierte la imagen con una función "setFileToBase" en el código del formulario de creación de producto del admin (en su VSCode se ve que está en una carpeta "admin").
-const cloudinary = require('../utils/cloudinary');
+//* Requerimos las credenciales del archivo .env y definimos la configuración de Cloudinary.
+require("dotenv").config()
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true
+});
 //*
 
 const todosLosProductos = async (paginaActual) => {
@@ -52,35 +59,38 @@ const crearProducto = async (
 	inactivo,
 	stock
 ) => {
-	//* Constante con el protocolo para subir la imagen directamente a Cloudinary en una carpeta que se crea automáticamente llamada "imagenes_productos". Se pueden setear ciertos parámetros como los que aparecen comentados.
-		const img_princ_cloud = await cloudinary.uploader.upload(imagen_principal, {
-			folder: "Imagenes_productos",
-			// width: 300,
-			// crop: "scale",
-		})
+	try {
+		// Subimos la imagen principal a Cloudinary
+		const result_principal = await cloudinary.uploader.upload(imagen_principal);
+		const imagen_principal_url = result_principal.secure_url;
+		
+		 // Subimos las imágenes secundarias a Cloudinary
+		 const imagenes_secundarias_urls = [];
+		 for (const imagen of imagenes_secundarias) {
+			 const result_secundaria = await cloudinary.uploader.upload(imagen);
+			 imagenes_secundarias_urls.push(result_secundaria.secure_url);
+		 }
+	
+		return await Productos.create({
+			nombre,
+			descripcion,
+			// imagen_principal,
+			// imagenes_secundarias,
+			imagen_principal: imagen_principal_url,
+            imagenes_secundarias: imagenes_secundarias_urls,
+			video,
+			edad,
+			genero,
+			precio,
+			destacado,
+			inactivo,
+			stock
+		});
+	} catch (error) {
+		console.error('Error al cargar la imagen', error);
+        throw new Error('Error al cargar la imagen');
+	}
 
-		const img_sec_cloud = imagenes_secundarias.map(elemento => {
-			//Acá habría que desarrollar el método para hacer lo mismo que con la imagen principal pero para cada elemento del array de strings.
-		})
-	//*
-
-	return await Productos.create({
-		nombre,
-		descripcion,
-		// imagen_principal,
-		imagen_principal: {
-			public_id: img_princ_cloud.public_id,
-			url: img_princ_cloud.secure_url
-		},
-		imagenes_secundarias,
-		video,
-		edad,
-		genero,
-		precio,
-		destacado,
-		inactivo,
-		stock
-	});
 };
 
 const filtrarProductos = async () => {};
