@@ -94,13 +94,13 @@ async function productosFiltrados(req, res) {
     if (!paginaActual) {
       paginaActual = 1;
     }
-    // console.log("Edad " + edad);
-    // console.log("Genero " + genero);
-    // console.log("Talla " + talla);
-    // console.log("Color " + color);
-    // console.log("minPrecio " + minPrecio);
-    // console.log("maxPrecio " + maxPrecio);
-    // console.log("página actual " + paginaActual);
+    console.log("Edad " + edad);
+    console.log("Genero " + genero);
+    console.log("Talla " + talla);
+    console.log("Color " + color);
+    console.log("minPrecio " + minPrecio);
+    console.log("maxPrecio " + maxPrecio);
+    console.log("página actual " + paginaActual);
 
     let array = [];
 
@@ -120,7 +120,7 @@ async function productosFiltrados(req, res) {
     array = filtrarColor(color, talla, array);
     array = filtrarPrecio(minPrecio, maxPrecio, array);
 
-    const paginacion = await resultadosPaginados(paginaActual, 5, array);
+    const paginacion = await resultadosPaginados(paginaActual, 12, array);
 
     res.status(200).json(paginacion);
   } catch (error) {

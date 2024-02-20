@@ -23,7 +23,7 @@ const resultadosPaginados = async (paginaActual, itemsPorPagina, array) => {
     //console.log("Desde que elemento: " + offsetAttribute);
     //console.log("Cuantos elementos por página: " + limitAttribute);
     const elementosPaginados = array.slice(offsetAttribute, limitAttribute);
-    return { elementosPaginados, totalPaginas };
+    return { elementosPaginados, totalPaginas, paginaActual };
   } catch (error) {
     throw new Error(
       "Error al obtener los usuarios paginados: " + error.message
