@@ -41,7 +41,6 @@ const {
   Productos,
   Promociones,
   Roles,
-  Stocks,
   Tallas,
   Usuarios,
 } = sequelize.models;
@@ -66,13 +65,8 @@ Usuarios.hasMany(Carritos, { foreignKey: "usuario_id" });
 Carritos.hasOne(Ordenes, { foreignKey: "carrito_id" });
 ////////////////////////////////////////////////
 Productos.hasOne(Productos_Descuentos, { foreignKey: "producto_id" });
-////////////////////////////////////////////////
-Productos.hasMany(Stocks, { foreignKey: "producto_id" });
-Tallas.hasMany(Stocks, { foreignKey: "talla_id" });
-Colores.hasMany(Stocks, { foreignKey: "color_id" });
-////////////////////////////////////////////////
 
-////////////////////////////
+////////////////////////////////////////////////
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
@@ -86,7 +80,6 @@ module.exports = {
   Productos,
   Promociones,
   Roles,
-  Stocks,
   Tallas,
   Usuarios,
 };
