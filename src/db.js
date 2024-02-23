@@ -31,6 +31,7 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 const {
+  Carritos_Detalles,
   Carritos,
   Colores,
   Configuraciones,
@@ -65,11 +66,14 @@ Usuarios.hasMany(Carritos, { foreignKey: "usuario_id" });
 Carritos.hasOne(Ordenes, { foreignKey: "carrito_id" });
 ////////////////////////////////////////////////
 Productos.hasOne(Productos_Descuentos, { foreignKey: "producto_id" });
-
+////////////////////////////////////////////////
+Carritos.hasMany(Carritos_Detalles, { foreignKey: "carrito_id" });
+Productos.hasMany(Carritos_Detalles, { foreignKey: "producto_id" });
 ////////////////////////////////////////////////
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
+  Carritos_Detalles,
   Carritos,
   Colores,
   Configuraciones,
