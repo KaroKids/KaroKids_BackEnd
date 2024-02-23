@@ -2,9 +2,9 @@ const { DataTypes, UUIDV4 } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Carritos",
+    "Carritos_Detalles",
     {
-      carrito_id: {
+      carrito_detalle_id: {
         type: DataTypes.UUID,
         primaryKey: true,
         allowNull: false,
