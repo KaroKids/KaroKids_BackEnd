@@ -1,28 +1,23 @@
 const { DataTypes, UUIDV4 } = require("sequelize");
 
 module.exports = (sequelize) => {
-	sequelize.define(
-		"Carritos",
-		{
-			carrito_id: {
-				type: DataTypes.UUID,
-				primaryKey: true,
-				allowNull: false,
-				defaultValue: UUIDV4,
-			},
-			//usuario_id: FK
-			productos: {
-				type: DataTypes.ARRAY(DataTypes.JSON), //Array de JSONs
-				allowNull: false,
-			},
-			inactivo: {
-				type: DataTypes.BOOLEAN,
-				allowNull: false,
-				defaultValue: "0",
-			},
-		},
-		{
-			timestamps: false,
-		}
-	);
+  sequelize.define(
+    "Carritos",
+    {
+      carrito_id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        allowNull: false,
+        defaultValue: UUIDV4,
+      },
+      inactivo: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: "0",
+      },
+    },
+    {
+      timestamps: false,
+    }
+  );
 };
