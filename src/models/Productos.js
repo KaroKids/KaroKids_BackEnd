@@ -9,6 +9,7 @@ module.exports = (sequelize) => {
       defaultValue: UUIDV4,
     },
     nombre: {
+
       type: DataTypes.STRING(50),
       allowNull: false,
     },
@@ -21,6 +22,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     imagenes_secundarias: {
+
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
     },

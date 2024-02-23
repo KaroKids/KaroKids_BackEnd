@@ -102,7 +102,6 @@ const crearProducto = async (
             console.log(err)
           }
         })
-      
     }
 
     return await Productos.create({
