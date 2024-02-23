@@ -16,17 +16,16 @@ const createOrder = async (req, res) => {
       },
     ],
     back_urls: {
-      success: "http://localhost:3001/payment/success",
-      failure: "http://localhost:3001/payment/failure",
-      pending: "http://localhost:3001/payment/pending",
+      success: "https://karokids.onrender.com/payment/success",
+      failure: "https://karokids.onrender.com/payment/failure",
+      pending: "https://karokids.onrender.com/payment/pending",
     },
-    notification_url:
-      "https://e1de-2800-810-4ff-12af-ecce-d8d5-20a9-9c44.ngrok-free.app/payment/webhook",
+    notification_url: "https://karokids.onrender.com/payment/webhook",
   };
   const preference = new Preference(client);
   const result = await preference.create({ body });
 
-  console.log(result);
+  // console.log(result);
 
   res.send(result);
 };
@@ -37,12 +36,12 @@ const receiveWebhook = async (req, res) => {
   try {
     if (query.type === "payment") {
       const data = await payment.get({ id: query["data.id"] });
-      console.log(data);
+      // console.log(data);
 
       res.status(204);
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({ error: error.message });
   }
 };
