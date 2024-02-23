@@ -9,7 +9,8 @@ module.exports = (sequelize) => {
       defaultValue: UUIDV4,
     },
     nombre: {
-      type: DataTypes.STRING(50), //Se eliminó la limitación de caracteres.
+
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
     descripcion: {
@@ -21,7 +22,8 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     imagenes_secundarias: {
-      type: DataTypes.ARRAY(DataTypes.STRING), //Array de strings
+
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
     },
     video: {

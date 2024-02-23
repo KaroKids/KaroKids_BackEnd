@@ -60,23 +60,55 @@ const crearProducto = async (
 ) => {
   try {
     // Subimos la imagen principal a Cloudinary
-    const result_principal = await cloudinary.uploader.upload(imagen_principal);
-    const imagen_principal_url = result_principal.secure_url;
+    const img_principal_cloud = await cloudinary.uploader.upload(imagen_principal,
+      {
+        upload_preset: 'preset_imagenes_productos',
+        allowed_formats: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg']
+      },
+      function(err, result) {
+        if (err) {
+          console.log(err)
+        }
+        // console.log('Result1:', result)
+        try {
+          console.log('img_principal_cloud', result.secure_url)
+          return result.secure_url
+        } catch (err) {
+          console.log(err)
+        }
+      })
+    
 
     // Subimos las imágenes secundarias a Cloudinary
-    const imagenes_secundarias_urls = [];
-    for (const imagen of imagenes_secundarias) {
-      const result_secundaria = await cloudinary.uploader.upload(imagen);
-      imagenes_secundarias_urls.push(result_secundaria.secure_url);
+    const imagenes_secundarias_cloud = [];
+
+    for (let i = 0; i < imagenes_secundarias.length; i++) {
+      const uploaded_secundaria = await cloudinary.uploader.upload(imagenes_secundarias[i],
+        {
+          upload_preset: 'preset_imagenes_productos',
+          allowed_formats: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg']
+        },
+        function(err, result) {
+          if (err) {
+            console.log('error de cloudinary', err)
+          }
+          // console.log('Result2:', result)
+          try {
+            // console.log(`Esta es la url de tu imagen secundaria`, result.secure_url)
+
+            imagenes_secundarias_cloud.push(result.secure_url);
+            // console.log('array de cloudinary', imagenes_secundarias_cloud)
+          } catch (err) {
+            console.log(err)
+          }
+        })
     }
 
     return await Productos.create({
       nombre,
       descripcion,
-      // imagen_principal,
-      // imagenes_secundarias,
-      imagen_principal: imagen_principal_url,
-      imagenes_secundarias: imagenes_secundarias_urls,
+      imagen_principal: img_principal_cloud.secure_url,
+      imagenes_secundarias: imagenes_secundarias_cloud,
       video,
       edad,
       genero,
