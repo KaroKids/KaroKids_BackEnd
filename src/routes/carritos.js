@@ -2,14 +2,12 @@ const { Router } = require("express");
 const {
   getCarrito,
   postCarrito,
-  putCarrito,
   deleteCarrito,
 } = require("../handlers/carritosHandlers");
 const carritos = Router();
 
-carritos.get("/:usuarioId", getCarrito);
-carritos.post("/:usuarioId", postCarrito);
-carritos.put("/:carritoId", putCarrito);
-carritos.delete("/:carritoId", deleteCarrito);
+carritos.get("/", getCarrito);
+carritos.post("/", postCarrito);
+carritos.delete("/", deleteCarrito);
 
 module.exports = carritos;
