@@ -15,18 +15,6 @@ const getCarrito = async (req, res) => {
   }
 };
 
-const deleteCarrito = async (req, res) => {
-  const { carrito_id } = req.body;
-
-  try {
-    const response = await borrarCarrito(usuario_id);
-
-    return res.send(`Se elimino el carrito (${id})`);
-  } catch (error) {
-    return res.status(400).json({ error: error.message });
-  }
-};
-
 const postCarrito = async (req, res) => {
   const { usuario_id } = req.body;
 
@@ -34,6 +22,18 @@ const postCarrito = async (req, res) => {
     const response = await crearCarrito(usuario_id);
 
     return res.status(201).send("Se creó el carrito");
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+const deleteCarrito = async (req, res) => {
+  const { carrito_id } = req.body;
+
+  try {
+    const response = await borrarCarrito(usuario_id);
+
+    return res.send(`Se elimino el carrito (${id})`);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
