@@ -8,10 +8,21 @@ module.exports = (sequelize) => {
 			allowNull: false,
 			defaultValue: UUIDV4,
 		},
-		email: {
+		uid_firebase: {
+			type: DataTypes.STRING
+		},
+		nombre_usuario: {
+			type: DataTypes.STRING
+		},
+		apellido_usuario: {
+			type: DataTypes.STRING
+		},
+		email_usuario: {
 			type: DataTypes.STRING(150),
 			allowNull: false,
-			isEmail: true, //Validador añadido.
+		},
+		telefono_usuario: {
+			type: DataTypes.STRING
 		},
 		inactivo: {
 			type: DataTypes.BOOLEAN,
