@@ -1,34 +1,33 @@
-const { Carritos, Usuarios } = require("../db");
+const { Carritos, Productos } = require("../db");
 const { Op } = require("sequelize");
 
-const todosLosCarritos = async () => {
-  const response = await Carritos.findAll();
-  return response;
-};
-
 const traerCarrito = async (usuario_id) => {
-  const response = await Carritos.findOne({
-    where: {
-      [Op.and]: [{ usuario_id: usuario_id }, { inactivo: 0 }],
-    },
+  const carritoUsuario = await Carritos.findByPk(usuario_id, {
+    where: { inactivo: 0 },
+    include: [
+      {
+        model: Productos,
+        through: { attributes: [] },
+      },
+    ],
   });
 
-  if (!response) {
-    return "No existe un carrito para ese usuario";
+  if (!carritoUsuario) {
+    return "El usuario no posee un carrito aún";
   } else {
-    return response;
+    return carritoUsuario;
   }
 };
 
-const borrarCarrito = async (usuario_id) => {
+const borrarCarrito = async (carrito_id) => {
   const response = await Carritos.findOne({
     where: {
-      [Op.and]: [{ usuario_id: usuario_id }, { inactivo: 0 }],
+      [Op.and]: [{ carrito_id: carrito_id }, { inactivo: 0 }],
     },
   });
 
   if (!response) {
-    return "No se pudo borrar";
+    return "No se pudo borrar el carrito indicado";
   } else {
     await response.update({
       inactivo: 1,
@@ -38,30 +37,30 @@ const borrarCarrito = async (usuario_id) => {
   }
 };
 
-const modificarCarrito = async (id) => {
-  await Carritos.update({
-    where: {
-      id: id,
-    },
-  });
-};
-
 const crearCarrito = async (usuario_id) => {
-  const usuario = Usuarios.findByPk(usuario_id);
+  const carritoUsuario = await Carritos.findByPk(usuario_id, {
+    where: { inactivo: 0 },
+    include: [
+      {
+        model: Productos,
+        through: { attributes: [] },
+      },
+    ],
+  });
 
-  if (usuario) {
-    const response = await Carritos.create({ inactivo: 0 });
-    usuario.addCarritos(response);
-    return response;
+  if (!carritoUsuario) {
+    const crearCarrito = await Carritos.create({
+      usuario_id: usuario_id,
+      inactivo: 0,
+    });
+    return crearCarrito;
+  } else {
+    return carritoUsuario;
   }
-
-  return "El usuario no está registrado, y por lo tanto, el carrito no fue creado";
 };
 
 module.exports = {
-  todosLosCarritos,
   traerCarrito,
   borrarCarrito,
-  modificarCarrito,
   crearCarrito,
 };
