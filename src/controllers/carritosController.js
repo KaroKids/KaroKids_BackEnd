@@ -1,4 +1,3 @@
-// const { Carritos, Productos } = require("../db");
 const { Carritos } = require("../db");
 const { Op } = require("sequelize");
 const { agregarProducto, eliminarProducto } = require('../utils/metodosProductos') //Traemos de "utils" los métodos de adición y supresión de productos del carrito.
@@ -45,7 +44,7 @@ const crearCarrito = async (usuario_id, producto_id, compra_talla, compra_color,
 
 };
 
-const actualizarCarrito = async (carrito_id, producto_id) => {
+const actualizarCarrito = async (carrito_id, producto_id) => { //Permite actualizar el carrito luego de la eliminación de un producto.
   try {
     const carritoUsuario = await eliminarProducto(carrito_id, producto_id)
 

@@ -32,7 +32,7 @@ const eliminarProducto = async (carrito_id, producto_id) => {
         });
         
         if (carrito) {
-            // const carritoUsuario = await Carritos.sequelize //Método de Seqeulize para borrar el objeto que contiene a "producto_id" ubicado dentro del array "productos_compra".
+            // const carritoUsuario = await Carritos.sequelize //Implementar método de Seqeulize para borrar el objeto que contiene a "producto_id" ubicado dentro del array "productos_compra".
             return carritoUsuario
             }
     } catch (error) {

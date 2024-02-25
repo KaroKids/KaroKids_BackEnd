@@ -29,7 +29,7 @@ const postCarrito = async (req, res) => {
   }
 };
 
-const updateCarrito = async (req, res) => {
+const updateCarrito = async (req, res) => { //Permite actualizar el carrito luego de la eliminación de un producto.
   const { carrito_id, producto_id } = req.body;
 
   try {
