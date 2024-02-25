@@ -1,6 +1,7 @@
 const {
   traerCarrito,
   crearCarrito,
+  actualizarCarrito,
   borrarCarrito,
 } = require("../controllers/carritosController");
 
@@ -28,6 +29,17 @@ const postCarrito = async (req, res) => {
   }
 };
 
+const updateCarrito = async (req, res) => {
+  const { carrito_id, producto_id } = req.body;
+
+  try {
+    const response = await actualizarCarrito(carrito_id, producto_id);
+    return res.json(response);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
 const deleteCarrito = async (req, res) => {
   const { carrito_id } = req.body;
 
@@ -43,5 +55,6 @@ const deleteCarrito = async (req, res) => {
 module.exports = {
   getCarrito,
   postCarrito,
+  updateCarrito,
   deleteCarrito,
 };

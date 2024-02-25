@@ -1,8 +1,7 @@
+// const { Carritos, Productos } = require("../db");
 const { Carritos } = require("../db");
 const { Op } = require("sequelize");
-
-//Traemos de "utils" los métodos de adición y supresión de productos del carrito.
-const { agregarProducto, eliminarProducto } = require('../utils/metodosProductos')
+const { agregarProducto, eliminarProducto } = require('../utils/metodosProductos') //Traemos de "utils" los métodos de adición y supresión de productos del carrito.
 
 const traerCarrito = async (usuario_id) => {
   try {
@@ -46,6 +45,16 @@ const crearCarrito = async (usuario_id, producto_id, compra_talla, compra_color,
 
 };
 
+const actualizarCarrito = async (carrito_id, producto_id) => {
+  try {
+    const carritoUsuario = await eliminarProducto(carrito_id, producto_id)
+
+    return carritoUsuario
+  } catch (error) {
+    throw new Error ('No se pudo actualizar el carrito')
+  }
+}
+
 const borrarCarrito = async (carrito_id) => {
   try {
     const response = await Carritos.findOne({
@@ -71,6 +80,7 @@ const borrarCarrito = async (carrito_id) => {
 
 module.exports = {
   traerCarrito,
-  borrarCarrito,
   crearCarrito,
+  actualizarCarrito,
+  borrarCarrito,
 };
