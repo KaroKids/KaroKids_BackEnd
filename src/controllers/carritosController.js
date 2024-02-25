@@ -18,7 +18,6 @@ const traerCarrito = async (usuario_id) => {
   }
 };
 
-
 const crearCarrito = async (usuario_id, producto_id, compra_talla, compra_color, compra_cantidad) => {
   try {
      // Busca un carrito en el modelo Carritos, asociado al usuario actual
@@ -41,7 +40,6 @@ const crearCarrito = async (usuario_id, producto_id, compra_talla, compra_color,
   } catch (error) {
     throw new Error ('Error al buscar/crear el carrito: ', error)
   }
-
 };
 
 const actualizarCarrito = async (carrito_id, producto_id) => { //Permite actualizar el carrito luego de la eliminación de un producto.
@@ -52,7 +50,7 @@ const actualizarCarrito = async (carrito_id, producto_id) => { //Permite actuali
   } catch (error) {
     throw new Error ('No se pudo actualizar el carrito')
   }
-}
+};
 
 const borrarCarrito = async (carrito_id) => {
   try {
@@ -74,8 +72,7 @@ const borrarCarrito = async (carrito_id) => {
   } catch (error) {
     throw new Error ('Error del controller "borrarCarrito": ', error)
   }
-
-  }
+};
 
 module.exports = {
   traerCarrito,
