@@ -8,6 +8,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: UUIDV4,
     },
+    //usuario_id: FK,
+    productos_compra: {
+      type: DataTypes.ARRAY(DataTypes.JSON)
+    },
     metodo_pago: {
       type: DataTypes.ENUM(
         "efectivo",

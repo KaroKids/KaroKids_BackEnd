@@ -1,66 +1,82 @@
-const { Carritos, Productos } = require("../db");
+const { Carritos } = require("../db");
 const { Op } = require("sequelize");
+const { agregarProducto, eliminarProducto } = require('../utils/metodosProductos') //Traemos de "utils" los métodos de adición y supresión de productos del carrito.
 
 const traerCarrito = async (usuario_id) => {
-  const carritoUsuario = await Carritos.findByPk(usuario_id, {
-    where: { inactivo: 0 },
-    include: [
-      {
-        model: Productos,
-        through: { attributes: [] },
-      },
-    ],
-  });
+  try {
+    const carritoUsuario = await Carritos.findByPk(usuario_id, {
+      where: { inactivo: 0 },
+    });
+    
+    if (!carritoUsuario) {
+      throw new Error('Su carrito está vacío. ¡Comience a comprar!');
+    }
 
-  if (!carritoUsuario) {
-    return "El usuario no posee un carrito aún";
-  } else {
     return carritoUsuario;
+  } catch (error) {
+   throw new Error ("Aún no ha creado un carrito de compra", error) 
+  }
+};
+
+const crearCarrito = async (usuario_id, producto_id, compra_talla, compra_color, compra_cantidad) => {
+  try {
+     // Busca un carrito en el modelo Carritos, asociado al usuario actual
+    let carritoUsuario = await Carritos.findByPk(usuario_id, {
+      where: { inactivo: 0 },
+    });
+      //Si no lo encuentra, lo crea y retorna la variable "nuevoCarrito" que contiene un objeto con un valor nuevo de "carrito_id" y todo su contenido asociado. 
+    if (!carritoUsuario) {
+      const nuevoCarrito = await Carritos.create({
+        usuario_id: usuario_id,
+        inactivo: 0,
+      });
+      carritoUsuario = nuevoCarrito; //Objeto con los campos: "carrito_id", "usuario_id", "productos_compra" e "inactivo".
+    }
+
+    //Una vez que se aseguró un "usuario_id" y un "carrito_id" debería almacenar en la tabla Carritos toda la información de la compra que le llegó en data.
+    carritoUsuario = agregarProducto(carritoUsuario, producto_id, compra_talla, compra_color, compra_cantidad)
+
+    return carritoUsuario;
+  } catch (error) {
+    throw new Error ('Error al buscar/crear el carrito: ', error)
+  }
+};
+
+const actualizarCarrito = async (carrito_id, producto_id) => { //Permite actualizar el carrito luego de la eliminación de un producto.
+  try {
+    const carritoUsuario = await eliminarProducto(carrito_id, producto_id)
+
+    return carritoUsuario
+  } catch (error) {
+    throw new Error ('No se pudo actualizar el carrito')
   }
 };
 
 const borrarCarrito = async (carrito_id) => {
-  const response = await Carritos.findOne({
-    where: {
-      [Op.and]: [{ carrito_id: carrito_id }, { inactivo: 0 }],
-    },
-  });
+  try {
+    const response = await Carritos.findOne({
+      where: {
+        [Op.and]: [{ carrito_id: carrito_id }, { inactivo: 0 }],
+      },
+    });
+    
+    if (!response) {
+      throw new Error ("No se encontró el carrito indicado. ", error);
+    }
 
-  if (!response) {
-    return "No se pudo borrar el carrito indicado";
-  } else {
     await response.update({
       inactivo: 1,
-    });
-
-    return "El carrito fue eliminado exitosamente";
-  }
-};
-
-const crearCarrito = async (usuario_id) => {
-  const carritoUsuario = await Carritos.findByPk(usuario_id, {
-    where: { inactivo: 0 },
-    include: [
-      {
-        model: Productos,
-        through: { attributes: [] },
-      },
-    ],
-  });
-
-  if (!carritoUsuario) {
-    const crearCarrito = await Carritos.create({
-      usuario_id: usuario_id,
-      inactivo: 0,
-    });
-    return crearCarrito;
-  } else {
-    return carritoUsuario;
+    })
+    
+    return ("El carrito fue eliminado exitosamente");
+  } catch (error) {
+    throw new Error ('Error del controller "borrarCarrito": ', error)
   }
 };
 
 module.exports = {
   traerCarrito,
-  borrarCarrito,
   crearCarrito,
+  actualizarCarrito,
+  borrarCarrito,
 };

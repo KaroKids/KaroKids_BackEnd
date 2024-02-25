@@ -1,7 +1,8 @@
 const {
   traerCarrito,
-  borrarCarrito,
   crearCarrito,
+  actualizarCarrito,
+  borrarCarrito,
 } = require("../controllers/carritosController");
 
 const getCarrito = async (req, res) => {
@@ -15,25 +16,37 @@ const getCarrito = async (req, res) => {
   }
 };
 
-const deleteCarrito = async (req, res) => {
-  const { carrito_id } = req.body;
+const postCarrito = async (req, res) => {
+  //Hacemos un destructuring de la información que llega en el objeto data desde el Front. Data contiene: {usuario_id, producto_id, compra_talla, compra_color, compra_cantidad}
+  const { usuario_id, producto_id, compra_talla, compra_color, compra_cantidad } = req.body;
 
   try {
-    const response = await borrarCarrito(usuario_id);
+    const response = await crearCarrito(usuario_id, producto_id, compra_talla, compra_color, compra_cantidad); //La constante "response" va a contener el objeto "carritoUsuario".
 
-    return res.send(`Se elimino el carrito (${id})`);
+    return res.status(201).send("Se creó el carrito y se añadió el producto exitosamente!");
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 };
 
-const postCarrito = async (req, res) => {
-  const { usuario_id } = req.body;
+const updateCarrito = async (req, res) => { //Permite actualizar el carrito luego de la eliminación de un producto.
+  const { carrito_id, producto_id } = req.body;
 
   try {
-    const response = await crearCarrito(usuario_id);
+    const response = await actualizarCarrito(carrito_id, producto_id);
+    return res.json(response);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
 
-    return res.status(201).send("Se creó el carrito");
+const deleteCarrito = async (req, res) => {
+  const { carrito_id } = req.body;
+
+  try {
+    const response = await borrarCarrito(carrito_id);
+
+    return res.send(`Se elimino el carrito (${id})`);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -42,5 +55,6 @@ const postCarrito = async (req, res) => {
 module.exports = {
   getCarrito,
   postCarrito,
+  updateCarrito,
   deleteCarrito,
 };

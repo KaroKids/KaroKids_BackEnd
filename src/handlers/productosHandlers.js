@@ -4,8 +4,6 @@ const {
 	traerProducto,
 } = require("../controllers/productosControllers");
 
-const { Colores, Tallas, Stocks } = require("../db");
-
 const getProductos = async (req, res) => {
 	const { paginaActual } = req.query;
 	if(!paginaActual){
@@ -36,7 +34,6 @@ const postProducto = async (req, res) => {
 		descripcion,
 		imagen_principal,
 		imagenes_secundarias,
-		video,
 		edad,
 		genero,
 		precio,
@@ -50,7 +47,6 @@ const postProducto = async (req, res) => {
 			descripcion,
 			imagen_principal,
 			imagenes_secundarias,
-			video,
 			edad,
 			genero,
 			precio,
