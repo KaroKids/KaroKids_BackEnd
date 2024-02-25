@@ -5,9 +5,9 @@ const { Carritos } = require("../db");
 const agregarProducto = async (carritoUsuario, producto_id, compra_talla, compra_color, compra_cantidad) => {
   //Se crea un objeto nuevaCompra con los valores de: producto_id, compra_talla, compra_color y compra_cantidad.
   const nuevaCompra = {
-    producto_id, 
-    compra_talla, 
-    compra_color, 
+    producto_id,
+    compra_talla,
+    compra_color,
     compra_cantidad
   }
   
