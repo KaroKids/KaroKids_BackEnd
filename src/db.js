@@ -61,7 +61,8 @@ Productos.belongsToMany(Usuarios, {
   through: "Productos_Favoritos",
 });
 //////////////////////////////////////////////////
-Usuarios.hasMany(Carritos, { foreignKey: "usuario_id" });
+Usuarios.hasOne(Carritos, { foreignKey: "usuario_id" });
+Carritos.belongsTo(Usuarios, { foreignKey: "usuario_id" });
 Carritos.hasOne(Ordenes, { foreignKey: "carrito_id" });
 ////////////////////////////////////////////////
 Productos.hasOne(Productos_Descuentos, { foreignKey: "producto_id" });
