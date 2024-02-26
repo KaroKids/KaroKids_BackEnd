@@ -2,22 +2,41 @@
 
 const { Carritos } = require("../db");
 
-const agregarProducto = async (carritoUsuario, producto_id, compra_talla, compra_color, compra_cantidad) => {
+const agregarProducto = async (
+  carritoUsuario,
+  producto_id,
+  compra_talla,
+  compra_color,
+  compra_cantidad
+) => {
   //Se crea un objeto nuevaCompra con los valores de: producto_id, compra_talla, compra_color y compra_cantidad.
+
   const nuevaCompra = {
     producto_id,
     compra_talla,
     compra_color,
-    compra_cantidad
-  }
-  
+    compra_cantidad,
+  };
+
   //Se actualiza el campo "productos_compra" del carrito asociado.
   try {
-    await carritoUsuario.update({
-      productos_compra: [...carritoUsuario.productos_compra, nuevaCompra]
-    });
+    // Se obtiene el valor actual de "productos_compra" del carrito
+    let productosCompraActual = carritoUsuario.productos_compra || [];
+    // Se agrega el nuevo objeto al arreglo
+    productosCompraActual.push(nuevaCompra);
 
-    return carritoUsuario;
+    // Se realiza la actualización utilizando el método update de Sequelize
+    await Carritos.update(
+      { productos_compra: productosCompraActual },
+      { where: { carrito_id: carritoUsuario.carrito_id } }
+    );
+
+    // Se vuelve a consultar el carrito actualizado de la base de datos
+    const carritoActualizado = await Carritos.findByPk(
+      carritoUsuario.carrito_id
+    );
+
+    return carritoActualizado;
   } catch (error) {
     throw new Error("Error al agregar el producto al carrito: ", error);
   }
@@ -32,17 +51,19 @@ const eliminarProducto = async (carrito_id, producto_id) => {
 
     if (carrito) {
       // Filtrar el array productos_compra para eliminar el producto con el producto_id dado
-      const nuevosProductos = carrito.productos_compra.filter(producto => producto.producto_id !== producto_id);
+      const nuevosProductos = carrito.productos_compra.filter(
+        (producto) => producto.producto_id !== producto_id
+      );
 
       // Actualizar el carrito con los nuevos productos
       await carrito.update({ productos_compra: nuevosProductos });
 
       return carrito;
     } else {
-      throw new Error('No se encontró el carrito especificado');
+      throw new Error("No se encontró el carrito especificado");
     }
   } catch (error) {
-    throw new Error('No se pudo eliminar el producto del carrito', error);
+    throw new Error("No se pudo eliminar el producto del carrito", error);
   }
 };
 
