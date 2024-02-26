@@ -1,4 +1,4 @@
-const { Usuarios } = require("../db");
+const { Usuarios, Carritos } = require("../db");
 const { Op } = require("sequelize");
 
 const todosLosUsuarios = async () => {
@@ -44,13 +44,20 @@ const crearUsuario = async (
 	email_usuario,
 	roles
 ) => {
-	return await Usuarios.create({
+	const response = await Usuarios.create({
 		uid_firebase,
 		nombre_usuario,
 		apellido_usuario,
 		email_usuario,
 		roles,
 	});
+	let nuevoCarrito = await Carritos.create({
+		inactivo: false,
+	});
+
+	await nuevoCarrito.setUsuario(response);
+	console.log(nuevoCarrito);
+	return response;
 };
 
 const modificarUsuario = async (
