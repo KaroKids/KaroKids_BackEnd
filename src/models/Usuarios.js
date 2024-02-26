@@ -21,8 +21,8 @@ module.exports = (sequelize) => {
 			type: DataTypes.STRING(150),
 			allowNull: false,
 		},
-		telefono_usuario: {
-			type: DataTypes.STRING
+		roles: {
+			type: DataTypes.ENUM("client","admin")
 		},
 		inactivo: {
 			type: DataTypes.BOOLEAN,
