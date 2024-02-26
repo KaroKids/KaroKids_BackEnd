@@ -28,8 +28,8 @@ const traerUsuarioNombre = async (nombre_usuario, apellido_usuario) => {
 	}
 };
 
-const traerUsuario = async (uid) => {
-	const response = await Usuarios.findOne({where: {uid_firebase : uid}});
+const traerUsuario = async (email_usuario) => {
+	const response = await Usuarios.findOne({where: {email_usuario : email_usuario}});
 	if (response === null) {
 		return "El usuario no existe";
 	} else {
