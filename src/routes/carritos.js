@@ -1,15 +1,17 @@
 const { Router } = require("express");
 const {
   getCarrito,
-  postCarrito,
-  updateCarrito,
+  addProducto,
+  deleteProducto,
+  updateProducto,
   deleteCarrito,
 } = require("../handlers/carritosHandlers");
 const carritos = Router();
 
 carritos.get("/", getCarrito);
-carritos.post("/", postCarrito);
-carritos.put('/', updateCarrito) //¿Sería un método put o un método post la acción de eliminar un producto del carrito?
+carritos.put('/agregar', addProducto)
+carritos.put('/eliminar', deleteProducto)
+carritos.put('/modificar', updateProducto)
 carritos.delete("/", deleteCarrito);
 
 module.exports = carritos;
