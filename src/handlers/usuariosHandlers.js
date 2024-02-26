@@ -27,9 +27,9 @@ const getUsuarios = async (req, res) => {
 };
 
 const getUsuario = async (req, res) => {
-	const { usuario_id } = req.params;
+	const { email_usuario } = req.query;
 	try {
-		const response = await traerUsuario(usuario_id);
+		const response = await traerUsuario(email_usuario);
 		res.status(200).json(response);
 	} catch (error) {
 		res.status(400).json({ error: error.message });
