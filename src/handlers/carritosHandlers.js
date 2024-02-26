@@ -2,7 +2,7 @@ const {
   traerCarrito,
   crearCarrito,
   actualizarCarrito,
-  borrarCarrito,
+  borrarProductoCarrito,
 } = require("../controllers/carritosController");
 
 const getCarrito = async (req, res) => {
@@ -18,18 +18,31 @@ const getCarrito = async (req, res) => {
 
 const postCarrito = async (req, res) => {
   //Hacemos un destructuring de la información que llega en el objeto data desde el Front. Data contiene: {usuario_id, producto_id, compra_talla, compra_color, compra_cantidad}
-  const { usuario_id, producto_id, compra_talla, compra_color, compra_cantidad } = req.body;
+  const {
+    usuario_id,
+    producto_id,
+    compra_talla,
+    compra_color,
+    compra_cantidad,
+  } = req.body;
 
   try {
-    const response = await crearCarrito(usuario_id, producto_id, compra_talla, compra_color, compra_cantidad); //La constante "response" va a contener el objeto "carritoUsuario".
+    const response = await crearCarrito(
+      usuario_id,
+      producto_id,
+      compra_talla,
+      compra_color,
+      compra_cantidad
+    ); //La constante "response" va a contener el objeto "carritoUsuario".
 
-    return res.status(201).send("Se creó el carrito y se añadió el producto exitosamente!");
+    return res.status(201).send(response);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 };
 
-const updateCarrito = async (req, res) => { //Permite actualizar el carrito luego de la eliminación de un producto.
+const updateCarrito = async (req, res) => {
+  //Permite actualizar el carrito luego de la eliminación de un producto.
   const { carrito_id, producto_id } = req.body;
 
   try {
@@ -41,12 +54,24 @@ const updateCarrito = async (req, res) => { //Permite actualizar el carrito lueg
 };
 
 const deleteCarrito = async (req, res) => {
-  const { carrito_id } = req.body;
+  const {
+    usuario_id,
+    producto_id,
+    compra_talla,
+    compra_color,
+    compra_cantidad,
+  } = req.body;
 
   try {
-    const response = await borrarCarrito(carrito_id);
+    const response = await borrarProductoCarrito(
+      usuario_id,
+      producto_id,
+      compra_talla,
+      compra_color,
+      compra_cantidad
+    );
 
-    return res.send(`Se elimino el carrito (${id})`);
+    return res.status(200).json(response);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }

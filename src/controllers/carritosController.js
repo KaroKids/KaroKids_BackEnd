@@ -1,9 +1,6 @@
 const { Carritos, Usuarios } = require("../db");
 const { Op } = require("sequelize");
-const {
-	agregarProducto,
-	eliminarProducto,
-} = require("../utils/metodosProductos"); //Traemos de "utils" los métodos de adición y supresión de productos del carrito.
+const { agregarProducto } = require("../utils/metodosProductos"); //Traemos de "utils" los métodos de adición y supresión de productos del carrito.
 
 const traerCarrito = async (usuario_id) => {
 	try {
@@ -54,42 +51,55 @@ const crearCarrito = async (
 	}
 };
 
-const actualizarCarrito = async (carrito_id, producto_id) => {
-	//Permite actualizar el carrito luego de la eliminación de un producto.
-	try {
-		const carritoUsuario = await eliminarProducto(carrito_id, producto_id);
+const actualizarCarrito = async (usuario_id, producto_id) => {
+  //Permite actualizar el carrito luego de la eliminación de un producto.
+  try {
+    const carritoUsuario = await eliminarProducto(usuario_id, producto_id);
 
-		return carritoUsuario;
-	} catch (error) {
-		throw new Error("No se pudo actualizar el carrito");
-	}
+    return carritoUsuario;
+  } catch (error) {
+    throw new Error("No se pudo actualizar el carrito");
+  }
 };
 
-const borrarCarrito = async (carrito_id) => {
-	try {
-		const response = await Carritos.findOne({
-			where: {
-				[Op.and]: [{ carrito_id: carrito_id }, { inactivo: 0 }],
-			},
-		});
+const borrarProductoCarrito = async (
+  usuario_id,
+  producto_id,
+  compra_talla,
+  compra_color
+) => {
+  try {
+    // Obtener el carrito del usuario
+    let carritoUsuario = await Carritos.findOne({
+      where: [{ usuario_id: usuario_id }, { inactivo: false }],
+    });
 
-		if (!response) {
-			throw new Error("No se encontró el carrito indicado. ", error);
-		}
+    console.log("Antiguos productos: ", carritoUsuario);
 
-		await response.update({
-			inactivo: 1,
-		});
+    if (carritoUsuario) {
+      // Filtrar el array productos_compra para eliminar el producto con el producto_id dado
+      const nuevosProductos = carritoUsuario.productos_compra.filter(
+        (producto) =>
+          producto.producto_id !== producto_id ||
+          producto.compra_talla !== compra_talla ||
+          producto.compra_color !== compra_color
+      );
 
-		return "El carrito fue eliminado exitosamente";
-	} catch (error) {
-		throw new Error('Error del controller "borrarCarrito": ', error);
-	}
+      // Actualizar el carrito con los nuevos productos
+      await carritoUsuario.update({ productos_compra: nuevosProductos });
+
+      return carritoUsuario;
+    } else {
+      throw new Error("No se encontró el carrito especificado");
+    }
+  } catch (error) {
+    throw new Error("No se pudo eliminar el producto del carrito", error);
+  }
 };
 
 module.exports = {
-	traerCarrito,
-	crearCarrito,
-	actualizarCarrito,
-	borrarCarrito,
+  traerCarrito,
+  crearCarrito,
+  actualizarCarrito,
+  borrarProductoCarrito,
 };
