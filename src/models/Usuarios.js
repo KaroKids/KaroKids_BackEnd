@@ -9,20 +9,21 @@ module.exports = (sequelize) => {
 			defaultValue: UUIDV4,
 		},
 		uid_firebase: {
-			type: DataTypes.STRING
+			type: DataTypes.STRING,
 		},
 		nombre_usuario: {
-			type: DataTypes.STRING
+			type: DataTypes.STRING,
 		},
 		apellido_usuario: {
-			type: DataTypes.STRING
+			type: DataTypes.STRING,
 		},
 		email_usuario: {
 			type: DataTypes.STRING(150),
 			allowNull: false,
 		},
 		roles: {
-			type: DataTypes.ENUM("client","admin")
+			type: DataTypes.ENUM("client", "admin"),
+			defaultValue: "client",
 		},
 		inactivo: {
 			type: DataTypes.BOOLEAN,
