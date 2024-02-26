@@ -28,8 +28,8 @@ const traerUsuarioNombre = async (nombre_usuario, apellido_usuario) => {
 	}
 };
 
-const traerUsuario = async (usuario_id) => {
-	const response = await Usuarios.findByPk(usuario_id);
+const traerUsuario = async (uid) => {
+	const response = await Usuarios.findOne({where: {uid_firebase : uid}});
 	if (response === null) {
 		return "El usuario no existe";
 	} else {
