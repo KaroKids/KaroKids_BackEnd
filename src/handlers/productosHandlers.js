@@ -2,14 +2,15 @@ const {
 	crearProducto,
 	todosLosProductos,
 	traerProducto,
+	borrarProducto,
 } = require("../controllers/productosControllers");
 
 const getProductos = async (req, res) => {
 	const { paginaActual } = req.query;
-	if(!paginaActual){
+	if (!paginaActual) {
 		paginaActual = 1;
 	}
-	console.log(paginaActual)
+	console.log(paginaActual);
 	try {
 		const response = await todosLosProductos(paginaActual);
 		res.status(200).json(response);
@@ -39,7 +40,7 @@ const postProducto = async (req, res) => {
 		precio,
 		destacado,
 		inactivo,
-		stock
+		stock,
 	} = req.body;
 	try {
 		const response = await crearProducto(
@@ -54,7 +55,7 @@ const postProducto = async (req, res) => {
 			inactivo,
 			stock
 		);
-		
+
 		res.status(200).json(response);
 	} catch (error) {
 		res.status(400).json({ error: error.message });
@@ -71,9 +72,14 @@ const putProducto = async (req, res) => {
 };
 
 const deleteProducto = async (req, res) => {
-	const { id } = req.params;
+	const { producto_id } = req.body;
 	try {
-		res.status(200).send(`se elimino el producto ${id}`);
+		const response = await borrarProducto(producto_id);
+		if (response === true) {
+			res.status(200).send(`se elimino el producto ${producto_id}`);
+		} else {
+			res.status(200).send(`se activo el producto ${producto_id}`);
+		}
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}
