@@ -21,11 +21,12 @@ const createOrder = async (req, res) => {
       pending: "https://karokids.onrender.com/payment/pending",
     },
     notification_url: "https://karokids.onrender.com/payment/webhook",
+    auto_return: "approved",
   };
   const preference = new Preference(client);
   const result = await preference.create({ body });
 
-  // console.log(result);
+  console.log(result);
 
   res.send(result);
 };
@@ -36,12 +37,12 @@ const receiveWebhook = async (req, res) => {
   try {
     if (query.type === "payment") {
       const data = await payment.get({ id: query["data.id"] });
-      // console.log(data);
+      console.log(data);
 
       res.status(204);
     }
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     return res.status(500).json({ error: error.message });
   }
 };

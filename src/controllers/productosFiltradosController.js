@@ -172,7 +172,7 @@ async function productosFiltrados(req, res) {
     array = filtrarPrecio(minPrecio, maxPrecio, array);
     array = await ordenar(orden, array);
 
-    const paginacion = await resultadosPaginados(paginaActual, 12, array);
+    const paginacion = await resultadosPaginados(paginaActual, 8, array);
 
     res.status(200).json(paginacion);
   } catch (error) {

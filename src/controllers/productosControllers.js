@@ -11,7 +11,7 @@ cloudinary.config({
 });
 
 const todosLosProductos = async (paginaActual) => {
-  const itemsPorPagina = 12;
+  const itemsPorPagina = 8;
 
   return resultadosPaginados(paginaActual, itemsPorPagina, Productos);
 };
