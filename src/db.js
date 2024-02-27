@@ -46,34 +46,90 @@ const {
 
 // RELACIONES DE MODELOS (TABLAS)
 // Usuarios 1:1 Entidades
-Usuarios.hasOne(Entidades, { foreignKey: "usuario_id" });
-Entidades.belongsTo(Usuarios, { foreignKey: "usuario_id" });
+Usuarios.hasOne(Entidades, {
+  foreignKey: {
+    allowNull: false,
+    name: "usuario_id",
+  },
+});
+Entidades.belongsTo(Usuarios, {
+  foreignKey: {
+    allowNull: false,
+    name: "usuario_id",
+  },
+});
 
 // Entidades 1:N Direcciones
-Entidades.hasMany(Direcciones, { foreignKey: "entidad_id" });
-Direcciones.belongsTo(Entidades, { foreignKey: "entidad_id" });
+Entidades.hasMany(Direcciones, {
+  foreignKey: {
+    allowNull: false,
+    name: "entidad_id",
+  },
+});
+Direcciones.belongsTo(Entidades, {
+  foreignKey: {
+    allowNull: false,
+    name: "entidad_id",
+  },
+});
 
 // Usuarios N:N Productos
 Usuarios.belongsToMany(Productos, {
-  foreignKey: "usuario_id",
   through: "Productos_Favoritos",
+  foreignKey: {
+    allowNull: false,
+    name: "usuario_id",
+  },
 });
 Productos.belongsToMany(Usuarios, {
-  foreignKey: "producto_id",
   through: "Productos_Favoritos",
+  foreignKey: {
+    allowNull: false,
+    name: "producto_id",
+  },
 });
 
 // Usuarios 1:1 Carritos
-Usuarios.hasOne(Carritos, { foreignKey: "usuario_id" });
-Carritos.belongsTo(Usuarios, { foreignKey: "usuario_id" });
+Usuarios.hasOne(Carritos, {
+  foreignKey: {
+    allowNull: false,
+    name: "usuario_id",
+  },
+});
+Carritos.belongsTo(Usuarios, {
+  foreignKey: {
+    allowNull: false,
+    name: "usuario_id",
+  },
+});
 
 // Usuarios 1:N Ordenes
-Usuarios.hasMany(Ordenes, { foreignKey: "usuario_id" });
-Ordenes.belongsTo(Usuarios, { foreignKey: "usuario_id" });
+Usuarios.hasMany(Ordenes, {
+  foreignKey: {
+    allowNull: false,
+    name: "usuario_id",
+  },
+});
+Ordenes.belongsTo(Usuarios, {
+  foreignKey: {
+    allowNull: false,
+    name: "usuario_id",
+  },
+});
 
 // Productos 1:1 Productos_Descuentos
-Productos.hasOne(Productos_Descuentos, { foreignKey: "producto_id" });
-Productos_Descuentos.belongsTo(Productos, { foreignKey: "producto_id" });
+Productos.hasOne(Productos_Descuentos, {
+  foreignKey: {
+    allowNull: false,
+    name: "producto_id",
+  },
+});
+Productos_Descuentos.belongsTo(Productos, {
+  foreignKey: {
+    allowNull: false,
+    name: "producto_id",
+  },
+});
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

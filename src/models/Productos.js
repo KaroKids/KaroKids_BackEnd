@@ -49,12 +49,12 @@ module.exports = (sequelize) => {
     destacado: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: "0",
+      defaultValue: false,
     },
     inactivo: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: "0",
+      defaultValue: false,
     },
   });
 };
