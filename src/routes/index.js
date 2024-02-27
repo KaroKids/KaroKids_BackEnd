@@ -13,6 +13,7 @@ const colores = require("./colores");
 const stock = require("./stock");
 const tallas = require("./tallas");
 const payment = require("./payment");
+const vaciarTabla = require("./vaciarTabla.js");
 
 const router = Router();
 
@@ -30,5 +31,6 @@ router.use("/colores", colores);
 router.use("/stock", stock);
 router.use("/tallas", tallas);
 router.use("/payment", payment);
+router.use("/vaciar", vaciarTabla);
 
 module.exports = router;
