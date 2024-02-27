@@ -5,6 +5,10 @@ const client = new MercadoPagoConfig({
     "TEST-3395648537928946-022217-68a657898d160b4ebe5d2032f1329091-1694080585",
 });
 
+const success = async (req, res) => {
+  res.redirect("https://karokids-frontend.vercel.app/productos");
+};
+
 const createOrder = async (req, res) => {
   const body = {
     items: [
@@ -47,4 +51,4 @@ const receiveWebhook = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, receiveWebhook };
+module.exports = { createOrder, receiveWebhook, success };
