@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
     inactivo: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: "0",
+      defaultValue: false,
     },
   });
 };
