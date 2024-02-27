@@ -7,7 +7,7 @@ const {
 } = require("../controllers/carritosController");
 
 const getCarrito = async (req, res) => {
-  const { usuario_id } = req.body;
+  const { usuario_id } = req.params;
   try {
     const response = await traerCarrito(usuario_id);
     return res.json(response);
@@ -83,7 +83,7 @@ const updateProducto = async (req, res) => {
 
 //Permite resetear a cero el carrito luego de enviar todo su contenido a la tabla Ordenes.
 const deleteCarrito = async (req, res) => {
-  const { usuario_id } = req.body;
+  const { usuario_id } = req.params;
 
   try {
     const response = await borrarCarrito(usuario_id);
