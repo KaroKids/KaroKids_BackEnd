@@ -20,15 +20,11 @@ const createOrder = async (req, res) => {
       },
     ],
     back_urls: {
-      success:
-        "https://c737-2800-810-4ff-12af-a4f9-58b5-e4b5-509a.ngrok-free.app/payment/success",
-      failure:
-        "https://c737-2800-810-4ff-12af-a4f9-58b5-e4b5-509a.ngrok-free.app/payment/failure",
-      pending:
-        "https://c737-2800-810-4ff-12af-a4f9-58b5-e4b5-509a.ngrok-free.app/payment/pending",
+      success: "https://karokids.onrender.com/payment/success",
+      failure: "https://karokids.onrender.com/payment/failure",
+      pending: "https://karokids.onrender.com/payment/pending",
     },
-    notification_url:
-      "https://c737-2800-810-4ff-12af-a4f9-58b5-e4b5-509a.ngrok-free.app/payment/webhook",
+    notification_url: "https://karokids.onrender.com/payment/webhook",
     auto_return: "approved",
   };
   const preference = new Preference(client);
