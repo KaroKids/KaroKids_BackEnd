@@ -9,12 +9,8 @@ const {
 } = require("../controllers/usuariosControllers");
 
 const getUsuarios = async (req, res) => {
-  const { nombre_usuario, apellido_usuario, email_usuario } = req.query;
+  const { nombre_usuario, apellido_usuario } = req.query;
   try {
-    if (email_usuario) {
-      const response = await traerUsuario(email_usuario);
-      return res.status(200).json(response);
-    }
     if (nombre_usuario || apellido_usuario) {
       const response = await traerUsuarioNombre(
         nombre_usuario,
@@ -30,15 +26,15 @@ const getUsuarios = async (req, res) => {
   }
 };
 
-// const getUsuario = async (req, res) => {
-//   const { email_usuario } = req.query;
-//   try {
-//     const response = await traerUsuario(email_usuario);
-//     res.status(200).json(response);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
+const getUsuario = async (req, res) => {
+  const { email_usuario } = req.query;
+  try {
+    const response = await traerUsuario(email_usuario);
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 const postUsuario = async (req, res) => {
   const {
