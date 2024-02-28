@@ -25,7 +25,8 @@ const addProducto = async (req, res) => {
     compra_talla,
     compra_color,
     compra_cantidad,
-    producto_precio } = req.body;
+    producto_precio,
+  producto_nombre } = req.body;
 
   try {
     const response = await agregarProducto(
@@ -34,7 +35,8 @@ const addProducto = async (req, res) => {
       compra_talla,
       compra_color,
       compra_cantidad,
-      producto_precio);
+      producto_precio,
+      producto_nombre);
     return res.json(response);
   } catch (error) {
     return res.status(400).json({ error: error.message });

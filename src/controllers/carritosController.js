@@ -22,7 +22,8 @@ const agregarProducto = async (
   compra_talla,
   compra_color,
   compra_cantidad,
-  producto_precio
+  producto_precio,
+  producto_nombre
 ) => {
   try {
     // Busca un carrito en el modelo Carritos, asociado al usuario actual
@@ -33,34 +34,23 @@ const agregarProducto = async (
     if (!carritoUsuario) {
       throw new Error("El usuario no posee carrito creado");
     }
-
+    let productosActualizados = []
+    if(carritoUsuario.productos_compra.length){
+        productosActualizados = carritoUsuario.productos_compra
+    }
     const nuevaCompra = {
-      producto_id,
-      compra_talla: compra_talla.toUpperCase(),
-      compra_color: compra_color.toUpperCase(),
-      compra_cantidad,
-      producto_precio,
+      producto_id : producto_id,
+      compra_talla : compra_talla.toUpperCase(),
+      compra_color : compra_color.toUpperCase(),
+      compra_cantidad : compra_cantidad,
+      producto_precio : producto_precio,
+      producto_nombre : producto_nombre
     };
 
-    // Se obtiene el valor actual de "productos_compra" del carrito y se agrega el nuevo objeto al arreglo
-    let productosCompraActual = carritoUsuario.productos_compra || [];
+   productosActualizados.push(nuevaCompra)
 
-    const productoExistente = productosCompraActual.find(
-      (producto) =>
-        producto.producto_id === producto_id &&
-        producto.compra_talla === compra_talla.toUpperCase() &&
-        producto.compra_color === compra_color.toUpperCase()
-    );
-
-    if (productoExistente) {
-      productoExistente.compra_cantidad += compra_cantidad;
-    } else {
-      productosCompraActual.push(nuevaCompra);
-    }
-
-    // Se realiza la actualización utilizando el método update de Sequelize
     await Carritos.update(
-      { productos_compra: productosCompraActual },
+      { productos_compra: productosActualizados },
       { where: { carrito_id: carritoUsuario.carrito_id } }
     );
 
@@ -125,7 +115,7 @@ const actualizarProducto = async (
         producto.compra_talla === compra_talla.toUpperCase() &&
         producto.compra_color === compra_color.toUpperCase()
       ) {
-        producto.cantidad = compra_cantidad;
+        producto.compra_cantidad = compra_cantidad;
       }
       return producto;
     });

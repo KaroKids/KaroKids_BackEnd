@@ -53,9 +53,7 @@ const crearUsuario = async (
     email_usuario,
     roles,
   });
-  let nuevoCarrito = await Carritos.create({
-    inactivo: false,
-  });
+  let nuevoCarrito = await Carritos.create({usuario_id : response.usuario_id, productos_compra : []});
 
   await nuevoCarrito.setUsuario(response);
   console.log(nuevoCarrito);
