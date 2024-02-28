@@ -84,13 +84,14 @@ const modificarUsuario = async (
 
 const borrarUsuario = async (usuario_id) => {
   const user = await Usuarios.findByPk(usuario_id);
+  console.log(user)
   await Usuarios.update(
     { inactivo: !user.inactivo },
     {
       where: { usuario_id: usuario_id },
     }
   );
-  return !user.inactivo;
+  return user;
 };
 
 const modificarRol = async (usuario_id, roles) => {

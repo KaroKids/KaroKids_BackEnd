@@ -76,9 +76,10 @@ const putUsuario = async (req, res) => {
 
 const deleteUsuario = async (req, res) => {
   const { usuario_id } = req.body;
+  console.log(usuario_id)
   try {
     const response = await borrarUsuario(usuario_id);
-    if (response === true) {
+    if (response.inactivo === true) {
       return res.status(200).send(`se elimino el usuario ${usuario_id}`);
     } else {
       return res.status(200).send(`se activo el usuario ${usuario_id}`);
