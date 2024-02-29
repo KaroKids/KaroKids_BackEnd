@@ -139,6 +139,7 @@ const actualizarProducto = async (
 
 const borrarCarrito = async (usuario_id) => {
   //Permite actualizar el carrito luego de la eliminación de un producto.
+ 
   try {
     let carritoUsuario = await Carritos.findOne({
       where: [{ usuario_id: usuario_id }],
