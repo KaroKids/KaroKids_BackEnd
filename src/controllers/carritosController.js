@@ -19,11 +19,12 @@ const traerCarrito = async (usuario_id) => {
 const agregarProducto = async (
   usuario_id,
   producto_id,
+  producto_nombre,
+  producto_imagen,
   compra_talla,
   compra_color,
   compra_cantidad,
-  producto_precio,
-  producto_nombre
+  producto_precio
 ) => {
   try {
     // Busca un carrito en el modelo Carritos, asociado al usuario actual
@@ -34,23 +35,36 @@ const agregarProducto = async (
     if (!carritoUsuario) {
       throw new Error("El usuario no posee carrito creado");
     }
-    let productosActualizados = []
-    if(carritoUsuario.productos_compra.length){
-        productosActualizados = carritoUsuario.productos_compra
-    }
+
     const nuevaCompra = {
-      producto_id : producto_id,
-      compra_talla : compra_talla.toUpperCase(),
-      compra_color : compra_color.toUpperCase(),
-      compra_cantidad : compra_cantidad,
-      producto_precio : producto_precio,
-      producto_nombre : producto_nombre
+      producto_id,
+      producto_nombre: producto_nombre.toUpperCase(),
+      producto_imagen,
+      compra_talla: compra_talla.toUpperCase(),
+      compra_color: compra_color.toUpperCase(),
+      compra_cantidad,
+      producto_precio,
     };
 
-   productosActualizados.push(nuevaCompra)
+    // Se obtiene el valor actual de "productos_compra" del carrito y se agrega el nuevo objeto al arreglo
+    let productosCompraActual = carritoUsuario.productos_compra || [];
 
+    const productoExistente = productosCompraActual.find(
+      (producto) =>
+        producto.producto_id === producto_id &&
+        producto.compra_talla === compra_talla.toUpperCase() &&
+        producto.compra_color === compra_color.toUpperCase()
+    );
+
+    if (productoExistente) {
+      productoExistente.compra_cantidad += compra_cantidad;
+    } else {
+      productosCompraActual.push(nuevaCompra);
+    }
+
+    // Se realiza la actualización utilizando el método update de Sequelize
     await Carritos.update(
-      { productos_compra: productosActualizados },
+      { productos_compra: productosCompraActual },
       { where: { carrito_id: carritoUsuario.carrito_id } }
     );
 
@@ -139,7 +153,7 @@ const actualizarProducto = async (
 
 const borrarCarrito = async (usuario_id) => {
   //Permite actualizar el carrito luego de la eliminación de un producto.
- 
+
   try {
     let carritoUsuario = await Carritos.findOne({
       where: [{ usuario_id: usuario_id }],
