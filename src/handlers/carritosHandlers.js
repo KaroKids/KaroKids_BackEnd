@@ -85,7 +85,8 @@ const updateProducto = async (req, res) => {
 
 //Permite resetear a cero el carrito luego de enviar todo su contenido a la tabla Ordenes.
 const deleteCarrito = async (req, res) => {
-  const { usuario_id } = req.params;
+  const { usuario_id } = req.body;
+  console.log("llego hasta aca con: " + usuario_id)
 
   try {
     const response = await borrarCarrito(usuario_id);
