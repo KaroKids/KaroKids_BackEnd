@@ -3,6 +3,7 @@ const {
   todosLosProductos,
   traerProducto,
   borrarProducto,
+  destacarProducto,
 } = require("../controllers/productosControllers");
 
 const getProductos = async (req, res) => {
@@ -63,9 +64,9 @@ const postProducto = async (req, res) => {
 };
 
 const putProducto = async (req, res) => {
-  const { id } = req.params;
+  const { producto_id } = req.body;
   try {
-    res.send(`se modifico el producto ${id}`);
+    res.send(`se modifico el producto ${producto_id}`);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -82,10 +83,23 @@ const deleteProducto = async (req, res) => {
   }
 };
 
+const standOutProducto = async (req, res) => {
+  const { producto_id } = req.body;
+
+  try {
+    const response = await destacarProducto(producto_id);
+
+    res.json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getProductos,
   getProducto,
   postProducto,
   putProducto,
   deleteProducto,
+  standOutProducto,
 };
