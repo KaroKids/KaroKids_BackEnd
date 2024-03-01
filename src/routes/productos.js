@@ -4,6 +4,7 @@ const {
   putProducto,
   deleteProducto,
   postProducto,
+  standOutProducto,
 } = require("../handlers/productosHandlers");
 const productosFiltrados = require("../controllers/productosFiltradosController");
 const productos = Router();
@@ -11,7 +12,8 @@ const productos = Router();
 productos.get("/", productosFiltrados);
 productos.get("/:id", getProducto);
 productos.post("/", postProducto);
-productos.put("/:id", putProducto);
+productos.put("/modificar", putProducto);
 productos.put("/", deleteProducto);
+productos.put("/destacado", standOutProducto);
 
 module.exports = productos;
