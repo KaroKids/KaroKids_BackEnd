@@ -14,6 +14,7 @@ const stock = require("./stock");
 const tallas = require("./tallas");
 const payment = require("./payment");
 const vaciarTabla = require("./vaciarTabla.js");
+const reviews = require("./reviews.js");
 
 const router = Router();
 
@@ -32,5 +33,6 @@ router.use("/stock", stock);
 router.use("/tallas", tallas);
 router.use("/payment", payment);
 router.use("/vaciar", vaciarTabla);
+router.use("/reviews", reviews);
 
 module.exports = router;
