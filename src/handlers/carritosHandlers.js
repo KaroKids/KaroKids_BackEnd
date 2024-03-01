@@ -20,25 +20,25 @@ const addProducto = async (req, res) => {
   //Permite actualizar el carrito luego de la eliminación de un producto.
   const {
     usuario_id,
-    producto_id,
-    producto_nombre,
-    producto_imagen,
+    id,
+    title,
+    picture_url,
     compra_talla,
     compra_color,
-    compra_cantidad,
-    producto_precio,
+    quantity,
+    unit_price,
   } = req.body;
 
   try {
     const response = await agregarProducto(
       usuario_id,
-      producto_id,
-      producto_nombre,
-      producto_imagen,
+      id,
+      title,
+      picture_url,
       compra_talla,
       compra_color,
-      compra_cantidad,
-      producto_precio
+      quantity,
+      unit_price
     );
     return res.json(response);
   } catch (error) {
