@@ -4,7 +4,6 @@ const { Ordenes } = require("../db");
 const client = new MercadoPagoConfig({
   accessToken:
     "TEST-499968136850667-022122-eb0fd0859f803321cf3c3ea2e4a16a42-404824788",
-  //"TEST-3395648537928946-022217-68a657898d160b4ebe5d2032f1329091-1694080585",
 });
 
 const success = async (req, res) => {
@@ -22,7 +21,7 @@ const createOrder = async (req, res) => {
         failure: `https://karokids.onrender.com/payment/failure?user_id=${user_id}`,
         pending: `https://karokids.onrender.com/payment/pending?user_id=${user_id}`,
       },
-      notification_url: `https://1f5c-2800-810-4ff-12af-44a9-c7e3-12d-c528.ngrok-free.app/payment/webhook?user_id=${user_id}`,
+      notification_url: `https://karokids.onrender.com/payment/webhook?user_id=${user_id}`,
       auto_return: "approved",
     };
     const preference = new Preference(client);
