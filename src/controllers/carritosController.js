@@ -57,7 +57,7 @@ const agregarProducto = async (
     );
 
     if (productoExistente) {
-      productoExistente.compra_cantidad += compra_cantidad;
+      productoExistente.compra_cantidad += quantity;
     } else {
       productosCompraActual.push(nuevaCompra);
     }
