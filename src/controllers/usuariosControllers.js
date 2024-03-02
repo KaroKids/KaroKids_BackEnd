@@ -40,20 +40,21 @@ const traerUsuario = async (email_usuario) => {
 };
 
 const crearUsuario = async (
-  uid_firebase,
   nombre_usuario,
   apellido_usuario,
   email_usuario,
   roles
 ) => {
   const response = await Usuarios.create({
-    uid_firebase,
     nombre_usuario,
     apellido_usuario,
     email_usuario,
     roles,
   });
-  let nuevoCarrito = await Carritos.create({usuario_id : response.usuario_id, productos_compra : []});
+  let nuevoCarrito = await Carritos.create({
+    usuario_id: response.usuario_id,
+    productos_compra: [],
+  });
 
   await nuevoCarrito.setUsuario(response);
   console.log(nuevoCarrito);
@@ -82,7 +83,7 @@ const modificarUsuario = async (
 
 const borrarUsuario = async (usuario_id) => {
   const user = await Usuarios.findByPk(usuario_id);
-  console.log(user)
+  console.log(user);
   await Usuarios.update(
     { inactivo: !user.inactivo },
     {
