@@ -1,62 +1,139 @@
 const { Usuarios, Productos } = require("../db");
 
 const traerProductosFavoritos = async (usuario_id) => {
-  const response = await Usuarios.findByPk(usuario_id);
+  try {
+    const usuarioFavoritos = await Usuarios.findByPk(usuario_id, {
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+      include: [
+        {
+          model: Productos,
+          attributes: ["producto_id"],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    });
 
-  if (!response) {
-    return "No existe ese usuario";
-  } else {
-    const productosFavoritos = response.getProductos();
-    return productosFavoritos;
+    if (!usuarioFavoritos) {
+      return "El usuario no existe";
+    }
+
+    const productos = [];
+
+    for (const productoFavorito of usuarioFavoritos.Productos) {
+      const buscarProducto = await Productos.findByPk(
+        productoFavorito.producto_id,
+        {
+          attributes: ["producto_id", "nombre", "imagen_principal", "precio"],
+        }
+      );
+      productos.push(buscarProducto);
+    }
+
+    return productos;
+  } catch (error) {
+    return error;
   }
 };
 
 const agregarProductoFavorito = async (usuario_id, producto_id) => {
-  const response = await Usuarios.findByPk(usuario_id, {
-    include: [
-      {
-        model: Productos,
-        through: { attributes: [] },
-      },
-    ],
-  });
+  try {
+    const usuarioFavoritos = await Usuarios.findByPk(usuario_id, {
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+      include: [
+        {
+          model: Productos,
+          attributes: ["producto_id"],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    });
 
-  if (!response) {
-    return "No se puede agregar el favorito a un usuario inexistente";
-  } else {
     const producto = await Productos.findByPk(producto_id);
 
-    if (!producto) {
-      return "No existe ese producto";
-    } else {
-      response.addProductos(producto);
-      return response;
+    if (!usuarioFavoritos) {
+      return "El usuario no existe";
     }
+
+    if (!producto) {
+      return "El producto no existe";
+    }
+
+    await usuarioFavoritos.addProductos(producto_id);
+
+    const productos = [];
+
+    for (const productoFavorito of usuarioFavoritos.Productos) {
+      const buscarProducto = await Productos.findByPk(
+        productoFavorito.producto_id,
+        {
+          attributes: ["producto_id", "nombre", "imagen_principal", "precio"],
+        }
+      );
+      productos.push(buscarProducto);
+    }
+
+    return productos;
+  } catch (error) {
+    return error;
   }
 };
 
 const eliminarProductoFavorito = async (usuario_id, producto_id) => {
-  const response = await Usuarios.findByPk(usuario_id, {
+  let usuarioFavoritos = await Usuarios.findByPk(usuario_id, {
+    attributes: { exclude: ["createdAt", "updatedAt"] },
     include: [
       {
         model: Productos,
-        through: { attributes: [] },
+        attributes: ["producto_id"],
+        through: {
+          attributes: [],
+        },
       },
     ],
   });
 
-  if (!response) {
-    return "No se puede eliminar el favorito a un usuario inexistente";
-  } else {
-    const producto = await Productos.findByPk(producto_id);
+  const producto = await Productos.findByPk(producto_id);
 
-    if (!producto) {
-      return "No existe ese producto";
-    } else {
-      response.removeProductos(producto);
-      return response;
-    }
+  if (!usuarioFavoritos) {
+    return "El usuario no existe";
   }
+
+  if (!producto) {
+    return "El producto no existe";
+  }
+
+  await usuarioFavoritos.removeProductos(producto);
+
+  usuarioFavoritos = await Usuarios.findByPk(usuario_id, {
+    attributes: { exclude: ["createdAt", "updatedAt"] },
+    include: [
+      {
+        model: Productos,
+        attributes: ["producto_id"],
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
+
+  const productos = [];
+
+  for (const productoFavorito of usuarioFavoritos.Productos) {
+    const buscarProducto = await Productos.findByPk(
+      productoFavorito.producto_id,
+      {
+        attributes: ["producto_id", "nombre", "imagen_principal", "precio"],
+      }
+    );
+    productos.push(buscarProducto);
+  }
+
+  return productos;
 };
 
 module.exports = {
