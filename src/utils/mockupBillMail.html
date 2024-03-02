@@ -1,28 +1,3 @@
-require('dotenv').config();
-const nodeMailer = require('nodemailer');
-// const path = require('path') //Sirve para importar archivos desde un directorio.
-
-//todo Podríamos importar desde el componente que se encarga de ejecutar esta función los valores de "nombre_usuario" y de "usuario_email". para incorporarlos de manera genérica donde haga falta
-const nombre_usuario = 'Alberto'
-const usuario_email  = 'albert_london@gmail.com'
-const numeroOrden = 12345
-// const { nombre, compra_talla, compra_color, compra_cantidad, total_compra } = productos_compra
-// const { data.status, data.status_detail, data.description, data.currency_id, data.transaction_amount } = data de MercadoPago --> Ver NOTA al pie.
-
-const transporter = nodeMailer.createTransport({
-    service: 'gmail',
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.ADMIN_EMAIL, //?Dirección de email del remitente.
-        pass: process.env.ADMIN_EMAIL_PASSWORD, //?App password de la cuenta de Gmail.
-    },
-});
-
-
-//todo Mail en el caso de que el pago haya sido aprovado y acreditado:
-const htmlAccredited = `
 <div>
     <table align="center" border="0">
         <tbody style="text-align:center">
@@ -128,6 +103,17 @@ const htmlAccredited = `
                 Comunícate con nosotros a través de los siguientes canales de diálogo:
                 </td>
             </tr>
+
+            <tr> 
+                <td style="padding:0 16px 16px 16px">
+                <table border="0" cellpadding="0" cellspacing="0" style="text-align:center" width="100%">
+                    <tbody>
+                        <tr>
+                            <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://www.facebook.com/YosoyKaroKids/" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://www.facebook.com/YosoyKaroKids/">0</a></td>
+                            <td style="width:4px;height:40px">&nbsp;</td>
+                            <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%221%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25221%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw1eMzv4d4JecZCGmBiymj6V">1</a></td>
+                            <td style="width:4px;height:40px">&nbsp;</td>
+                            <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%222%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25222%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw22mHoxfVx-iVzRohRainVE">2</a></td>
              <!-- Banner con links a redes sociales de la empresa -->
             <tr>
                 <td style="text-align:center"><br>
@@ -137,57 +123,3 @@ const htmlAccredited = `
     
     </table>    
 </div>
-`
-
-const mailOptions = {
-    from: {
-        name: 'Karo Kids',
-        address: process.env.ADMIN_EMAIL
-    },
-    to: 'jgerfuentes@gmail.com',
-    //? to: [usuario_email, 'jgerfuentes@gmail.com'], // Se puede colocar una lista de receptores.
-
-    subject: "¡Nueva compra en KaroKids registrada con éxito! ✔", // Subject line
-    html: htmlAccredited,
-    //? attachments: [
-            // Se añade la ruta al archivo PDF qeu se encuentra almacenado de manera local.
-    //     {
-    //         filename: 'factura.pdf',
-    //         path: path.join(__dirname, 'factura.pdf'),
-    //         contentType: 'application/pdf'
-    //     },
-            //Opción para el caso de que quisiéramos renderizar el logo de la empresa en el cuerpo del mail.
-    //     { 
-    //         filename: 'logo.png',
-    //         path: path.join(__dirname, 'logo.png'),
-    //         contentType: 'application/image'
-    //     }
-    // ]
-}
-
-const sendMail = async (transporter, mailOptions) => {
-    try {
-        await transporter.sendMail(mailOptions)
-        console.log('¡Email enviado con éxito!')
-    } catch (error) {
-        console.error(error)
-
-    }
-}
-
-sendMail(transporter, mailOptions)
-
-module.exports = sendMail;
-
-//! VIDEO: minuto 8:00
-//* NOTA:
-// Al hacer el checkout en la pasarela de pagos, se obtiene un objeto "data" como respuesta. Este objeto almacena:
-//  data.order= {id: '2342234', type: 'mercadopago'}
-//?  data.description = string con el nombre del producto.
-//?  data.currency_id = string con las siglas de la moneda.
-//  data.payer = {first_name:'', last_name:'', email:'', id:'122342'}
-//  data.payment_method_id: string con el método de pago. Ej: 'master'
-//  data.payment_type_id: string con el tipo de pago. Ej: 'credit_card'
-//?  data.transaction_amount: valor numérico total de la compra.
-//?  data.status: string que indica el estado de la compra. Ej: 'approved'.
-//?  data.status_detail: string que indica el detalle del status de la compra. Ej: 'accredited' -->Con esta opción se podría determinar si se ejecuta: successmail o rejectedMail
