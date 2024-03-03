@@ -8,6 +8,6 @@ const productos_favoritos = Router();
 
 productos_favoritos.get("/:usuario_id", getProductosFavoritos);
 productos_favoritos.post("/", addProductoFavorito);
-productos_favoritos.delete("/", deleteProductoFavorito);
+productos_favoritos.put("/", deleteProductoFavorito);
 
 module.exports = productos_favoritos;
