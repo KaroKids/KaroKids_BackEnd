@@ -5,7 +5,7 @@ const {
 } = require("../controllers/productosFavoritosControllers");
 
 const getProductosFavoritos = async (req, res) => {
-  const { usuario_id } = req.body;
+  const { usuario_id } = req.params;
   try {
     const response = await traerProductosFavoritos(usuario_id);
     res.json(response);
