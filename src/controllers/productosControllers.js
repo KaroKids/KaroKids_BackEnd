@@ -16,6 +16,28 @@ const todosLosProductos = async (paginaActual) => {
   return resultadosPaginados(paginaActual, itemsPorPagina, Productos);
 };
 
+const productosDestacados = async (limite) => {
+  try {
+    const productos = await Productos.findAll({
+      where: {
+        destacado: true,
+      },
+      limit: limite,
+      attributes: [
+        "producto_id",
+        "nombre",
+        "descripcion",
+        "imagen_principal",
+        "precio",
+      ],
+    });
+
+    return productos;
+  } catch (error) {
+    return error;
+  }
+};
+
 const traerProducto = async (id) => {
   const response = await Productos.findByPk(id);
   if (response === null) {
@@ -157,4 +179,5 @@ module.exports = {
   crearProducto,
   filtrarProductos,
   destacarProducto,
+  productosDestacados,
 };

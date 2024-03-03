@@ -4,6 +4,7 @@ const {
   traerProducto,
   borrarProducto,
   destacarProducto,
+  productosDestacados,
 } = require("../controllers/productosControllers");
 
 const getProductos = async (req, res) => {
@@ -14,6 +15,17 @@ const getProductos = async (req, res) => {
 
   try {
     const response = await todosLosProductos(paginaActual);
+    res.json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getProductosDestacados = async (req, res) => {
+  const { limite } = req.body;
+
+  try {
+    const response = await productosDestacados(limite);
     res.json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -102,4 +114,5 @@ module.exports = {
   putProducto,
   deleteProducto,
   standOutProducto,
+  getProductosDestacados,
 };
