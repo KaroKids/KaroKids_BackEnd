@@ -28,13 +28,17 @@ const agregarProducto = async (
 ) => {
   try {
     // Busca un carrito en el modelo Carritos, asociado al usuario actual
-    let carritoUsuario = await Carritos.findOne({
-      where: [{ usuario_id: usuario_id }],
+    // let carritoUsuario = await Carritos.findOne({
+    //   where: [{ usuario_id: usuario_id }],
+    // });
+    let [carritoUsuario, created] = await Carritos.findOrCreate({
+      where: { usuario_id: usuario_id },
+      defaults: { usuario_id: usuario_id },
     });
 
-    if (!carritoUsuario) {
-      throw new Error("El usuario no posee carrito creado");
-    }
+    // if (!carritoUsuario) {
+    //   throw new Error("El usuario no posee carrito creado");
+    // }
 
     const nuevaCompra = {
       producto_id: id,
