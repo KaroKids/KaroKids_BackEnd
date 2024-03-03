@@ -27,20 +27,37 @@ const addProducto = async (req, res) => {
     compra_color,
     quantity,
     unit_price,
+    products,
   } = req.body;
 
   try {
-    const response = await agregarProducto(
-      usuario_id,
-      id,
-      title,
-      picture_url,
-      compra_talla,
-      compra_color,
-      quantity,
-      unit_price
-    );
-    return res.json(response);
+    if (products) {
+      for (const product of products) {
+        await agregarProducto(
+          usuario_id,
+          product.id,
+          product.title,
+          product.picture_url,
+          product.compra_talla,
+          product.compra_color,
+          product.quantity,
+          product.unit_price
+        );
+      }
+      return res.json({ message: "Productos agregados al carrito" });
+    } else {
+      const response = await agregarProducto(
+        usuario_id,
+        id,
+        title,
+        picture_url,
+        compra_talla,
+        compra_color,
+        quantity,
+        unit_price
+      );
+      return res.json(response);
+    }
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
