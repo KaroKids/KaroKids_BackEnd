@@ -16,10 +16,32 @@ const todosLosProductos = async (paginaActual) => {
   return resultadosPaginados(paginaActual, itemsPorPagina, Productos);
 };
 
+const productosDestacados = async (limite) => {
+  try {
+    const productos = await Productos.findAll({
+      where: {
+        destacado: true,
+      },
+      limit: limite,
+      attributes: [
+        "producto_id",
+        "nombre",
+        "descripcion",
+        "imagen_principal",
+        "precio",
+      ],
+    });
+
+    return productos;
+  } catch (error) {
+    return error;
+  }
+};
+
 const traerProducto = async (id) => {
   const response = await Productos.findByPk(id);
   if (response === null) {
-    return "la Producto no existe";
+    return "El producto no existe";
   } else {
     return response;
   }
@@ -46,10 +68,10 @@ const borrarProducto = async (producto_id) => {
   }
 };
 
-const modificarProducto = async (id) => {
+const modificarProducto = async (producto_id) => {
   await Productos.update({
     where: {
-      id: id,
+      id: producto_id,
     },
   });
 };
@@ -132,6 +154,23 @@ const crearProducto = async (
 
 const filtrarProductos = async () => {};
 
+const destacarProducto = async (producto_id) => {
+  if (!producto_id) {
+    return "El producto no existe";
+  } else {
+    const producto = await Productos.findByPk(producto_id);
+
+    await Productos.update(
+      { destacado: !producto.destacado },
+      {
+        where: { producto_id: producto_id },
+      }
+    );
+
+    return await Productos.findByPk(producto_id);
+  }
+};
+
 module.exports = {
   todosLosProductos,
   traerProducto,
@@ -139,4 +178,6 @@ module.exports = {
   modificarProducto,
   crearProducto,
   filtrarProductos,
+  destacarProducto,
+  productosDestacados,
 };

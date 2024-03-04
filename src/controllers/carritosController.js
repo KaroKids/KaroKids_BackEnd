@@ -18,32 +18,36 @@ const traerCarrito = async (usuario_id) => {
 
 const agregarProducto = async (
   usuario_id,
-  producto_id,
-  producto_nombre,
-  producto_imagen,
+  id,
+  title,
+  picture_url,
   compra_talla,
   compra_color,
-  compra_cantidad,
-  producto_precio
+  quantity,
+  unit_price
 ) => {
   try {
     // Busca un carrito en el modelo Carritos, asociado al usuario actual
-    let carritoUsuario = await Carritos.findOne({
-      where: [{ usuario_id: usuario_id }],
+    // let carritoUsuario = await Carritos.findOne({
+    //   where: [{ usuario_id: usuario_id }],
+    // });
+    let [carritoUsuario, created] = await Carritos.findOrCreate({
+      where: { usuario_id: usuario_id },
+      defaults: { usuario_id: usuario_id },
     });
 
-    if (!carritoUsuario) {
-      throw new Error("El usuario no posee carrito creado");
-    }
+    // if (!carritoUsuario) {
+    //   throw new Error("El usuario no posee carrito creado");
+    // }
 
     const nuevaCompra = {
-      producto_id,
-      producto_nombre: producto_nombre.toUpperCase(),
-      producto_imagen,
+      producto_id: id,
+      producto_nombre: title.toUpperCase(),
+      producto_imagen: picture_url,
       compra_talla: compra_talla.toUpperCase(),
       compra_color: compra_color.toUpperCase(),
-      compra_cantidad,
-      producto_precio,
+      compra_cantidad: quantity,
+      producto_precio: unit_price,
     };
 
     // Se obtiene el valor actual de "productos_compra" del carrito y se agrega el nuevo objeto al arreglo
@@ -51,13 +55,13 @@ const agregarProducto = async (
 
     const productoExistente = productosCompraActual.find(
       (producto) =>
-        producto.producto_id === producto_id &&
+        producto.producto_id === id &&
         producto.compra_talla === compra_talla.toUpperCase() &&
         producto.compra_color === compra_color.toUpperCase()
     );
 
     if (productoExistente) {
-      productoExistente.compra_cantidad += compra_cantidad;
+      productoExistente.compra_cantidad += quantity;
     } else {
       productosCompraActual.push(nuevaCompra);
     }

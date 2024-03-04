@@ -13,7 +13,7 @@ usuarios.get("/", getUsuarios);
 usuarios.get("/usuario", getUsuario);
 usuarios.post("/", postUsuario);
 usuarios.put("/", putUsuario);
-usuarios.put("/rol/", putUsuarioRol);
+usuarios.put("/rol", putUsuarioRol);
 usuarios.put("/delete", deleteUsuario);
 
 module.exports = usuarios;

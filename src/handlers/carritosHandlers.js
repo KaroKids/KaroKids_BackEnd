@@ -20,27 +20,44 @@ const addProducto = async (req, res) => {
   //Permite actualizar el carrito luego de la eliminación de un producto.
   const {
     usuario_id,
-    producto_id,
-    producto_nombre,
-    producto_imagen,
+    id,
+    title,
+    picture_url,
     compra_talla,
     compra_color,
-    compra_cantidad,
-    producto_precio,
+    quantity,
+    unit_price,
+    products,
   } = req.body;
 
   try {
-    const response = await agregarProducto(
-      usuario_id,
-      producto_id,
-      producto_nombre,
-      producto_imagen,
-      compra_talla,
-      compra_color,
-      compra_cantidad,
-      producto_precio
-    );
-    return res.json(response);
+    if (products) {
+      for (const product of products) {
+        await agregarProducto(
+          usuario_id,
+          product.id,
+          product.title,
+          product.picture_url,
+          product.compra_talla,
+          product.compra_color,
+          product.quantity,
+          product.unit_price
+        );
+      }
+      return res.json({ message: "Productos agregados al carrito" });
+    } else {
+      const response = await agregarProducto(
+        usuario_id,
+        id,
+        title,
+        picture_url,
+        compra_talla,
+        compra_color,
+        quantity,
+        unit_price
+      );
+      return res.json(response);
+    }
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
