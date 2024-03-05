@@ -3,10 +3,38 @@ const { Calificaciones, Ordenes } = require("../db");
 
 const getReviewsProducts = async (producto_id) => {
   try {
-    const reviewsProducts = await Calificaciones.findOne({
+    const reviewsProducts = await Calificaciones.findAll({
       where: [{ producto_id: producto_id }],
-      attributes: ["puntuacion", "comentario", "usuario_id"],
+      attributes: ["puntuacion", "comentario", "createdAt"],
     });
+    //si no tiene puntuacion return 0
+    //si tiene puntuacion, debo calcular el promedio
+    const valores = reviewsProducts.map((valor) => {
+      valores.push(valor.puntuacion);
+    });
+
+    const suma = valores.reduce(
+      (acumulador, valorActual) => acumulador + valorActual,
+      0
+    );
+
+    let promedioPuntuacion = 0;
+    if (valores.length === 0) {
+      console.log("El producto no tiene calificaciones");
+    } else {
+      const promedio = suma / valores.length;
+
+      const mitad = Math.floor(promedio) + 0.5;
+
+      if (promedio === mitad) {
+        promedioPuntuacion = promedio;
+      } else if (promedio > mitad) {
+        promedioPuntuacion = Math.ceil(promedio);
+      } else if (promedio < mitad) {
+        promedioPuntuacion = Math.floor(promedio);
+      }
+    }
+
     return reviewsProducts;
   } catch (error) {
     throw new Error("El producto no tiene calificaciones");

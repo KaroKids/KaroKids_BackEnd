@@ -7,7 +7,7 @@ const getReviewsProductHandlers = async (req, res) => {
   const { producto_id } = req.params;
   try {
     const response = await getReviewsProducts(producto_id);
-    return res.json(response);
+    return res.status(200).json(response);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
