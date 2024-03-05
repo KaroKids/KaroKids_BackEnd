@@ -39,7 +39,7 @@ const traerProductosFavoritos = async (usuario_id) => {
 
 const agregarProductoFavorito = async (usuario_id, producto_id) => {
   try {
-    const usuarioFavoritos = await Usuarios.findByPk(usuario_id, {
+    let usuarioFavoritos = await Usuarios.findByPk(usuario_id, {
       attributes: { exclude: ["createdAt", "updatedAt"] },
       include: [
         {
@@ -63,6 +63,19 @@ const agregarProductoFavorito = async (usuario_id, producto_id) => {
     }
 
     await usuarioFavoritos.addProductos(producto_id);
+
+    usuarioFavoritos = await Usuarios.findByPk(usuario_id, {
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+      include: [
+        {
+          model: Productos,
+          attributes: ["producto_id"],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    });
 
     const productos = [];
 
