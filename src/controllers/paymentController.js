@@ -11,11 +11,23 @@ const success = async (req, res) => {
 };
 
 const createOrder = async (req, res) => {
-  const { user_id, carritoLocal } = req.body;
+  const { user_id, cart } = req.body;
+
+  const cartFixed = cart.map((product) => {
+    return {
+      id: product.producto_id,
+      title: product.producto_nombre,
+      picture_url: product.producto_imagen,
+      compra_talla: product.compra_talla,
+      compra_color: product.compra_color,
+      quantity: product.compra_cantidad,
+      unit_price: product.producto_precio,
+    };
+  });
 
   try {
     const body = {
-      items: carritoLocal,
+      items: cartFixed,
       back_urls: {
         success: `https://karokids.onrender.com/payment/success?user_id=${user_id}`,
         failure: `https://karokids.onrender.com/payment/failure?user_id=${user_id}`,

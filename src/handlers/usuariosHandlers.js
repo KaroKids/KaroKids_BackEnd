@@ -37,16 +37,9 @@ const getUsuario = async (req, res) => {
 };
 
 const postUsuario = async (req, res) => {
-  const {
-    uid_firebase,
-    nombre_usuario,
-    apellido_usuario,
-    email_usuario,
-    roles,
-  } = req.body;
+  const { nombre_usuario, apellido_usuario, email_usuario, roles } = req.body;
   try {
     const response = await crearUsuario(
-      uid_firebase,
       nombre_usuario,
       apellido_usuario,
       email_usuario,
@@ -76,7 +69,7 @@ const putUsuario = async (req, res) => {
 
 const deleteUsuario = async (req, res) => {
   const { usuario_id } = req.body;
-  console.log(usuario_id)
+  console.log(usuario_id);
   try {
     const response = await borrarUsuario(usuario_id);
     if (response.inactivo === true) {
