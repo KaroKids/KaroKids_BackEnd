@@ -1,10 +1,11 @@
-const { Calificaciones, Usuarios, Productos } = require("../db");
+const { Op } = require("sequelize");
+const { Calificaciones, Ordenes } = require("../db");
 
 const getReviewsProducts = async (producto_id) => {
   try {
     const reviewsProducts = await Calificaciones.findOne({
       where: [{ producto_id: producto_id }],
-      attributes: ["puntuacion", "comentario"],
+      attributes: ["puntuacion", "comentario", "usuario_id"],
     });
     return reviewsProducts;
   } catch (error) {
@@ -12,24 +13,42 @@ const getReviewsProducts = async (producto_id) => {
   }
 };
 
-const createReviewsProducts = async (
+const createReviewsProducts = async ({
   producto_id,
   usuario_id,
   puntuacion,
-  comentario
-) => {
-  const newReviewsProducts = await Calificaciones.create({
-    puntuacion: puntuacion,
-    comentario: comentario,
+  comentario,
+}) => {
+  /* Entrar a la tabla Ordenes con el valor de usuario_id, producto_id y encontrar el valor de "estado_pago" */
+
+  const buscarProducto = await Ordenes.findOne({
+    where: {
+      [Op.and]: [{ usuario_id: usuario_id }, { estado_pago: "aprobado" }],
+    },
+    attributes: ["productos_compra"],
   });
 
-  newReviewsProducts.setUsuarios(usuario_id),
-    newReviewsProducts.setProductos(producto_id);
+  if (buscarProducto && buscarProducto.productos_compra) {
+    const productosFiltrados = buscarProducto.productos_compra.filter(
+      (producto) => producto.id === producto_id
+    );
 
-  console.log("Calificación creada y asociada exitosamente.");
+    if (productosFiltrados.length > 0) {
+      // Utilizamos Promise.all para esperar a que todas las promesas se resuelvan
+      const newReviewsProducts = await Promise.all(
+        productosFiltrados.map(async () => {
+          return await Calificaciones.create({
+            producto_id,
+            usuario_id,
+            puntuacion,
+            comentario,
+          });
+        })
+      );
 
-  console.log("newReviewsProducts", newReviewsProducts);
-  return newReviewsProducts;
+      return newReviewsProducts;
+    }
+  }
 };
 
 module.exports = { getReviewsProducts, createReviewsProducts };
