@@ -1,5 +1,6 @@
 const { MercadoPagoConfig, Preference, Payment } = require("mercadopago");
 const { Ordenes } = require("../db");
+const { borrarCarrito } = require("./carritosController");
 
 const client = new MercadoPagoConfig({
   accessToken:
@@ -11,11 +12,23 @@ const success = async (req, res) => {
 };
 
 const createOrder = async (req, res) => {
-  const { user_id, carritoLocal } = req.body;
+  const { user_id, cart } = req.body;
+  console.log(cart);
+  const cartFixed = cart.map((product) => {
+    return {
+      id: product.producto_id,
+      title: product.producto_nombre,
+      picture_url: product.producto_imagen,
+      compra_talla: product.compra_talla,
+      compra_color: product.compra_color,
+      quantity: product.compra_cantidad,
+      unit_price: product.producto_precio,
+    };
+  });
 
   try {
     const body = {
-      items: carritoLocal,
+      items: cartFixed,
       back_urls: {
         success: `https://karokids.onrender.com/payment/success?user_id=${user_id}`,
         failure: `https://karokids.onrender.com/payment/failure?user_id=${user_id}`,
@@ -27,6 +40,7 @@ const createOrder = async (req, res) => {
     const preference = new Preference(client);
     const result = await preference.create({ body });
 
+    console.log(result);
     return res.json({ id: result.id });
   } catch (error) {
     console.log(error);
@@ -37,7 +51,7 @@ const createOrder = async (req, res) => {
 const receiveWebhook = async (req, res) => {
   const payment = new Payment(client);
   const query = req.query;
-
+  console.log(query);
   try {
     if (query.type === "payment") {
       const { payment_type_id, status, transaction_amount, additional_info } =
@@ -72,6 +86,8 @@ const receiveWebhook = async (req, res) => {
       });
 
       console.log(order);
+
+      await borrarCarrito(user_id);
 
       return res.status(201).json({ message: "Orden creada exitosamente" });
     }
