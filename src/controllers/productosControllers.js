@@ -94,7 +94,7 @@ const crearProducto = async (
       imagen_principal,
       {
         upload_preset: "preset_imagenes_productos",
-        allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg"],
+        allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
       },
       function (err, result) {
         if (err) {
@@ -116,7 +116,7 @@ const crearProducto = async (
         imagenes_secundarias[i],
         {
           upload_preset: "preset_imagenes_productos",
-          allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg"],
+          allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
         },
         function (err, result) {
           if (err) {
