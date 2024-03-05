@@ -68,7 +68,69 @@ const borrarProducto = async (producto_id) => {
   }
 };
 
-const modificarProducto = async (producto_id) => {
+const modificarProducto = async (
+  producto_id,
+  nombre,
+  descripcion,
+  imagen_principal,
+  imagenes_secundarias,
+  edad,
+  genero,
+  precio,
+  destacado,
+  inactivo,
+  stock) => {
+    try {
+      const productoActual = await Productos.findByPk(producto_id,{
+        attributes: { exclude: ["createdAt", "updatedAt"]},
+      })
+
+      const cloudinaryRegex = /^https:\/\/res\.cloudinary\.com\/dk4ysl2hw\/image\/upload\/.*$/
+      const extensionRegex = /\.(png|jpe?g|gif|webp|svg|heic|heif)$/i;
+
+      if (nombre !== productoActual.nombre) {
+        await Productos.update(
+          { nombre: nombre },
+          { where: { producto_id: producto_id } }
+        );
+      }
+      if (descripcion !== productoActual.descripcion) {
+        await Productos.update(
+          { descripcion: descripcion },
+          { where: { producto_id: producto_id } }
+        );
+      }
+      if (imagen_principal !== productoActual.imagen_principal) {
+        if (imagen_principal !== cloudinaryRegex.test(imagen_principal)) {
+          //subir a cloudinary
+        } else if (extensionRegex.test(imagen_principal)) {
+          const img_princip_cloudinary = await cloudinary.uploader.upload(
+            imagen_principal,
+            {
+              upload_preset: "preset_imagenes_productos",
+              allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
+            },
+            function (err, result) {
+              if (err) {
+                throw new Error("Error al subir la imagen primaria: ", err);
+              }
+              try {
+                return result.secure_url;
+              } catch (err) {
+                throw new Error("Error en img_principal_cloud: ", err);
+              }
+            }
+          );
+          //transformar y subir a cloudinary
+          await Productos.update(
+            { descripcion: descripcion },
+            { where: { producto_id: producto_id } }
+          );
+        }
+      }
+    } catch (error) {
+      
+    }
   await Productos.update({
     where: {
       id: producto_id,
