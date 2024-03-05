@@ -1,95 +1,189 @@
 <div>
-    <table>
-        <tbody>
+    <table align="center" border="0">
+        <tbody style="text-align:center">
+            
             <tr>
                 <td style="text-align:center">
-                <img src="{banner subido a Cloudinary}" style="width:725px;height:292px" class="CToWUd a6T" data-bit="iit" tabindex="0">
+                    <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709364802/Imagenes_Productos/Logos/Banner-logo2_vitkys.png" alt="banner_con_logo_Cloudinary" style="width:900px;height:260px" />
                 </td>
             </tr>
-            <tr>
+ 
+            <tr>               
                 <td>&nbsp;</td>
             </tr>
+
+            <tr>
+                <td style="text-align:center; margin:5px; padding: 5px;">
+                    <h1 style="margin: 5px; padding:5px;">¡Hola ${nombre_usuario}!</h1>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="text-align:center; margin:5px; padding: 5px;">
+                    <h2 style="margin: 5px; padding:5px;">¡Muchas gracias por elegirnos y confiar en nosotros!</h2>
+                </td>
+            </tr>
+
+            <tr>               
+                <td>&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td style="text-align:center; margin:5px; padding: 5px;">
+                    <h2 style="margin: 5px; padding:5px;">Hemos registrado su compra con el siguiente detalle:</h2>
+                </td>
+            </tr>
+
+            <tr>               
+                <td style="text-align:center;">
+                    <h3 style="margin: 5px; padding:5px;">Número de orden: ${numeroOrden}</h3>
+                </td>
+            </tr>
+
+            <tr>               
+                <td style="text-align:center;">
+                    <h3 style="margin: 5px; padding:5px;">Estado: ${estado_compra} - ${estado_compra_detalle}</h3>
+                </td>
+            </tr>
+
+            <tr>               
+                <td>&nbsp;</td>
+            </tr>
+
             <tr>
                 <td style="text-align:center">
-                <table align="center" border="0" cellpadding="0" style="background-color:#f2f4f8;border:1px solid #d9dbde;border-radius:3px;font-family:arial,sans-serif;max-width:600px">
+                    <table align="center" border="0" cellpadding="0" style="background-color:#f2f4f8; border:1px solid #d9dbde; border-radius:3px; font-family:arial,sans-serif; max-width:700px; width:100%">
+                        <tbody>
+                            <tr>
+                                <td style="text-align:center; font-size:16px; padding:16px; width:100%">
+                                    <strong>
+                                        Listado de productos: 
+                                    </strong>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <table border="0" cellspacing="5px" style="color:#a5a5a5; font-size:13px" width="100%">
+                                        <tbody>
+                                            <!-- Cada "<tr>"" podría renderizarse a partir de un map del array de productos comprados -->
+                                                <!-- productos_compra?.map((producto, index) => {
+                                                    <tr key="index">
+                                                        <td align="left">{producto.nombre}</td>
+                                                        <td align="right">{producto.compra_talla, producto.compra_color, producto.compra_cantidad}</td>
+                                                    </tr>
+                                                }) -->
+                                            <tr>
+                                                <td style="padding:5px 10px" align="left">Producto 1</td>
+                                                <td style="padding:5px 10px" align="right"> Detalle 1</td>
+                                                <!-- {/* <td align="center">Detalle 1</td>
+                                                <td align="right">COP Precio_unitario 1</td> */} -->
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:5px 10px" align="left">Producto 2</td>
+                                                <td style="padding:5px 10px" align="right"> Detalle 2</td>
+                                                <!-- {/* <td align="center">Detalle 2</td>
+                                                <td align="right">COP Precio_unitario 2</td> */} -->
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:5px 10px" align="left">Producto 3</td>
+                                                <td style="padding:5px 10px" align="right"> Detalle 3</td>
+                                                <!-- {/* <td align="center">Detalle 3</td>
+                                                <td align="right">COP Precio_unitario 3</td> */} -->
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:center; font-size:16px; padding:16px 5px 5px 5px; width:100%">
+                                    <strong>
+                                        Monto total de la compra: ${moneda} ${monto_total}
+                                    </strong>
+                                </td>
+                            </tr>  
+                            
+                            <!-- <tr>
+                                <td style="text-align:center; font-size:15px; padding:5px 5px 16px 5px;">${moneda} ${monto_total}</td>
+                            <tr> -->
+
+                            <tr>
+                                <td style="text-align:center; font-size:15px; padding:16px 5px 5px 5px; width:100%">
+                                    <strong>
+                                        Método de pago: ${forma_pago} - ${forma_pago_detalle}
+                                    </strong>
+                                </td>
+                            </tr>
+
+                            <!-- <tr>
+                                <td style="text-align:center; font-size:15px; padding:5px 5px 16px 5px;">${forma_pago} - ${forma_pago_detalle}</td>
+                            <tr> -->
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- <tr>
+                <td style="text-align:center"><br/>
+                    Puedes descargar tu factura electrónica haciendo <a><u>click aquí</u></a>
+                    </td>
+            </tr> -->
+
+            <tr>               
+                <td>&nbsp;</td>
+            </tr>
+
+            <tr> 
+                <td style="text-align:center; padding:10px"><br/>
+                    <h4>
+                        ¿Está satisfecho con su compra? Puede calificar los productos y dejarnos un comentario aquí
+                    </h4>
+                </td>
+            </tr>
+
+            
+            <tr>
+                <td style="text-align:center; padding:10px"><br/>
+                    <h4>
+                        ¿Dudas o consultas? Puede comunicarse con nosotros a través de los siguientes canales de diálogo:
+                    </h4>
+                </td>
+            </tr>
+
+            <tr> 
+                <td style="padding:16px">
+                <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709365873/Imagenes_Productos/Logos/fondo-redes-difuminado_nb1teq.png); background-repeat: no-repeat; background-size: cover; border-radius:3px; max-width:650px; width:100%">
                     <tbody>
                         <tr>
-                            <td style="font-size:15px;padding:16px 16px 16px 16px">
-                            Listado de productos
+                            <td style="padding:10px; width:50px">
+                                <a href="https://www.facebook.com/YosoyKaroKids/" style="display:contents; text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://www.facebook.com/YosoyKaroKids/">
+                                    <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709367030/Imagenes_Productos/Logos/1-FB_icon-no_background_wbjq0v.png" alt="FB_icon" width="50px" heigth="50px"/>
+                                </a>
                             </td>
-                        </tr>
 
-                        <tr>
-                            <td style="padding:0 16px 4px 16px">
-                                <table border="0" cellpadding="0" cellspacing="0" style="color:#a5a5a5;font-size:13px" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left">Producto 1</td>
-                                            <td align="center"> Detalle 1</td>
-                                            <td align="right">COP Precio1</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left">Producto 2</td>
-                                            <td align="center"> Detalle 2</td>
-                                            <td align="right">COP Precio2</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left">Producto 3</td>
-                                            <td align="center"> Detalle 3</td>
-                                            <td align="right">COP Precio3</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
+                            <td style="width:4px;height:40px">&nbsp;</td>
 
-                        <!-- Bloque con casilleros de puntuacion -->
-                        <tr> 
-                            <td style="padding:0 16px 16px 16px">
-                            <table border="0" cellpadding="0" cellspacing="0" style="text-align:center" width="100%">
-                                <tbody>
-                                    <tr>
-                                        <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%220%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25220%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw3dOLEXT2U9oJjgVyARo9Mv">0</a></td>
-                                        <td style="width:4px;height:40px">&nbsp;</td>
-                                        <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%221%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25221%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw1eMzv4d4JecZCGmBiymj6V">1</a></td>
-                                        <td style="width:4px;height:40px">&nbsp;</td>
-                                        <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%222%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25222%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw22mHoxfVx-iVzRohRainVE">2</a></td>
-                                        <td style="width:4px;height:40px">&nbsp;</td>
-                                        <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%223%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25223%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw2gB0RtagNqPTlgVM6WqIkx">3</a></td>
-                                        <td style="width:4px;height:40px">&nbsp;</td>
-                                        <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%224%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25224%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw0FMAAbbt4GO_4wjfvz2Sso">4</a></td>
-                                        <td style="width:4px;height:40px">&nbsp;</td>
-                                        <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%225%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25225%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw2Iv3kunNQINfU3W2qaKg1C">5</a></td>
-                                        <td style="width:4px;height:40px">&nbsp;</td>
-                                        <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%226%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25226%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw3Qols0jr5NageZwAubL4dM">6</a></td>
-                                        <td style="width:4px;height:40px">&nbsp;</td>
-                                        <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%227%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25227%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw0EK25U6hsLWx7qz7k6smTW">7</a></td>
-                                        <td style="width:4px;height:40px">&nbsp;</td>
-                                        <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%228%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25228%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw0XYjMP-PYVwu1A32i6kocM">8</a></td>
-                                        <td style="width:4px;height:40px">&nbsp;</td>
-                                        <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%229%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%25229%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw2fYLtXcjprp_qIjubuBrRq">9</a></td>
-                                        <td style="width:4px;height:40px">&nbsp;</td>
-                                        <td style="font-size:18px;width:40px;border-radius:3px;background:#fff;border:1px solid #a5a5a5"><a href="https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL=kUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv&amp;Q_CHL=email&amp;Q_PopulateResponse=%7B%22QID1%22:%2210%22%7D&amp;Q_PopulateValidate=1" style="display:block;text-decoration:none;color:#666;background:#fff;line-height:40px;border-radius:3px;white-space:nowrap" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://federadasalud.qualtrics.com/jfe/form/SV_cDdmmTFNtpIBlMq?Q_DL%3DkUUP1WFHQpytpdF_cDdmmTFNtpIBlMq_CGC_PI720O1tBnw7kiv%26Q_CHL%3Demail%26Q_PopulateResponse%3D%257B%2522QID1%2522:%252210%2522%257D%26Q_PopulateValidate%3D1&amp;source=gmail&amp;ust=1709332730628000&amp;usg=AOvVaw0z3MnMzMmEn6R3kLddDZNi">10</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <td style="padding:10px; width:50px">
+                                <a href="https://www.instagram.com/yosoy.karokidsmoda/" style="display:contents;text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://www.instagram.com/yosoy.karokidsmoda/">
+                                    <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709528362/Imagenes_Productos/Logos/2-IG_icon-no_background_k3ajsy.png" alt="IG_icon" width="50px" heigth="50px"/>
+                                </a>
+                            </td>
+
+                            <td style="width:4px;height:40px">&nbsp;</td>
+
+                            <td style="padding:10px; width:50px">
+                                <a href="https://wa.link/fdh8yl" style="display:contents; text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://wa.link/fdh8yl">
+                                    <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709367034/Imagenes_Productos/Logos/3-WSP_icon-no_background_fihi8y.png" alt="WSP_icon" width="55px" heigth="55px"/>
+                                </a>
                             </td>
                         </tr>
-                        <!-- Termina bloque puntuacion -->
-                        
                     </tbody>
                 </table>
                 </td>
             </tr>
-            <tr>
-                <td style="text-align:center"><br>
-                <img src="https://ci3.googleusercontent.com/meips/ADKq_NbkSTBO6pxdJwLtW4OTRDMm4j6g6UBHrwWt7e7IXGtrW7iAqvht8VPEZFm1yKn1YjsO1FisQ9DX1gU48qz97FoSaBXaLes9n0Rrvof2gOlvPdN6YJ75Xt67gAR-TLv7FMltVw=s0-d-e1-ft#https://federadasalud.yul1.qualtrics.com/CP/Graphic.php?IM=IM_WA09ciwezj1vgdx" style="width:725px;height:75px" class="CToWUd" data-bit="iit"></td>
-            </tr>
-            <tr>
-                <td style="text-align:center"><br>
-                Si querés dejar de recibir correos como este hacé <a><u>click acá</u></a></td>
-            </tr>
+
         </tbody>
-    
     </table>    
-</div
+</div>
