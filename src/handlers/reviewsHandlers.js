@@ -23,12 +23,10 @@ const createReviewsProductHandlers = async (req, res) => {
       comentario,
     });
 
-    res
-      .status(200)
-      .json({
-        message: "Calificación creada y asociada exitosamente.",
-        data: response,
-      });
+    res.status(200).json({
+      message: "Calificación creada y asociada exitosamente.",
+      response,
+    });
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: error.message });
