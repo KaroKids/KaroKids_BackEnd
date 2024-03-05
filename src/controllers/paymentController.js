@@ -12,7 +12,7 @@ const success = async (req, res) => {
 
 const createOrder = async (req, res) => {
   const { user_id, cart } = req.body;
-
+  console.log(cart);
   const cartFixed = cart.map((product) => {
     return {
       id: product.producto_id,
@@ -39,6 +39,7 @@ const createOrder = async (req, res) => {
     const preference = new Preference(client);
     const result = await preference.create({ body });
 
+    console.log(result);
     return res.json({ id: result.id });
   } catch (error) {
     console.log(error);
@@ -49,7 +50,7 @@ const createOrder = async (req, res) => {
 const receiveWebhook = async (req, res) => {
   const payment = new Payment(client);
   const query = req.query;
-
+  console.log(query);
   try {
     if (query.type === "payment") {
       const { payment_type_id, status, transaction_amount, additional_info } =
