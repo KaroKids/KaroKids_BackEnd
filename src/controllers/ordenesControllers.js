@@ -5,7 +5,11 @@ const todasLasOrdenes = async () => {
   return response;
 };
 const traerOrden = async (id) => {
-  const response = await Ordenes.findByPk(id);
+  const response = await Ordenes.findAll({
+    where: {
+      usuario_id: id,
+    },
+  });
   if (response === null) {
     return "la orden no existe";
   } else {

@@ -1,6 +1,6 @@
 const { MercadoPagoConfig, Preference, Payment } = require("mercadopago");
-const { Ordenes } = require("../db");
 const { borrarCarrito } = require("./carritosController");
+const { crearOrden } = require("./ordenesControllers");
 
 const client = new MercadoPagoConfig({
   accessToken:
@@ -76,7 +76,7 @@ const receiveWebhook = async (req, res) => {
       const user_id = req.query.user_id;
       console.log(user_id);
 
-      const order = await Ordenes.create({
+      const order = await crearOrden({
         productos_compra: additional_info.items,
         metodo_pago: metodoPago[payment_type_id],
         estado_pago: estadoPago[status],

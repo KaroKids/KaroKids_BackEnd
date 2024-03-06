@@ -2,36 +2,19 @@ const { Usuarios, Productos } = require("../db");
 
 const traerProductosFavoritos = async (usuario_id) => {
   try {
-    const usuarioFavoritos = await Usuarios.findByPk(usuario_id, {
-      attributes: { exclude: ["createdAt", "updatedAt"] },
-      include: [
-        {
-          model: Productos,
-          attributes: ["producto_id"],
-          through: {
-            attributes: [],
-          },
-        },
-      ],
+    // Verifica si el usuario existe
+    const usuario = await Usuarios.findByPk(usuario_id);
+    if (!usuario) {
+      return { error: "El usuario no existe" };
+    }
+
+    // Obtiene los productos actualizados
+    const productosFavoritos = await usuario.getProductos({
+      attributes: ["producto_id", "nombre", "imagen_principal", "precio"],
+      joinTableAttributes: [],
     });
 
-    if (!usuarioFavoritos) {
-      return "El usuario no existe";
-    }
-
-    const productos = [];
-
-    for (const productoFavorito of usuarioFavoritos.Productos) {
-      const buscarProducto = await Productos.findByPk(
-        productoFavorito.producto_id,
-        {
-          attributes: ["producto_id", "nombre", "imagen_principal", "precio"],
-        }
-      );
-      productos.push(buscarProducto);
-    }
-
-    return productos;
+    return productosFavoritos;
   } catch (error) {
     return error;
   }
@@ -39,62 +22,43 @@ const traerProductosFavoritos = async (usuario_id) => {
 
 const agregarProductoFavorito = async (usuario_id, producto_id) => {
   try {
-    const usuarioFavoritos = await Usuarios.findByPk(usuario_id, {
-      attributes: { exclude: ["createdAt", "updatedAt"] },
-      include: [
-        {
-          model: Productos,
-          attributes: ["producto_id"],
-          through: {
-            attributes: [],
-          },
-        },
-      ],
+    // Verifica si el usuario existe
+    const usuario = await Usuarios.findByPk(usuario_id);
+    if (!usuario) {
+      return { error: "El usuario no existe" };
+    }
+
+    // Verifica si el producto existe
+    const producto = await Productos.findByPk(producto_id);
+    if (!producto) {
+      return { error: "El producto no existe" };
+    }
+
+    // Verifica si el producto ya está en los favoritos del usuario
+    const productoExistente = await usuario.hasProductos(producto_id);
+    if (!productoExistente) {
+      // Agrega el producto a los favoritos del usuario
+      await usuario.addProductos(producto);
+    }
+
+    // Recarga las asociaciones desde la base de datos
+    await usuario.reload();
+
+    // Obtiene los productos actualizados
+    const productosFavoritos = await usuario.getProductos({
+      attributes: ["producto_id", "nombre", "imagen_principal", "precio"],
+      joinTableAttributes: [],
     });
 
-    const producto = await Productos.findByPk(producto_id);
-
-    if (!usuarioFavoritos) {
-      return "El usuario no existe";
-    }
-
-    if (!producto) {
-      return "El producto no existe";
-    }
-
-    await usuarioFavoritos.addProductos(producto_id);
-
-    const productos = [];
-
-    for (const productoFavorito of usuarioFavoritos.Productos) {
-      const buscarProducto = await Productos.findByPk(
-        productoFavorito.producto_id,
-        {
-          attributes: ["producto_id", "nombre", "imagen_principal", "precio"],
-        }
-      );
-      productos.push(buscarProducto);
-    }
-
-    return productos;
+    return productosFavoritos;
   } catch (error) {
-    return error;
+    console.error(error);
+    return { error: "Error interno del servidor" };
   }
 };
 
 const eliminarProductoFavorito = async (usuario_id, producto_id) => {
-  let usuarioFavoritos = await Usuarios.findByPk(usuario_id, {
-    attributes: { exclude: ["createdAt", "updatedAt"] },
-    include: [
-      {
-        model: Productos,
-        attributes: ["producto_id"],
-        through: {
-          attributes: [],
-        },
-      },
-    ],
-  });
+  const usuarioFavoritos = await Usuarios.findByPk(usuario_id);
 
   const producto = await Productos.findByPk(producto_id);
 
@@ -108,32 +72,13 @@ const eliminarProductoFavorito = async (usuario_id, producto_id) => {
 
   await usuarioFavoritos.removeProductos(producto);
 
-  usuarioFavoritos = await Usuarios.findByPk(usuario_id, {
-    attributes: { exclude: ["createdAt", "updatedAt"] },
-    include: [
-      {
-        model: Productos,
-        attributes: ["producto_id"],
-        through: {
-          attributes: [],
-        },
-      },
-    ],
+  // Obtiene los productos actualizados
+  const productosFavoritos = await usuarioFavoritos.getProductos({
+    attributes: ["producto_id", "nombre", "imagen_principal", "precio"],
+    joinTableAttributes: [],
   });
 
-  const productos = [];
-
-  for (const productoFavorito of usuarioFavoritos.Productos) {
-    const buscarProducto = await Productos.findByPk(
-      productoFavorito.producto_id,
-      {
-        attributes: ["producto_id", "nombre", "imagen_principal", "precio"],
-      }
-    );
-    productos.push(buscarProducto);
-  }
-
-  return productos;
+  return productosFavoritos;
 };
 
 module.exports = {
