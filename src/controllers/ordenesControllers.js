@@ -33,8 +33,22 @@ const modificarOrden = async (id) => {
   });
 };
 
-const crearOrden = async (orden) => {
-  return await Ordenes.create(orden);
+const crearOrden = async (
+  productos_compra,
+  metodo_pago,
+  estado_pago,
+  estado_pedido,
+  coste_total,
+  usuario_id
+) => {
+  return await Ordenes.create(
+    productos_compra,
+    metodo_pago,
+    estado_pago,
+    estado_pedido,
+    coste_total,
+    usuario_id
+  );
 };
 
 const filtrarOrdenes = async () => {};
