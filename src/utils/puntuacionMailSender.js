@@ -51,7 +51,7 @@ const transporter = nodeMailer.createTransport({
     },
 });
 
-const htmlFailure = `
+const htmlReview = `
 <div>
 <table align="center" border="0">
     <tbody style="text-align:center">
@@ -78,26 +78,33 @@ const htmlFailure = `
             </td>
         </tr>
 
-        <tr>
-            <td>
-                <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709711465/Imagenes_Productos/Logos/4-_Warning_icon-no_background_zjx0m7.png" alt="warning_icon" width="300px" heigth="300px"/>
-            </td>
+        <tr>               
+            <td>&nbsp;</td>
         </tr>
-        
+
         <tr> 
             <td style="padding:16px">
             <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709709855/Imagenes_Productos/Logos/Banner-Reviews-desenfocado_zcdjkp.png); background-position: center;background-repeat: no-repeat; background-size: cover; border-radius:5px; max-width:1000px; width:100%">
                 <tbody>
                     <tr>
                         <td style="text-align:center; margin:5px; padding: 5px;">
-                            <h3 style="margin: 20px 10px 20px 120px; padding:10px 10px 10px 80px;">Lamentamos informarle que hemos registrado un inconveniente con su última compra. A continuación le presentamos los detalles de la misma:</h3>
-
+                            <h3 style="margin: 20px 10px 20px 120px; padding:10px 10px 10px 80px;">En Karo Kids valoramos inmensamente la opinión de nuestros clientes, por eso es que le recordamos que cuenta con la posibilidad de puntuar y comentar todos aquellos productos que haya adquirido en nuestro local. De esta manera, podrá sumar su granito de arena a nuestro deseo de mantener una línea de comunicación activa con nuestra gente, ¡la familia KaroKids!</h3>
                         </td>
                     </tr>
                 </tbody>
             </table>
             </td>
-        </tr>    
+        </tr>
+
+        <tr>               
+            <td>&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td style="text-align:center; margin:5px; padding: 5px;">
+                <h2 style="margin: 5px; padding:5px;">Detalle de su última visita:</h2>
+            </td>
+        </tr>
 
         <tr>               
             <td>&nbsp;</td>
@@ -110,12 +117,6 @@ const htmlFailure = `
                         <tr>               
                             <td style="text-align:center; font-size:17px; padding:16px; width:100%"">
                                 <strong>Número de orden: {numeroOrden}</strong>
-                            </td>
-                        </tr>
-
-                        <tr>               
-                            <td style="text-align:center; font-size:17px; padding:16px; width:100%"">
-                                <strong>Estado: {estado_compra} - {estado_compra_detalle}</strong>
                             </td>
                         </tr>
 
@@ -168,35 +169,34 @@ const htmlFailure = `
                                     Monto total de la compra: {moneda} {monto_total}
                                 </strong>
                             </td>
-                        </tr> 
+                        </tr>  
 
-                        <tr>
+                        <!-- <tr>
                             <td style="text-align:center; font-size:15px; padding:16px 5px 5px 5px; width:100%">
                                 <strong>
                                     Método de pago: {forma_pago} - {forma_pago_detalle}
                                 </strong>
                             </td>
-                        </tr>
+                        </tr> -->
+
                     </tbody>
                 </table>
             </td>
         </tr>
-        
-        <tr>               
-            <td>&nbsp;</td>
-        </tr>
 
-        <tr>
-            <td style="text-align:center; margin:5px; padding: 5px;">
-                <h2 style="margin: 5px; padding:5px;"> ⛔ Motivo del inconveniente: Pago no acreditado / Operación cancelada ⛔</h2>
+        <tr> 
+            <td style="text-align:center; padding:10px"><br/>
+                <h3>
+                    ¿Está satisfecho con su compra? Puede calificar sus productos y dejarnos un comentario accediendo a <a href="http://localhost:5173/" target="_blank" style="text-decoration:underline" data-saferedirecturl="https://www.google.com/url?q=http://localhost:5173/">su perfil de usuario</a>
+                </h3>
             </td>
         </tr>
 
         <tr>
-            <td style="text-align:center"><br/>
-                <h3>
-                    Lo invitamos a comunicarse con nosotros a través de nuestros canales oficiales para poder brindarle asesoramiento a la mayor brevedad posible.
-                </h3>
+            <td style="text-align:center; padding:10px"><br/>
+                <h4>
+                    ¿Dudas o consultas? Puede comunicarse con nosotros a través de los siguientes canales de diálogo:
+                </h4>
             </td>
         </tr>
 
@@ -249,8 +249,8 @@ const mailOptions = {
         address: process.env.ADMIN_EMAIL
     },
     to: [usuario_email, 'jgerfuentes@gmail.com'],
-    subject: "⛔ ¡Nueva compra en KaroKids registrada con inconvenientes! ⛔",
-    html: htmlFailure,
+    subject: "¡Su compra en KaroKids pendiente de calificación! 🛒📭",
+    html: htmlReview,
     //? attachments: [
             // Se añade la ruta al archivo PDF que se encuentra almacenado de manera local.
     //     {
