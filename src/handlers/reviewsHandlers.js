@@ -1,13 +1,24 @@
 const {
-  getReviewsProducts,
+  getPromedioReviews,
   createReviewsProducts,
+  getAllReviews,
 } = require("../controllers/reviewsControllers");
 
-const getReviewsProductHandlers = async (req, res) => {
+const getAllReviewsHandlers = async (req, res) => {
   const { producto_id } = req.params;
   try {
-    const response = await getReviewsProducts(producto_id);
-    return res.json(response);
+    const response = await getAllReviews(producto_id);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+const getPromedioReviewsHandlers = async (req, res) => {
+  const { producto_id } = req.params;
+  try {
+    const response = await getPromedioReviews(producto_id);
+    return res.status(200).json(response);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -16,17 +27,14 @@ const getReviewsProductHandlers = async (req, res) => {
 const createReviewsProductHandlers = async (req, res) => {
   const { producto_id, usuario_id, puntuacion, comentario } = req.body;
   try {
-    const response = await createReviewsProducts({
+    const response = await createReviewsProducts(
       producto_id,
       usuario_id,
       puntuacion,
-      comentario,
-    });
+      comentario
+    );
 
-    res.status(200).json({
-      message: "Calificación creada y asociada exitosamente.",
-      response,
-    });
+    res.status(200).json(response);
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: error.message });
@@ -58,8 +66,7 @@ const createReviewsPageHandlers = async (req, res) => {
 }; */
 
 module.exports = {
-  getReviewsProductHandlers,
+  getPromedioReviewsHandlers,
   createReviewsProductHandlers,
-  //getReviewsPageHandlers,
-  //createReviewsPageHandlers,
+  getAllReviewsHandlers,
 };
