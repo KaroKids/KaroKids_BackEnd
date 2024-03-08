@@ -24,9 +24,23 @@ const getOrden = async (req, res) => {
 };
 
 const postOrden = async (req, res) => {
-  const { a } = req.body;
+  const {
+    productos_compra,
+    metodo_pago,
+    estado_pago,
+    estado_pedido,
+    coste_total,
+    usuario_id,
+  } = req.body;
   try {
-    const response = await crearOrden(a);
+    const response = await crearOrden(
+      productos_compra,
+      metodo_pago,
+      estado_pago,
+      estado_pedido,
+      coste_total,
+      usuario_id
+    );
     res.status(200).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
