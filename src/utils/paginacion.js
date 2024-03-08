@@ -9,9 +9,9 @@
 //OFFSET = (pagina - 1) * LIMIT
 
 //SELECT * FROM tabla OFFSET 0 LIMIT 10 ---> Devolverá lo que se encuentre entre OFFSET y LIMIT. En este caso, los primeros 10 elementos.
-
 const resultadosPaginados = async (paginaActual, itemsPorPagina, array) => {
   try {
+   
     let limitAttribute = itemsPorPagina;
     let totalElementos = array.length;
     let totalPaginas = Math.ceil(totalElementos / limitAttribute); //Este parámetro se va a utilizar para manejar apropiadamente los últimos elementos disponibles para visualizar en el Front, por eso no se usa acá y simplemente se retorna.

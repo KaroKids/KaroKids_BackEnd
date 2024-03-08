@@ -5,6 +5,7 @@ const {
   borrarProducto,
   destacarProducto,
   productosDestacados,
+  modificarProducto,
 } = require("../controllers/productosControllers");
 
 const getProductos = async (req, res) => {
@@ -76,9 +77,33 @@ const postProducto = async (req, res) => {
 };
 
 const putProducto = async (req, res) => {
-  const { producto_id } = req.body;
+  const { 
+    producto_id,
+    nombre,
+    descripcion,
+    imagen_principal,
+    imagenes_secundarias,
+    edad,
+    genero,
+    precio,
+    destacado,
+    inactivo,
+    stock } = req.body;
   try {
-    res.send(`se modifico el producto ${producto_id}`);
+    const response = await modificarProducto (
+      producto_id,
+      nombre,
+      descripcion,
+      imagen_principal,
+      imagenes_secundarias,
+      edad,
+      genero,
+      precio,
+      destacado,
+      inactivo,
+      stock);
+
+    res.status(200).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

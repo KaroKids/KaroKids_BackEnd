@@ -1,9 +1,23 @@
-const { Ordenes } = require("../db");
+const { Ordenes, Usuarios } = require("../db");
 
 const todasLasOrdenes = async () => {
-  const response = await Ordenes.findAll();
-  return response;
+  try {
+    const ordenes = await Ordenes.findAll({
+      include: [
+        {
+          model: Usuarios,
+          attributes: ['nombre_usuario', 'apellido_usuario']
+        }
+      ]
+    });
+
+    return ordenes;
+  } catch (error) {
+    throw new Error('Error al obtener todas las ordenes: ' + error.message);
+  }
 };
+
+
 const traerOrden = async (id) => {
   const response = await Ordenes.findAll({
     where: {
