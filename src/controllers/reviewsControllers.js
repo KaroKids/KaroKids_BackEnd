@@ -7,16 +7,38 @@ const getAllReviews = async (producto_id) => {
       where: [{ producto_id: producto_id }],
       attributes: ["puntuacion", "comentario", "createdAt"],
     });
+
     //si no tiene puntuacion return 0
     //si tiene puntuacion, debo calcular el promedio
     const atributos = [];
     reviewsProducts.map((valor) => {
       atributos.push(valor.dataValues);
     });
-    console.log(atributos);
+
     return atributos;
   } catch (error) {
     throw new Error("El producto no tiene calificaciones");
+  }
+};
+
+const getLast3Reviews = async (producto_id) => {
+  try {
+    const reviewsProducts = await Calificaciones.findAll({
+      where: { producto_id: producto_id }, // Filtro por producto_id
+      attributes: ["puntuacion", "comentario", "createdAt"], // Seleccionar los atributos requeridos
+      order: [["createdAt", "DESC"]], // Ordenar por fecha de creación en orden descendente
+      limit: 3, // Limitar a las últimas tres calificaciones
+    });
+
+    // Si no hay calificaciones, retorna un arreglo vacío
+    if (reviewsProducts.length === 0) {
+      return [];
+    }
+
+    // Mapear los valores y retornarlos
+    return reviewsProducts;
+  } catch (error) {
+    throw new Error("Error al obtener las calificaciones del producto");
   }
 };
 
@@ -39,22 +61,30 @@ const getPromedioReviews = async (producto_id) => {
     );
 
     let promedioPuntuacion = 0;
-    if (valores.length === 0) {
+    let totalCalificaciones = valores.length;
+    let promedioReal = 0;
+    if (totalCalificaciones === 0) {
       console.log("El producto no tiene calificaciones");
     } else {
-      const promedio = suma / valores.length;
+      promedioReal = suma / totalCalificaciones; // este muestra promedioReal real, ejemplo 4.8
+      //let promedioRealSinUltimoDecimal = parseFloat(objeto.promedioReal.toFixed(1));
 
-      const mitad = Math.floor(promedio) + 0.5;
+      const mitad = Math.floor(promedioReal) + 0.5;
 
-      if (promedio === mitad) {
-        promedioPuntuacion = promedio;
-      } else if (promedio > mitad) {
-        promedioPuntuacion = Math.ceil(promedio);
-      } else if (promedio < mitad) {
-        promedioPuntuacion = Math.floor(promedio);
+      if (promedioReal === mitad) {
+        promedioPuntuacion = promedioReal;
+      } else if (promedioReal > mitad) {
+        promedioPuntuacion = Math.ceil(promedioReal);
+      } else if (promedioReal < mitad) {
+        promedioPuntuacion = Math.floor(promedioReal);
       }
     }
-    return promedioPuntuacion;
+    let numeroCadena = promedioReal.toString().slice(0, -1);
+    // Convertir la cadena de nuevo a un número
+    promedioReal = parseFloat(numeroCadena);
+
+    const response = { promedioPuntuacion, totalCalificaciones, promedioReal };
+    return response;
   } catch (error) {
     throw new Error("El producto no tiene calificaciones");
   }
@@ -97,4 +127,9 @@ const createReviewsProducts = async (
   // }
 };
 
-module.exports = { getPromedioReviews, createReviewsProducts, getAllReviews };
+module.exports = {
+  getPromedioReviews,
+  getLast3Reviews,
+  createReviewsProducts,
+  getAllReviews,
+};

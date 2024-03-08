@@ -1,5 +1,6 @@
 const {
   getPromedioReviews,
+  getLast3Reviews,
   createReviewsProducts,
   getAllReviews,
 } = require("../controllers/reviewsControllers");
@@ -8,6 +9,16 @@ const getAllReviewsHandlers = async (req, res) => {
   const { producto_id } = req.params;
   try {
     const response = await getAllReviews(producto_id);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+const get3ReviewsHandlers = async (req, res) => {
+  const { producto_id } = req.params;
+  try {
+    const response = await getLast3Reviews(producto_id);
     return res.status(200).json(response);
   } catch (error) {
     return res.status(400).json({ error: error.message });
@@ -67,6 +78,7 @@ const createReviewsPageHandlers = async (req, res) => {
 
 module.exports = {
   getPromedioReviewsHandlers,
+  get3ReviewsHandlers,
   createReviewsProductHandlers,
   getAllReviewsHandlers,
 };
