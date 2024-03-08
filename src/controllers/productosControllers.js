@@ -239,7 +239,7 @@ const modificarProducto = async (
       console.log(`Se modificó exitosamente el producto ${producto_id}`)
       return await Productos.findByPk(producto_id);
     } catch (error) {
-     console(error);
+     
      throw new Error ("Error en modificarProducto Controller")
     }
 };
