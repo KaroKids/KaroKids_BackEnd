@@ -140,7 +140,7 @@ const modificarProducto = async (
 
       //Actualizacion por cambio de Imagenes secundarias
       const imagenesSec_cloudinary = [];
-      let auxIdentidad = false
+      let auxIdentidad = false //Auxiliar para verificar si hay igualdad entre valores.
 
       for (let i = 0; i < imagenes_secundarias.length; i++) {
         //Verificamos si estamos recibiendo un formato válido o no.
@@ -153,8 +153,12 @@ const modificarProducto = async (
               break
             }
           }
-          //SI no hay coincidencias, se procede a subir la imagen a Cloudinary
-          if (auxIdentidad !== true) {
+          if (auxIdentidad === true) {
+            auxIdentidad = false; //Se resetea el auxiliar para la próxima iteración.
+          }
+          
+          else if (auxIdentidad !== true) {
+            //SI no hay coincidencias, se procede a subir la imagen a Cloudinary
             await cloudinary.uploader.upload(
               imagenes_secundarias[i],
               {
@@ -231,6 +235,9 @@ const modificarProducto = async (
           { where: { producto_id: producto_id } }
         );
       }
+
+      console.log(`Se modificó exitosamente el producto ${producto_id}`)
+      return await Productos.findByPk(producto_id);
     } catch (error) {
      console(error);
      throw new Error ("Error en modificarProducto Controller")
