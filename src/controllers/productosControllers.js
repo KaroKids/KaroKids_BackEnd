@@ -85,7 +85,7 @@ const modificarProducto = async (
         attributes: { exclude: ["createdAt", "updatedAt"]},
       })
       const cloudinaryRegex = /^https:\/\/res\.cloudinary\.com\/dk4ysl2hw\/image\/upload\//;
-      const extensionRegex = /\.(png|jpe?g|gif|webp|svg|heic|heif)$/i;
+      // const extensionRegex = /\.(png|jpe?g|gif|webp|svg|heic|heif)$/i;
 
       //todo Actualizacion por cambio de nombre
       if (nombre !== productoActual.nombre) {
@@ -105,7 +105,6 @@ const modificarProducto = async (
 
       //todo Actualizacion por cambio de Imagen Principal
       if (imagen_principal !== productoActual.imagen_principal) {
-        //Caso: imagen nueva, aún no subida a Cloudinary --> Imagen de PC o de celular. ¿LLegará hasheada?
         if (!cloudinaryRegex.test(imagen_principal)) {
           // if (extensionRegex.test(imagen_principal)) {
             const img_principal_cloud = await cloudinary.uploader.upload(
@@ -254,7 +253,6 @@ const crearProducto = async (
   stock
 ) => {
   try {
-    // Subimos la imagen principal a Cloudinary y retornamos la URL que nos devuelve el host.
     const img_principal_cloud = await cloudinary.uploader.upload(
       imagen_principal,
       {
@@ -273,7 +271,6 @@ const crearProducto = async (
       }
     );
 
-    // Subimos las imágenes secundarias a Cloudinary y almacenamos las URLs retornadas en un arreglo.
     const imagenes_secundarias_cloud = [];
 
     for (let i = 0; i < imagenes_secundarias.length; i++) {
