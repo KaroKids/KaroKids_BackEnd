@@ -81,9 +81,22 @@ const modificarProducto = async (
   inactivo,
   stock) => {
     try {
+      console.log("id: " + producto_id);
+      console.log("nombre: " + nombre);
+      console.log("desc: "+ descripcion);
+      console.log("imag1:" + imagen_principal);
+      console.log("imags: " + imagenes_secundarias);
+      console.log("edad: " + edad);
+      console.log("genero: " + genero);
+      console.log("precio:" + precio);
+      console.log("destacado:" + destacado);
+      console.log("inactivo:" + inactivo);
+      console.log("stock:" + stock);
       const productoActual = await Productos.findByPk(producto_id,{
         attributes: { exclude: ["createdAt", "updatedAt"]},
       })
+      const cloudinaryRegex = /^https:\/\/res\.cloudinary\.com\/dk4ysl2hw\/image\/upload\//;
+      const extensionRegex = /\.(png|jpe?g|gif|webp|svg|heic|heif)$/i;
 
       //todo Actualizacion por cambio de nombre
       if (nombre !== productoActual.nombre) {
@@ -106,151 +119,109 @@ const modificarProducto = async (
         //Caso: imagen nueva, aún no subida a Cloudinary --> Imagen de PC o de celular. ¿LLegará hasheada?
         if (!cloudinaryRegex.test(imagen_principal)) {
           //Condición: ¿Cumple con los formatos permitidos?
-          if (extensionRegex.test(imagen_principal)) {
-            const imgPrincipal_cloudinary = await cloudinary.uploader.upload(
-              imagen_principal,
-              {
-                upload_preset: "preset_imagenes_productos",
-                allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
-              },
-              function (err, result) {
-                if (err) {
-                  throw new Error("Error al subir nueva imagen primaria: ", err);
-                }
-                try {
-                  return result.secure_url;
-                } catch (err) {
-                  throw new Error("ModificarProducto Controller: Error en imgPrincipal_cloudinary. ", err);
-                }
+          /////////////////////////////////////////////////////////
+          const img_principal_cloud = await cloudinary.uploader.upload(
+            imagen_principal,
+            {
+              upload_preset: "preset_imagenes_productos",
+              allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
+            },
+            function (err, result) {
+              if (err) {
+                throw new Error("Error al subir la imagen primaria: ", err);
               }
-            );
+              try {
+                return result.secure_url;
+              } catch (err) {
+                throw new Error("Error en img_principal_cloud: ", err);
+              }
+            }
+          );
+          await Productos.update(
+            { imagen_principal: img_principal_cloud.secure_url },
+            { where: { producto_id: producto_id } }
+          );
+          /////////////////////////////////////////////////////////
+          // if (extensionRegex.test(imagen_principal)) {
+          //   const imgPrincipal_cloudinary = await cloudinary.uploader.upload(
+          //     imagen_principal,
+          //     {
+          //       upload_preset: "preset_imagenes_productos",
+          //       allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
+          //     },
+          //     function (err, result) {
+          //       if (err) {
+          //         throw new Error("Error al subir nueva imagen primaria: ", err);
+          //       }
+          //       try {
+          //         return result.secure_url;
+          //       } catch (err) {
+          //         throw new Error("ModificarProducto Controller: Error en imgPrincipal_cloudinary. ", err);
+          //       }
+          //     }
+          //   );
             
-            await Productos.update(
-              { imagen_principal: imgPrincipal_cloudinary.secure_url },
-              { where: { producto_id: producto_id } }
-            );
-          } else {
-            throw new Error ('ModificarProducto Controller: Formato de imagen principal no permitido')
-          }
-        } 
+          //   await Productos.update(
+          //     { imagen_principal: imgPrincipal_cloudinary.secure_url },
+          //     { where: { producto_id: producto_id } }
+          //   );
+          // } else {
+          //   throw new Error ('ModificarProducto Controller: Formato de imagen principal no permitido')
+          // }
+        } else{
+          await Productos.update(
+            { imagen_principal: imagen_principal },
+            { where: { producto_id: producto_id } }
+          );
+        }
       }
 
       //todo Actualizacion por cambio de Imagenes secundarias
       //Si el arreglo llega vacío, lo actualiza inmediatamente.
-      if (imagenes_secundarias.length === 0) {
-        await Productos.update(
-          { imagenes_secundarias: imagenes_secundarias },
-          { where: { producto_id: producto_id } }
-        );
-      }
+      // if (imagenes_secundarias.length === 0) {
+      //   await Productos.update(
+      //     { imagenes_secundarias: imagenes_secundarias },
+      //     { where: { producto_id: producto_id } }
+      //   );
+      // }
+       imagenes_secundarias = [...new Set(imagenes_secundarias)];
+      const imagenes_secundarias_cloud = [];
 
-      const cloudinaryRegex = /^https:\/\/res\.cloudinary\.com\/dk4ysl2hw\/image\/upload\//;
-      const extensionRegex = /\.(png|jpe?g|gif|webp|svg|heic|heif)$/i;
-
-      console.log('Array de imagenes recibido:', imagenes_secundarias)
-
-      //* --------------OPCIÓN ORIGINAL--------------
-      //Si el nuevo arreglo no llega vacío y es diferente al original
-      if (imagenes_secundarias !== productoActual.imagenes_secundarias) {
-        let imagenesSec_cloudinary = [];
+      for (let i = 0; i < imagenes_secundarias.length; i++) {
+        if (!cloudinaryRegex.test(imagenes_secundarias[i])) {
+          console.log("entro al if")
+        await cloudinary.uploader.upload(
+          imagenes_secundarias[i],
+          {
+            upload_preset: "preset_imagenes_productos",
+            allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
+          },
+          function (err, result) {
+            if (err) {
+              throw new Error("Error al subir las imagenes secundarias: ", err);
+            }
   
-        for (let i = 0; i < imagenes_secundarias.length; i++) {
-          let imagenRecibida = imagenes_secundarias[i];
-          console.log("imagenRecibida: ", imagenRecibida)
-  
-          //Si el arreglo original no la incluye
-          if (!productoActual.imagenes_secundarias.includes(imagenRecibida)) {
-            console.log('Entró al primer if')
-            //Si no es un enlace de Cloudinary ---> ESTA CONDICIÓN NO ES NECESARIA PORQUE LA BASE DE DATOS NO LO VA A TENER ASOCIADA A ESTE PRODUCTO DE TODOS MODOS, AUNQUE LA IMAGEN YA ESTÉ EN CLOUDINARY.
-            // if (!cloudinaryRegex.test(imagenRecibida)) { 
-              // console.log('Entró al segundo if')
-              //Si cumple con los formatos permitidos
-              if (extensionRegex.test(imagen_principal)) {
-                console.log('Entró al tercer if')
-                // Subirla y pushear el resultado en imagenesSec_cloudinary
-                try {
-                  const result = await cloudinary.uploader.upload(imagenRecibida, {
-                    upload_preset: "preset_imagenes_productos",
-                    allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
-                  });
-                  imagenesSec_cloudinary.push(result.secure_url);
-                } catch (error) {
-                  console.error(`Error al subir la nueva imagen secundaria ${imagenRecibida} a Cloudinary: `, error);
-                  throw new Error("ModificarProducto Controller: Error al subir las imágenes secundarias a Cloudinary");
-                }
-              } else {
-                console.log('Entró al primer else')
-                //Si no cumple con ninguna condición y su formato no es uno de los permitidos
-                console.error(`Formato no permitido: `, error);
-                throw new Error(`ModificarProducto Controller: Formato no permitido para la imagen secundaria ${imagenRecibida}`);
-              }
-            // } 
-            // else {
-            //   console.log('Entró al segundo else')
-            //   //Si el arreglo original no la incluye y es un enlace de Cloudinary
-            //   imagenesSec_cloudinary.push(imagenRecibida);
-            // }
-          } else {
-            console.log('Entró al tercer else')
-            //Si el arreglo original la incluye
-            imagenesSec_cloudinary.push(imagenRecibida);
+            try {
+              console.log("entro al push")
+              imagenes_secundarias_cloud.push(result.secure_url);
+            } catch (err) {
+              throw new Error(
+                "Error al construir el array imagenes_secundarias_cloud: ",
+                err
+              );
+            }
           }
-        }
-        console.log('Salió del bucle')
-        console.log('Arreglo de imagenes secundarias actualizado: ', imagenesSec_cloudinary)
-  
-        await Productos.update(
-          { imagenes_secundarias: imagenesSec_cloudinary },
-          { where: { producto_id: producto_id } }
         );
+      }else{
+        imagenes_secundarias_cloud.push(imagenes_secundarias[i]);
       }
-
-          //* --------------OTRA ALTERNATIVA--------------
-          // if (imagenes_secundarias !== productoActual.imagenes_secundarias) {
-          //   const imagenesSec_cloudinary2 = productoActual.imagenes_secundarias.map(async (imagen, index) => {
-          //     //Si el arreglo original no la incluye
-          //     if (imagenes_secundarias[index] !== imagen) {
-          //       //Si no es un enlace de Cloudinary
-          //       if (!cloudinaryRegex.test(imagenes_secundarias[index])) {
-          //         console.log('Entró al segundo if')
-          //         //Si cumple con los formatos permitidos
-          //         if (extensionRegex.test(imagen_principal)) {
-          //           console.log('Entró al tercer if')
-          //           // Subirla y pushear el resultado en imagenesSec_cloudinary
-          //           try {
-          //             const result = await cloudinary.uploader.upload(imagenes_secundarias[index], {
-          //               upload_preset: "preset_imagenes_productos",
-          //               allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
-          //             });
-          //             return result.secure_url;
-          //           } catch (error) {
-          //             console.error(`Error al subir la nueva imagen secundaria ${imagenes_secundarias[index]} a Cloudinary: `, error);
-          //             throw new Error("ModificarProducto Controller: Error al subir las imágenes secundarias a Cloudinary");
-          //           }
-          //         } else {
-          //           console.log('Entró al primer else')
-          //           //Si no cumple con ninguna condición y su formato no es uno de los permitidos
-          //           console.error(`Formato no permitido: `, error);
-          //           throw new Error(`ModificarProducto Controller: Formato no permitido para la imagen secundaria ${imagenes_secundarias[index]}`);
-          //         }
-          //       } else {
-          //         console.log('Entró al segundo else')
-          //         //Si el arreglo original no la incluye y es un enlace de Cloudinary
-          //         return imagenes_secundarias[index];
-          //       }
-          //     } else {
-          //       console.log('Entró al tercer else')
-          //       //Si el arreglo original la incluye
-          //       return imagenes_secundarias[index];
-          //     }
-          //   })
-
-          //   await Productos.update(
-          //     { imagenes_secundarias: imagenesSec_cloudinary2 },
-          //     { where: { producto_id: producto_id } }
-          //   );
-          // }
-
+    }
+      await Productos.update(
+        { imagenes_secundarias: imagenes_secundarias_cloud },
+        { where: { producto_id: producto_id } }
+      );
+      console.log('Array de imagenes recibido:', imagenes_secundarias_cloud)
+     
 
       //todo Actualizacion por cambio de edad/categoría
       if (edad !== productoActual.edad) {
