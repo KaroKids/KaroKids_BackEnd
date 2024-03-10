@@ -19,11 +19,21 @@ const filtrarEdad = (edad, array1) => {
 const filtrarGenero = (genero, array1) => {
   if (genero) {
     const arr = [];
-    array1.map((a) => {
-      if (a.genero === genero) {
-        arr.push(a);
-      }
-    });
+
+    if (genero === "chico") {
+      array1.map((a) => {
+        if (a.genero !== "chica") {
+          arr.push(a);
+        }
+      });
+    } else {
+      array1.map((a) => {
+        if (a.genero !== "chico") {
+          arr.push(a);
+        }
+      });
+    }
+
     return arr;
   } else {
     return array1;
@@ -138,8 +148,17 @@ const ordenar = (orden, array) => {
 };
 async function productosFiltrados(req, res) {
   try {
-    const { edad, genero, talla, color, minPrecio, maxPrecio, nombre, orden, admin } =
-      req.query;
+    const {
+      edad,
+      genero,
+      talla,
+      color,
+      minPrecio,
+      maxPrecio,
+      nombre,
+      orden,
+      admin,
+    } = req.query;
     let { paginaActual } = req.query;
     if (!paginaActual) {
       paginaActual = 1;
@@ -152,10 +171,10 @@ async function productosFiltrados(req, res) {
     console.log("minPrecio " + minPrecio);
     console.log("maxPrecio " + maxPrecio);
     console.log("página actual " + paginaActual);
-    console.log("rol: "+ admin)
+    console.log("rol: " + admin);
 
     let array = [];
-    let mapeado =[]
+    let mapeado = [];
     if (nombre) {
       array = await Productos.findAll({
         where: { nombre: { [Op.iLike]: `%${nombre}%` } },
@@ -166,27 +185,27 @@ async function productosFiltrados(req, res) {
 
     array = array.map((a) => a.dataValues);
 
-    if(admin === "false"){ 
-        console.log("entro al if admin")
-        array = array.map((producto)=>{
-          console.log("producto del map")
-          console.log(producto)
-          if (producto.inactivo === false){
-            mapeado.push(producto)
-          }})
-          console.log("array mapeado")
-          array = mapeado 
-      }else{
-        console.log("no entro")
-      }
+    if (admin === "false") {
+      console.log("entro al if admin");
+      array = array.map((producto) => {
+        console.log("producto del map");
+        console.log(producto);
+        if (producto.inactivo === false) {
+          mapeado.push(producto);
+        }
+      });
+      console.log("array mapeado");
+      array = mapeado;
+    } else {
+      console.log("no entro");
+    }
     array = filtrarEdad(edad, array);
     array = filtrarGenero(genero, array);
     array = await filtrarTalla(talla, array);
     array = filtrarColor(color, talla, array);
     array = filtrarPrecio(minPrecio, maxPrecio, array);
     array = await ordenar(orden, array);
-   
-  
+
     const paginacion = await resultadosPaginados(paginaActual, 8, array);
 
     res.status(200).json(paginacion);
