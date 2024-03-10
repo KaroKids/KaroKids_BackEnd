@@ -108,23 +108,23 @@ const modificarProducto = async (
         //Caso: imagen nueva, aún no subida a Cloudinary --> Imagen de PC o de celular. ¿LLegará hasheada?
         if (!cloudinaryRegex.test(imagen_principal)) {
           // if (extensionRegex.test(imagen_principal)) {
-          const img_principal_cloud = await cloudinary.uploader.upload(
-            imagen_principal,
-            {
-              upload_preset: "preset_imagenes_productos",
-              allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
-            },
-            function (err, result) {
-              if (err) {
-                throw new Error("Error al subir la imagen primaria: ", err);
+            const img_principal_cloud = await cloudinary.uploader.upload(
+              imagen_principal,
+              {
+                upload_preset: "preset_imagenes_productos",
+                allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
+              },
+              function (err, result) {
+                if (err) {
+                  throw new Error("Error al subir la imagen primaria: ", err);
+                }
+                try {
+                  return result.secure_url;
+                } catch (err) {
+                  throw new Error("Error en img_principal_cloud: ", err);
+                }
               }
-              try {
-                return result.secure_url;
-              } catch (err) {
-                throw new Error("Error en img_principal_cloud: ", err);
-              }
-            }
-          );
+            );
           // }
           await Productos.update(
             { imagen_principal: img_principal_cloud.secure_url },
@@ -151,27 +151,29 @@ const modificarProducto = async (
 
       for (let i = 0; i < imagenes_secundarias.length; i++) {
         if (!cloudinaryRegex.test(imagenes_secundarias[i])) {
-        await cloudinary.uploader.upload(
-          imagenes_secundarias[i],
-          {
-            upload_preset: "preset_imagenes_productos",
-            allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
-          },
-          function (err, result) {
-            if (err) {
-              throw new Error("Error al subir las imagenes secundarias: ", err);
-            }
-  
-            try {
-              imagenes_secundarias_cloud.push(result.secure_url);
-            } catch (err) {
-              throw new Error(
-                "Error al construir el array imagenes_secundarias_cloud: ",
-                err
-              );
-            }
-          }
-        );
+          // if (extensionRegex.test(imagenes_secundarias[i])) {
+            await cloudinary.uploader.upload(
+              imagenes_secundarias[i],
+              {
+                upload_preset: "preset_imagenes_productos",
+                allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
+              },
+              function (err, result) {
+                if (err) {
+                  throw new Error("Error al subir las imagenes secundarias: ", err);
+                }
+      
+                try {
+                  imagenes_secundarias_cloud.push(result.secure_url);
+                } catch (err) {
+                  throw new Error(
+                    "Error al construir el array imagenes_secundarias_cloud: ",
+                    err
+                  );
+                }
+              }
+            );
+        // }
       }else{
         imagenes_secundarias_cloud.push(imagenes_secundarias[i]);
       }
@@ -229,7 +231,7 @@ const modificarProducto = async (
           { where: { producto_id: producto_id } }
         );
       }
-      
+
       //todo Se retorna el elemento modificado
       console.log(`Se modificó exitosamente el producto ${producto_id}`)
       return await Productos.findByPk(producto_id);
