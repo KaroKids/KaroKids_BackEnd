@@ -5,7 +5,7 @@ const getAllReviews = async (producto_id) => {
   try {
     const reviewsProducts = await Calificaciones.findAll({
       where: [{ producto_id: producto_id }],
-      attributes: ["puntuacion", "comentario", "createdAt"],
+      attributes: ["usuario_id", "puntuacion", "comentario", "createdAt"],
     });
 
     //si no tiene puntuacion return 0
@@ -48,8 +48,6 @@ const getPromedioReviews = async (producto_id) => {
       where: [{ producto_id: producto_id }],
       attributes: ["puntuacion"],
     });
-    //si no tiene puntuacion return 0
-    //si tiene puntuacion, debo calcular el promedio
 
     const valores = reviewsProducts.map((valor) => {
       return valor.dataValues.puntuacion;
@@ -64,10 +62,8 @@ const getPromedioReviews = async (producto_id) => {
     let totalCalificaciones = valores.length;
     let promedioReal = 0;
     if (totalCalificaciones === 0) {
-      console.log("El producto no tiene calificaciones");
     } else {
-      promedioReal = suma / totalCalificaciones; // este muestra promedioReal real, ejemplo 4.8
-      //let promedioRealSinUltimoDecimal = parseFloat(objeto.promedioReal.toFixed(1));
+      promedioReal = suma / totalCalificaciones;
 
       const mitad = Math.floor(promedioReal) + 0.5;
 
@@ -79,9 +75,8 @@ const getPromedioReviews = async (producto_id) => {
         promedioPuntuacion = Math.floor(promedioReal);
       }
     }
-    let numeroCadena = promedioReal.toString().slice(0, -1);
-    // Convertir la cadena de nuevo a un número
-    promedioReal = parseFloat(numeroCadena);
+
+    promedioReal = parseFloat(promedioReal.toFixed(1));
 
     const response = { promedioPuntuacion, totalCalificaciones, promedioReal };
     return response;
