@@ -35,12 +35,18 @@ const createOrder = async (req, res) => {
         pending: `https://karokids.onrender.com/payment/pending?user_id=${user_id}`,
       },
       notification_url: `https://karokids.onrender.com/payment/webhook?user_id=${user_id}`,
+      payment_methods: {
+        excluded_payment_types: [
+          {
+            id: "ticket",
+          },
+        ],
+      },
       auto_return: "approved",
     };
     const preference = new Preference(client);
     const result = await preference.create({ body });
 
-    console.log(result);
     return res.json({ id: result.id });
   } catch (error) {
     console.log(error);
@@ -51,7 +57,6 @@ const createOrder = async (req, res) => {
 const receiveWebhook = async (req, res) => {
   const payment = new Payment(client);
   const query = req.query;
-  console.log(query);
   try {
     if (query.type === "payment") {
       const { payment_type_id, status, transaction_amount, additional_info } =
@@ -74,7 +79,6 @@ const receiveWebhook = async (req, res) => {
       };
 
       const user_id = req.query.user_id;
-      console.log(user_id);
 
       const order = await crearOrden({
         productos_compra: additional_info.items,
@@ -84,8 +88,6 @@ const receiveWebhook = async (req, res) => {
         coste_total: transaction_amount,
         usuario_id: user_id,
       });
-
-      console.log(order);
 
       await borrarCarrito(user_id);
 
