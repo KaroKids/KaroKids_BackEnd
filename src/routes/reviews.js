@@ -9,8 +9,8 @@ const {
 
 const reviews = Router();
 
-reviews.get("/:producto_id", getPromedioReviewsHandlers); //reviews/c77e5271-7c45-4b8e-aa5b-55e8ff309d38
-reviews.post("/", createReviewsProductHandlers); // esta ruta es para comentarios
+reviews.get("/:producto_id", getPromedioReviewsHandlers);
+reviews.post("/", createReviewsProductHandlers);
 reviews.get("/all/:producto_id", getAllReviewsHandlers);
 reviews.get("/ultimos/:producto_id", get3ReviewsHandlers);
 
