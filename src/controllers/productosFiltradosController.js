@@ -163,15 +163,7 @@ async function productosFiltrados(req, res) {
 		if (!paginaActual) {
 			paginaActual = 1;
 		}
-		console.log("orden" + orden);
-		console.log("Edad " + edad);
-		console.log("Genero " + genero);
-		console.log("Talla " + talla);
-		console.log("Color " + color);
-		console.log("minPrecio " + minPrecio);
-		console.log("maxPrecio " + maxPrecio);
-		console.log("página actual " + paginaActual);
-		console.log("rol: " + admin);
+
 
 		let array = [];
 		let mapeado = [];
@@ -193,19 +185,14 @@ async function productosFiltrados(req, res) {
 		array = array.map((a) => a.dataValues);
 
 		if (admin === "false") {
-			console.log("entro al if admin");
 			array = array.map((producto) => {
-				console.log("producto del map");
 				console.log(producto);
 				if (producto.inactivo === false) {
 					mapeado.push(producto);
 				}
 			});
-			console.log("array mapeado");
 			array = mapeado;
-		} else {
-			console.log("no entro");
-		}
+		} 
 		array = filtrarEdad(edad, array);
 		array = filtrarGenero(genero, array);
 		array = await filtrarTalla(talla, array);
