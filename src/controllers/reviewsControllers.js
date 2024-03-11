@@ -6,6 +6,7 @@ const getAllReviews = async (producto_id) => {
     const reviewsProducts = await Calificaciones.findAll({
       where: [{ producto_id: producto_id }],
       attributes: ["usuario_id", "puntuacion", "comentario", "createdAt"],
+      order: [["createdAt", "DESC"]],
     });
 
     //si no tiene puntuacion return 0
