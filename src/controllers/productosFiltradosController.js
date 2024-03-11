@@ -143,7 +143,6 @@ const ordenar = (orden, array) => {
 			return 0;
 		});
 	}
-	console.log(arr);
 	return arr;
 };
 async function productosFiltrados(req, res) {
@@ -186,7 +185,6 @@ async function productosFiltrados(req, res) {
 
 		if (admin === "false") {
 			array = array.map((producto) => {
-				console.log(producto);
 				if (producto.inactivo === false) {
 					mapeado.push(producto);
 				}

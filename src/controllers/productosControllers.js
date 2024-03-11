@@ -356,33 +356,24 @@ const crearProducto = async (
 };
 
 const decrementarCantidad = async (producto_id, compra_talla, compra_color, compra_cantidad)=>{
-  console.log(producto_id)
-  console.log(compra_talla)
-  console.log(compra_color)
-  console.log(compra_cantidad)
+
   const producto = await Productos.findByPk(producto_id)
    const modificado = producto.dataValues.stock[compra_talla].filter((item)=> {
-    console.log(item)
     if (item.color === compra_color){
       if ((item.cantidad - compra_cantidad) > 0){
         item.cantidad = item.cantidad - compra_cantidad;
-        console.log("entro al if: " + item.cantidad)
         item.cantidad = item.cantidad.toString();
         return item
       }}else{
-        console.log("no entro al if: " + item)
         return item
       }
    } )
    console.log(modificado)
    if(modificado.length){
-    console.log("actualizo")
     producto.dataValues.stock[compra_talla] = modificado
    }else{
-    console.log("elimino")
     delete producto.dataValues.stock[compra_talla]
    }
-   console.log(producto.dataValues)
    await Productos.update(
     { stock: producto.dataValues.stock },
     { where: { producto_id: producto_id } }
