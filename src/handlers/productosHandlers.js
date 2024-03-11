@@ -6,6 +6,7 @@ const {
   destacarProducto,
   productosDestacados,
   modificarProducto,
+  decrementarCantidad
 } = require("../controllers/productosControllers");
 
 const getProductos = async (req, res) => {
@@ -75,6 +76,21 @@ const postProducto = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+const decrementarStock = async (req,res)=>{
+  const {producto_id, compra_talla, compra_color, compra_cantidad} = req.body;
+  try {
+    const response = await decrementarCantidad (
+      producto_id,
+      compra_talla,
+      compra_color.toLowerCase(),
+      compra_cantidad);
+
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 
 const putProducto = async (req, res) => {
   const { 
@@ -140,4 +156,5 @@ module.exports = {
   deleteProducto,
   standOutProducto,
   getProductosDestacados,
+  decrementarStock
 };

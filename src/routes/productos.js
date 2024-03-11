@@ -6,6 +6,7 @@ const {
   postProducto,
   standOutProducto,
   getProductosDestacados,
+  decrementarStock
 } = require("../handlers/productosHandlers");
 const productosFiltrados = require("../controllers/productosFiltradosController");
 const productos = Router();
@@ -17,5 +18,6 @@ productos.post("/", postProducto);
 productos.put("/modificar", putProducto);
 productos.put("/", deleteProducto);
 productos.put("/destacado", standOutProducto);
+productos.put("/stock", decrementarStock);
 
 module.exports = productos;

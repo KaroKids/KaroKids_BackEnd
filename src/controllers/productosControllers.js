@@ -314,6 +314,32 @@ const crearProducto = async (
   }
 };
 
+const decrementarCantidad = async (producto_id, compra_talla, compra_color, compra_cantidad)=>{
+
+  const producto = await Productos.findByPk(producto_id)
+   const modificado = producto.dataValues.stock[compra_talla].filter((item)=> {
+    if (item.color === compra_color){
+      if ((item.cantidad - compra_cantidad) > 0){
+        item.cantidad = item.cantidad - compra_cantidad;
+        item.cantidad = item.cantidad.toString();
+        return item
+      }}else{
+        return item
+      }
+   } )
+   console.log(modificado)
+   if(modificado.length){
+    producto.dataValues.stock[compra_talla] = modificado
+   }else{
+    delete producto.dataValues.stock[compra_talla]
+   }
+   await Productos.update(
+    { stock: producto.dataValues.stock },
+    { where: { producto_id: producto_id } }
+  );
+  return await Productos.findByPk(producto_id);
+}
+
 const filtrarProductos = async () => {};
 
 const destacarProducto = async (producto_id) => {
@@ -342,4 +368,5 @@ module.exports = {
   filtrarProductos,
   destacarProducto,
   productosDestacados,
+  decrementarCantidad
 };
