@@ -54,14 +54,22 @@ const borrarProducto = async (producto_id) => {
     if (!producto) {
       return "No existe ese producto";
     }
-
+  if(producto.destacado == true){
     await Productos.update(
-      { inactivo: !producto.inactivo },
+      { inactivo: !producto.inactivo,
+      destacado: !producto.destacado },
       {
         where: { producto_id: producto_id },
       }
     );
-
+    }else{
+      await Productos.update(
+        { inactivo: !producto.inactivo},
+        {
+          where: { producto_id: producto_id },
+        }
+      );
+    }
     return await Productos.findByPk(producto_id);
   } catch (error) {
     return error;
