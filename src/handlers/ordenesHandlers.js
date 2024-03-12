@@ -2,11 +2,13 @@ const {
   todasLasOrdenes,
   traerOrden,
   crearOrden,
+  modificarOrden,
 } = require("../controllers/ordenesControllers");
+const ordenesFiltradas = require("../controllers/ordenesFiltradasControllers");
 
 const getOrdenes = async (req, res) => {
   try {
-    const response = await todasLasOrdenes();
+    const response = await ordenesFiltradas();
     res.status(200).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -48,10 +50,12 @@ const postOrden = async (req, res) => {
 };
 
 const putOrden = async (req, res) => {
-  const { id } = req.params;
+  const { id , estado} = req.body;
   try {
-    res.status(200).send(`se modifico la orden ${id}`);
+    const response = await modificarOrden(id, estado)
+    res.status(200).json(response);
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: error.message });
   }
 };

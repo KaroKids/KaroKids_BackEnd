@@ -144,9 +144,26 @@ const createReviewsProducts = async (
   // }
 };
 
+const existeReview = async (usuario_id, producto_id) =>{
+try{
+  const response = await Calificaciones.findOne({
+    where: { usuario_id: usuario_id, producto_id : producto_id },
+  })
+  if (response){
+    return true
+  }else{
+    return false
+  }
+}catch(error){
+  console.error(error);
+    res.status(400).json({ error: error.message });
+}
+}
+
 module.exports = {
   getPromedioReviews,
   getLast3Reviews,
   createReviewsProducts,
   getAllReviews,
+  existeReview
 };
