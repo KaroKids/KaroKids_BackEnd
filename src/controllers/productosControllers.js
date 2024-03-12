@@ -226,12 +226,21 @@ const modificarProducto = async (
 
       //todo Actualizacion por cambio de stock
       if (stock !== productoActual.stock) {
+        if(Object.keys(stock).length === 0 && productoActual.inactivo == false){
+          if (productoActual.destacado === true){
+            productoActual.destacado = false
+          }
         await Productos.update(
-          { stock: stock },
+          { stock: stock, inactivo : true, destacado : productoActual.destacado },
+          { where: { producto_id: producto_id } }
+        );
+      }else{
+        await Productos.update(
+          { stock: stock},
           { where: { producto_id: producto_id } }
         );
       }
-
+    }
       //todo Se retorna el elemento modificado
       console.log(`Se modificó exitosamente el producto ${producto_id}`)
       return await Productos.findByPk(producto_id);
@@ -339,10 +348,23 @@ const decrementarCantidad = async (producto_id, compra_talla, compra_color, comp
    }else{
     delete producto.dataValues.stock[compra_talla]
    }
+   if(producto.dataValues.stock == null || producto.dataValues.stock == undefined){
+    producto.dataValues.stock = {}
+   }
+   if(Object.keys(producto.dataValues.stock).length === 0 && producto.dataValues.inactivo == false){
+    if(producto.dataValues.destacado == true){
+      producto.dataValues.destacado = false
+    }
+    await Productos.update(
+      { stock: producto.dataValues.stock, inactivo : true, destacado : producto.dataValues.destacado },
+      { where: { producto_id: producto_id } }
+    );
+   }else{
    await Productos.update(
     { stock: producto.dataValues.stock },
     { where: { producto_id: producto_id } }
   );
+   }
   return await Productos.findByPk(producto_id);
 }
 

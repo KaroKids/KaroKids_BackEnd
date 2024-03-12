@@ -59,12 +59,12 @@ const createOrder = async (req, res) => {
         // success: `https://karokids.onrender.com/payment/success?user_id=${user_id}`,
         // failure: `https://karokids.onrender.com/payment/failure?user_id=${user_id}`,
         // pending: `https://karokids.onrender.com/payment/pending?user_id=${user_id}`,
-         success: `https://32b2-2800-810-5c2-524-156a-31f-f219-dd77.ngrok-free.app/payment/success?user_id=${user_id}`,
-         failure: `https://32b2-2800-810-5c2-524-156a-31f-f219-dd77.ngrok-free.app/payment/failure?user_id=${user_id}`,
-         pending: `https://32b2-2800-810-5c2-524-156a-31f-f219-dd77.ngrok-free.app/payment/pending?user_id=${user_id}`,
+         success: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/success?user_id=${user_id}`,
+         failure: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/failure?user_id=${user_id}`,
+         pending: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/pending?user_id=${user_id}`,
       },
      // notification_url: `https://karokids.onrender.com/payment/webhook?user_id=${user_id}`,
-      notification_url: `https://32b2-2800-810-5c2-524-156a-31f-f219-dd77.ngrok-free.app/payment/webhook?user_id=${user_id}`,
+      notification_url: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/webhook?user_id=${user_id}`,
       payment_methods: {
         excluded_payment_types: [
           {
