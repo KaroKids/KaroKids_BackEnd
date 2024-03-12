@@ -38,12 +38,14 @@ const borrarOrden = async (id) => {
   });
 };
 
-const modificarOrden = async (id) => {
-  await Ordenes.update({
-    where: {
-      id: id,
-    },
-  });
+const modificarOrden = async (id, estado) => {
+  await Ordenes.update(
+    {estado_pago : estado},
+    {where: {
+      orden_id: id,
+    },}
+  );
+  return await Ordenes.findByPk(id);
 };
 
 const crearOrden = async (

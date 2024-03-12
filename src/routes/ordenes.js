@@ -6,13 +6,14 @@ const {
   putOrden,
   deleteOrden,
   getOrdenById,
-} = require("../handlers/ordenesHandlers");
+} = require("../handlers/ordenesHandlers");;
+const ordenesFiltradas = require('../controllers/ordenesFiltradasControllers');
 const ordenes = Router();
 
-ordenes.get("/", getOrdenes);
+ordenes.get("/", ordenesFiltradas);
 ordenes.get("/:id", getOrden);
 ordenes.post("/", postOrden);
-ordenes.put("/:id", putOrden);
+ordenes.put("/", putOrden);
 ordenes.delete("/:id", deleteOrden);
 ordenes.get("/detail/:orden_id", getOrdenById);
 
