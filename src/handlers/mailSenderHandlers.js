@@ -1,4 +1,4 @@
-const { successMailSender, reviewMailSender, failureMailSender } = require("../controllers/mailSenderControllers");
+const { successMailSender, reviewMailSender, failureMailSender, pendingMailSender } = require("../controllers/mailSenderControllers");
 
 const postSuccessMail = async (req, res) => {
     const {nombre_usuario, usuario_email, numero_orden, productos_compra, mp_data} = req.body;
@@ -33,8 +33,20 @@ const postFailureMail = async (req, res) => {
     }
 }
 
+const postPendingMail = async (req, res) => {
+    const {nombre_usuario, usuario_email, numero_orden, productos_compra, mp_data} = req.body;
+    try{
+        const response = await pendingMailSender(nombre_usuario, usuario_email, numero_orden, productos_compra, mp_data)
+        res.status(200).json(response);
+    }
+    catch(error){
+        res.status(400).json({error: error.message});
+    }
+}
+
 module.exports = {
     postSuccessMail, 
     postReviewMail, 
     postFailureMail,
+    postPendingMail
 }
