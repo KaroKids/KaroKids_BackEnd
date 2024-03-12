@@ -255,7 +255,9 @@ const crearProducto = async (
 ) => {
   try {
     //Primero se convierten las imagenes de formato HEIC a JPEG
+    console.log('imgPrincipalRecibida', imagen_principal)
     const imgPrincipalConvertida = await heicToJpeg(imagen_principal);
+    console.log('imgPrincipalConvertida', imgPrincipalConvertida)
 
     const img_principal_cloud = await cloudinary.uploader.upload(
       imgPrincipalConvertida,
