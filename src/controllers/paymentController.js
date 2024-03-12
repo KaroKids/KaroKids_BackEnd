@@ -1,7 +1,7 @@
 const { MercadoPagoConfig, Preference, Payment } = require("mercadopago");
 const { borrarCarrito } = require("./carritosController");
 const { crearOrden } = require("./ordenesControllers");
-const { decrementarCantidad } = require("./productosControllers")
+const { decrementarCantidad } = require("./productosControllers");
 
 const client = new MercadoPagoConfig({
   accessToken:
@@ -11,11 +11,11 @@ const client = new MercadoPagoConfig({
 const success = async (req, res) => {
   const payment = new Payment(client);
   const query = req.query;
-    const user_id = req.query.user_id;
+  const user_id = req.query.user_id;
   try {
     const { payment_id } = query;
     const { additional_info } = await payment.get({ id: payment_id });
-    const productosComprados = additional_info.items;  
+    const productosComprados = additional_info.items;
     for (const producto of productosComprados) {
       const info = producto.description.split("-");
       console.log(producto.id);
@@ -32,7 +32,7 @@ const success = async (req, res) => {
       );
     }
     await borrarCarrito(user_id);
-    res.redirect("http://localhost:5173/productos");
+    res.redirect("https://karokids-frontend.vercel.app/productos");
   } catch (error) {
     console.log(error);
   }
@@ -46,7 +46,8 @@ const createOrder = async (req, res) => {
       id: product.producto_id,
       title: product.producto_nombre,
       picture_url: product.producto_imagen,
-      description: product.compra_talla +"-" + product.compra_color.toLowerCase(),
+      description:
+        product.compra_talla + "-" + product.compra_color.toLowerCase(),
       quantity: product.compra_cantidad,
       unit_price: product.producto_precio,
     };
@@ -56,15 +57,11 @@ const createOrder = async (req, res) => {
     const body = {
       items: cartFixed,
       back_urls: {
-        // success: `https://karokids.onrender.com/payment/success?user_id=${user_id}`,
-        // failure: `https://karokids.onrender.com/payment/failure?user_id=${user_id}`,
-        // pending: `https://karokids.onrender.com/payment/pending?user_id=${user_id}`,
-         success: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/success?user_id=${user_id}`,
-         failure: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/failure?user_id=${user_id}`,
-         pending: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/pending?user_id=${user_id}`,
+        success: `https://karokids.onrender.com/payment/success?user_id=${user_id}`,
+        failure: `https://karokids.onrender.com/payment/failure?user_id=${user_id}`,
+        pending: `https://karokids.onrender.com/payment/pending?user_id=${user_id}`,
       },
-     // notification_url: `https://karokids.onrender.com/payment/webhook?user_id=${user_id}`,
-      notification_url: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/webhook?user_id=${user_id}`,
+      notification_url: `https://karokids.onrender.com/payment/webhook?user_id=${user_id}`,
       payment_methods: {
         excluded_payment_types: [
           {
@@ -110,7 +107,7 @@ const receiveWebhook = async (req, res) => {
 
       const user_id = req.query.user_id;
 
-      const order = await crearOrden({
+      await crearOrden({
         productos_compra: additional_info.items,
         metodo_pago: metodoPago[payment_type_id],
         estado_pago: estadoPago[status],
