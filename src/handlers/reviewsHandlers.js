@@ -4,7 +4,6 @@ const {
   createReviewsProducts,
   getAllReviews,
   existeReview,
-
 } = require("../controllers/reviewsControllers");
 
 const getAllReviewsHandlers = async (req, res) => {
@@ -55,17 +54,18 @@ const createReviewsProductHandlers = async (req, res) => {
 };
 
 const getExisteReview = async (req, res) => {
-  const { usuario_id, producto_id } = req.body;
+  const { usuario_id, producto_id } = req.query;
+  console.log("params handler", { usuario_id, producto_id });
   try {
-    const response = await existeReview(usuario_id, producto_id)
+    const response = { existe: await existeReview(usuario_id, producto_id) };
 
+    console.log("response handler", response);
     res.status(200).json(response);
   } catch (error) {
     console.error(error);
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error });
   }
-
-}
+};
 
 /* const getReviewsPageHandlers = async (req, res) => {
   try {
@@ -96,5 +96,5 @@ module.exports = {
   get3ReviewsHandlers,
   createReviewsProductHandlers,
   getAllReviewsHandlers,
-  getExisteReview
+  getExisteReview,
 };
