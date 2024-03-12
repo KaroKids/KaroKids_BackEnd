@@ -6,17 +6,16 @@ const todasLasOrdenes = async () => {
       include: [
         {
           model: Usuarios,
-          attributes: ['nombre_usuario', 'apellido_usuario']
-        }
-      ]
+          attributes: ["nombre_usuario", "apellido_usuario"],
+        },
+      ],
     });
 
     return ordenes;
   } catch (error) {
-    throw new Error('Error al obtener todas las ordenes: ' + error.message);
+    throw new Error("Error al obtener todas las ordenes: " + error.message);
   }
 };
-
 
 const traerOrden = async (id) => {
   const response = await Ordenes.findAll({
@@ -69,6 +68,11 @@ const crearOrden = async (
 
 const filtrarOrdenes = async () => {};
 
+const traerOrdenPorId = async (orden_id) => {
+  const orden = await Ordenes.findByPk(orden_id);
+  return orden;
+};
+
 module.exports = {
   todasLasOrdenes,
   traerOrden,
@@ -76,4 +80,5 @@ module.exports = {
   modificarOrden,
   crearOrden,
   filtrarOrdenes,
+  traerOrdenPorId,
 };

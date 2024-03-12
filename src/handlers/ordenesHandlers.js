@@ -1,8 +1,10 @@
+const { response } = require("express");
 const {
   todasLasOrdenes,
   traerOrden,
   crearOrden,
   modificarOrden,
+  traerOrdenPorId,
 } = require("../controllers/ordenesControllers");
 const ordenesFiltradas = require("../controllers/ordenesFiltradasControllers");
 
@@ -69,10 +71,21 @@ const deleteOrden = async (req, res) => {
   }
 };
 
+const getOrdenById = async (req, res) => {
+  const { orden_id } = req.params;
+  const response = await traerOrdenPorId(orden_id);
+  try {
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error });
+  }
+};
+
 module.exports = {
   getOrdenes,
   getOrden,
   postOrden,
   putOrden,
   deleteOrden,
+  getOrdenById,
 };
