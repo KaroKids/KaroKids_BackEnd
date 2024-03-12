@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Productos } = require("../db");
 const resultadosPaginados = require("../utils/paginacion");
 const cloudinary = require("cloudinary").v2;
+const { heicToJpeg } = require('../utils/heicToJpeg')
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -93,7 +94,6 @@ const modificarProducto = async (
         attributes: { exclude: ["createdAt", "updatedAt"]},
       })
       const cloudinaryRegex = /^https:\/\/res\.cloudinary\.com\/dk4ysl2hw\/image\/upload\//;
-      // const extensionRegex = /\.(png|jpe?g|gif|webp|svg|heic|heif)$/i;
 
       //todo Actualizacion por cambio de nombre
       if (nombre !== productoActual.nombre) {
@@ -114,25 +114,26 @@ const modificarProducto = async (
       //todo Actualizacion por cambio de Imagen Principal
       if (imagen_principal !== productoActual.imagen_principal) {
         if (!cloudinaryRegex.test(imagen_principal)) {
-          // if (extensionRegex.test(imagen_principal)) {
-            const img_principal_cloud = await cloudinary.uploader.upload(
-              imagen_principal,
-              {
-                upload_preset: "preset_imagenes_productos",
-                allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
-              },
-              function (err, result) {
-                if (err) {
-                  throw new Error("Error al subir la imagen primaria: ", err);
-                }
-                try {
-                  return result.secure_url;
-                } catch (err) {
-                  throw new Error("Error en img_principal_cloud: ", err);
-                }
+          let imgConvertida = await heicToJpeg(imagen_principal);
+
+          const img_principal_cloud = await cloudinary.uploader.upload(
+            imgConvertida,
+            {
+              upload_preset: "preset_imagenes_productos",
+              allowed_formats: ["png", "jpg", "jpeg", "gif", "webp"],
+            },
+            function (err, result) {
+              if (err) {
+                throw new Error("Error al subir la imagen primaria: ", err);
               }
-            );
-          // }
+              try {
+                return result.secure_url;
+              } catch (err) {
+                throw new Error("Error en img_principal_cloud: ", err);
+              }
+            }
+          );
+
           await Productos.update(
             { imagen_principal: img_principal_cloud.secure_url },
             { where: { producto_id: producto_id } }
@@ -146,50 +147,42 @@ const modificarProducto = async (
       }
 
       //todo Actualizacion por cambio de Imagenes secundarias
-      //Si el arreglo llega vacío, lo actualiza inmediatamente.
-      // if (imagenes_secundarias.length === 0) {
-      //   await Productos.update(
-      //     { imagenes_secundarias: imagenes_secundarias },
-      //     { where: { producto_id: producto_id } }
-      //   );
-      // }
-       imagenes_secundarias = [...new Set(imagenes_secundarias)];
+      imagenes_secundarias = [...new Set(imagenes_secundarias)];
       const imagenes_secundarias_cloud = [];
 
       for (let i = 0; i < imagenes_secundarias.length; i++) {
         if (!cloudinaryRegex.test(imagenes_secundarias[i])) {
-          // if (extensionRegex.test(imagenes_secundarias[i])) {
-            await cloudinary.uploader.upload(
-              imagenes_secundarias[i],
-              {
-                upload_preset: "preset_imagenes_productos",
-                allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
-              },
-              function (err, result) {
-                if (err) {
-                  throw new Error("Error al subir las imagenes secundarias: ", err);
-                }
-      
-                try {
-                  imagenes_secundarias_cloud.push(result.secure_url);
-                } catch (err) {
-                  throw new Error(
-                    "Error al construir el array imagenes_secundarias_cloud: ",
-                    err
-                  );
-                }
+          let imgConvertida = await heicToJpeg(imagenes_secundarias[i]);
+          await cloudinary.uploader.upload(
+            imgConvertida,
+            {
+              upload_preset: "preset_imagenes_productos",
+              allowed_formats: ["png", "jpg", "jpeg", "gif", "webp"],
+            },
+            function (err, result) {
+              if (err) {
+                throw new Error("Error al subir las imagenes secundarias: ", err);
               }
-            );
-        // }
-      }else{
-        imagenes_secundarias_cloud.push(imagenes_secundarias[i]);
+    
+              try {
+                imagenes_secundarias_cloud.push(result.secure_url);
+              } catch (err) {
+                throw new Error(
+                  "Error al construir el array imagenes_secundarias_cloud: ",
+                  err
+                );
+              }
+            }
+          );
+        } else {
+         imagenes_secundarias_cloud.push(imagenes_secundarias[i]);
+        }
       }
-    }
+
       await Productos.update(
         { imagenes_secundarias: imagenes_secundarias_cloud },
         { where: { producto_id: producto_id } }
       );
-     
 
       //todo Actualizacion por cambio de edad/categoría
       if (edad !== productoActual.edad) {
@@ -261,11 +254,14 @@ const crearProducto = async (
   stock
 ) => {
   try {
+    //Primero se convierten las imagenes de formato HEIC a JPEG
+    const imgPrincipalConvertida = await heicToJpeg(imagen_principal);
+
     const img_principal_cloud = await cloudinary.uploader.upload(
-      imagen_principal,
+      imgPrincipalConvertida,
       {
         upload_preset: "preset_imagenes_productos",
-        allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
+        allowed_formats: ["png", "jpg", "jpeg", "gif", "webp"],
       },
       function (err, result) {
         if (err) {
@@ -282,11 +278,13 @@ const crearProducto = async (
     const imagenes_secundarias_cloud = [];
 
     for (let i = 0; i < imagenes_secundarias.length; i++) {
+      let imagenConvertida = await heicToJpeg(imagenes_secundarias[i]);
+
       await cloudinary.uploader.upload(
-        imagenes_secundarias[i],
+        imagenConvertida,
         {
           upload_preset: "preset_imagenes_productos",
-          allowed_formats: ["png", "jpg", "jpeg", "gif", "webp", "svg", "heic"],
+          allowed_formats: ["png", "jpg", "jpeg", "gif", "webp"],
         },
         function (err, result) {
           if (err) {
