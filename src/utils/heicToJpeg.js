@@ -1,7 +1,7 @@
-import heicConvert from 'heic-convert';
+const heicConvert = require('heic-convert');
 
 //todo Función para la conversión de las imágenes en formato HEIC a formato JPEG.
-export const heicToJpeg = async (base64Image) => {
+const heicToJpeg = async (base64Image) => {
     try {
         const imgBuffer = Buffer.from(base64Image, 'base64');
     
@@ -20,3 +20,5 @@ export const heicToJpeg = async (base64Image) => {
         return base64Image;
     }
 };
+
+module.exports = heicToJpeg

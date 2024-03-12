@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Productos } = require("../db");
 const resultadosPaginados = require("../utils/paginacion");
 const cloudinary = require("cloudinary").v2;
-const { heicToJpeg } = require('../utils/heicToJpeg')
+const heicToJpeg = require('../utils/heicToJpeg')
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
