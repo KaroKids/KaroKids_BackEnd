@@ -2,7 +2,6 @@ require("dotenv").config();
 const { Productos } = require("../db");
 const resultadosPaginados = require("../utils/paginacion");
 const cloudinary = require("cloudinary").v2;
-const heicToJpeg = require("../utils/heicToJpeg");
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -115,10 +114,8 @@ const modificarProducto = async (
     //todo Actualizacion por cambio de Imagen Principal
     if (imagen_principal !== productoActual.imagen_principal) {
       if (!cloudinaryRegex.test(imagen_principal)) {
-        let imgConvertida = await heicToJpeg(imagen_principal);
-
         const img_principal_cloud = await cloudinary.uploader.upload(
-          imgConvertida,
+          imagen_principal,
           {
             upload_preset: "preset_imagenes_productos",
             allowed_formats: ["png", "jpg", "jpeg", "gif", "webp"],
@@ -153,9 +150,8 @@ const modificarProducto = async (
 
     for (let i = 0; i < imagenes_secundarias.length; i++) {
       if (!cloudinaryRegex.test(imagenes_secundarias[i])) {
-        let imgConvertida = await heicToJpeg(imagenes_secundarias[i]);
         await cloudinary.uploader.upload(
-          imgConvertida,
+          imagenes_secundarias[i],
           {
             upload_preset: "preset_imagenes_productos",
             allowed_formats: ["png", "jpg", "jpeg", "gif", "webp"],
@@ -264,11 +260,8 @@ const crearProducto = async (
   stock
 ) => {
   try {
-    //Primero se convierten las imagenes de formato HEIC a JPEG
-    const imgPrincipalConvertida = await heicToJpeg(imagen_principal);
-
     const img_principal_cloud = await cloudinary.uploader.upload(
-      imgPrincipalConvertida,
+      imagen_principal,
       {
         upload_preset: "preset_imagenes_productos",
         allowed_formats: ["png", "jpg", "jpeg", "gif", "webp"],
@@ -288,10 +281,8 @@ const crearProducto = async (
     const imagenes_secundarias_cloud = [];
 
     for (let i = 0; i < imagenes_secundarias.length; i++) {
-      let imagenConvertida = await heicToJpeg(imagenes_secundarias[i]);
-
       await cloudinary.uploader.upload(
-        imagenConvertida,
+        imagenes_secundarias[i],
         {
           upload_preset: "preset_imagenes_productos",
           allowed_formats: ["png", "jpg", "jpeg", "gif", "webp"],
