@@ -144,26 +144,27 @@ const createReviewsProducts = async (
   // }
 };
 
-const existeReview = async (usuario_id, producto_id) =>{
-try{
-  const response = await Calificaciones.findOne({
-    where: { usuario_id: usuario_id, producto_id : producto_id },
-  })
-  if (response){
-    return true
-  }else{
-    return false
+const existeReview = async (usuario_id, producto_id) => {
+  try {
+    console.log("params controller", { usuario_id, producto_id });
+    const response = await Calificaciones.findOne({
+      where: { usuario_id: usuario_id, producto_id: producto_id },
+    });
+    console.log("response controller", response);
+    if (response) {
+      return response;
+    } else {
+      return Boolean(false);
+    }
+  } catch (error) {
+    return error;
   }
-}catch(error){
-  console.error(error);
-    res.status(400).json({ error: error.message });
-}
-}
+};
 
 module.exports = {
   getPromedioReviews,
   getLast3Reviews,
   createReviewsProducts,
   getAllReviews,
-  existeReview
+  existeReview,
 };

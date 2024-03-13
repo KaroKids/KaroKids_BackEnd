@@ -73,7 +73,8 @@ const createOrder = async (req, res) => {
       id: product.producto_id,
       title: product.producto_nombre,
       picture_url: product.producto_imagen,
-      description: product.compra_talla +"-" + product.compra_color.toLowerCase(),
+      description:
+        product.compra_talla + "-" + product.compra_color.toLowerCase(),
       quantity: product.compra_cantidad,
       unit_price: product.producto_precio,
     };
@@ -83,15 +84,11 @@ const createOrder = async (req, res) => {
     const body = {
       items: cartFixed,
       back_urls: {
-        // success: `https://karokids.onrender.com/payment/success?user_id=${user_id}`,
-        // failure: `https://karokids.onrender.com/payment/failure?user_id=${user_id}`,
-        // pending: `https://karokids.onrender.com/payment/pending?user_id=${user_id}`,
-         success: `https://0051-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/success?user_id=${user_id}`,
-         failure: `https://0051-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/failure?user_id=${user_id}`,
-         pending: `https://0051-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/pending?user_id=${user_id}`,
+        success: `https://karokids.onrender.com/payment/success?user_id=${user_id}`,
+        failure: `https://karokids.onrender.com/payment/failure?user_id=${user_id}`,
+        pending: `https://karokids.onrender.com/payment/pending?user_id=${user_id}`,
       },
-     // notification_url: `https://karokids.onrender.com/payment/webhook?user_id=${user_id}`,
-      notification_url: `https://0051-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/webhook?user_id=${user_id}`,
+      notification_url: `https://karokids.onrender.com/payment/webhook?user_id=${user_id}`,
       payment_methods: {
         excluded_payment_types: [
           {
@@ -137,7 +134,7 @@ const receiveWebhook = async (req, res) => {
 
       const user_id = req.query.user_id;
 
-      const order = await crearOrden({
+      await crearOrden({
         productos_compra: additional_info.items,
         metodo_pago: metodoPago[payment_type_id],
         estado_pago: estadoPago[status],
