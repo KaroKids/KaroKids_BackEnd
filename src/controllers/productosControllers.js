@@ -114,8 +114,6 @@ const modificarProducto = async (
     //todo Actualizacion por cambio de Imagen Principal
     if (imagen_principal !== productoActual.imagen_principal) {
       if (!cloudinaryRegex.test(imagen_principal)) {
-        // let imgConvertida = await heicToJpeg(imagen_principal);
-
         const img_principal_cloud = await cloudinary.uploader.upload(
           imagen_principal,
           {
@@ -152,7 +150,6 @@ const modificarProducto = async (
 
     for (let i = 0; i < imagenes_secundarias.length; i++) {
       if (!cloudinaryRegex.test(imagenes_secundarias[i])) {
-        // let imgConvertida = await heicToJpeg(imagenes_secundarias[i]);
         await cloudinary.uploader.upload(
           imagenes_secundarias[i],
           {
