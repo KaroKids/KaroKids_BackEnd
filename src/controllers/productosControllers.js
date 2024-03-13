@@ -233,7 +233,7 @@ const modificarProducto = async (
         );
       } else {
         await Productos.update(
-          { stock: stock },
+          { stock: stock},
           { where: { producto_id: producto_id } }
         );
       }

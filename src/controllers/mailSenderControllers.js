@@ -22,10 +22,10 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     const numeroOrden = numero_orden //? ¿Va a ser el número de orden de la DB o el que envía MP?
     const moneda = mp_data.currency_id
     const monto_total = mp_data.transaction_amount //? O el valor de "total_compra" del objeto "productos_compra"?? 
-    const estado_compra = ''
-    const estado_compra_detalle = ''
-    const forma_pago = ''
-    const forma_pago_detalle = ''
+    let estado_compra = ''
+    let estado_compra_detalle = ''
+    let forma_pago = ''
+    let forma_pago_detalle = ''
 
     //* Validacion de estado y aprobacion del pago:
     if (mp_data.status === 'approved') {
@@ -505,13 +505,13 @@ const failureMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
       //* Definicion de variables:
     const nombreUsuario = nombre_usuario
     const emailUsuario  = usuario_email // Puede ser un array de strings con varios mails.
-    const numeroOrden = numero_orden //? ¿Va a ser el número de orden de la DB o el que envía MP?
-    const moneda = mp_data.currency_id
-    const monto_total = mp_data.transaction_amount //? O el valor de "total_compra" del objeto "productos_compra"?? 
-    const estado_compra = ''
-    const estado_compra_detalle = ''
-    const forma_pago = ''
-    const forma_pago_detalle = ''
+    // const numeroOrden = numero_orden //? ¿Va a ser el número de orden de la DB o el que envía MP?
+    // const moneda = mp_data.currency_id
+    // const monto_total = mp_data.transaction_amount //? O el valor de "total_compra" del objeto "productos_compra"?? 
+    // const estado_compra = ''
+    // const estado_compra_detalle = ''
+    // const forma_pago = ''
+    // const forma_pago_detalle = ''
 
     //* Funcionalidad
     const transporter = nodeMailer.createTransport({
@@ -583,13 +583,13 @@ const failureMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
                             <tbody>
                                 <tr>               
                                     <td style="text-align:center; font-size:17px; padding:16px; width:100%"">
-                                        <strong>Número de orden: ${numeroOrden}</strong>
+                                        <strong>Número de orden: </strong>
                                     </td>
                                 </tr>
     
                                 <tr>               
                                     <td style="text-align:center; font-size:17px; padding:16px; width:100%"">
-                                        <strong>Estado: ${estado_compra} - ${estado_compra_detalle}</strong>
+                                        <strong>Estado:  -</strong>
                                     </td>
                                 </tr>
     
@@ -639,7 +639,7 @@ const failureMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
                                 <tr>
                                     <td style="text-align:center; font-size:16px; padding:16px 5px 5px 5px; width:100%">
                                         <strong>
-                                            Monto total de la compra: ${moneda} ${monto_total}
+                                            Monto total de la compra: 
                                         </strong>
                                     </td>
                                 </tr> 
@@ -647,7 +647,7 @@ const failureMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
                                 <tr>
                                     <td style="text-align:center; font-size:15px; padding:16px 5px 5px 5px; width:100%">
                                         <strong>
-                                            Método de pago: ${forma_pago} - ${forma_pago_detalle}
+                                            Método de pago:  - 
                                         </strong>
                                     </td>
                                 </tr>
