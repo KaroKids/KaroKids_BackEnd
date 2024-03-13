@@ -1,43 +1,70 @@
 const { MercadoPagoConfig, Preference, Payment } = require("mercadopago");
 const { borrarCarrito } = require("./carritosController");
 const { crearOrden } = require("./ordenesControllers");
-const { decrementarCantidad } = require("./productosControllers")
-
+const { decrementarCantidad } = require("./productosControllers");
+const { successMailSender, reviewMailSender, failureMailSender, pendingMailSender } = require("./mailSenderControllers");
+const {Usuarios, Ordenes} = require ("../db")
 const client = new MercadoPagoConfig({
   accessToken:
     "TEST-499968136850667-022122-eb0fd0859f803321cf3c3ea2e4a16a42-404824788",
 });
 
 const success = async (req, res) => {
+  try{
   const payment = new Payment(client);
   const query = req.query;
+   const data = await payment.get({ id: query.payment_id });
     const user_id = req.query.user_id;
-  try {
-    const { payment_id } = query;
-    const { additional_info } = await payment.get({ id: payment_id });
-    const productosComprados = additional_info.items;  
-    for (const producto of productosComprados) {
-      const info = producto.description.split("-");
-      console.log(producto.id);
-      console.log(info[0]);
-      console.log(info[1]);
-      console.log(producto.quantity);
-      console.log(user_id);
+    let usuario = await Usuarios.findOne({where :{usuario_id : user_id},
+      include: [
+        {
+          model: Ordenes,
+          attributes: ["orden_id",],
+          order: [["createdAt", "DESC"]],
+          limit: 1,
+        },
+      ],
+    });
+    usuario = usuario.dataValues
+    const orden_id = usuario.Ordenes[0].dataValues.orden_id
+    const email = usuario.email_usuario
+    const nombre = usuario.nombre_usuario
+     const productosComprados = data.additional_info.items;  
+     for (const producto of productosComprados) {
+       const info = producto.description.split("-");
+       
+       await decrementarCantidad(
+         producto.id,
+         info[0],
+         info[1],
+         producto.quantity
+         );
+        }
+     await borrarCarrito(user_id);
+     await successMailSender(nombre , email , orden_id, productosComprados, data)
+     await reviewMailSender(nombre , email , orden_id, productosComprados, data)
+     res.redirect("http://localhost:5173/productos");
 
-      await decrementarCantidad(
-        producto.id,
-        info[0],
-        info[1],
-        producto.quantity
-      );
-    }
-    await borrarCarrito(user_id);
-    res.redirect("http://localhost:5173/productos");
-  } catch (error) {
-    console.log(error);
+  }catch(error){
+    console.log(error)
   }
 };
 
+const failure = async (req, res) => {
+  try{
+ 
+     const orden_id = "asdasd"
+     const email = "seyjoaluminio@gmail.com"
+     const nombre = "sebastian"
+
+     await failureMailSender(nombre , email , orden_id)
+     res.redirect("http://localhost:5173/productos");
+
+  }catch(error){
+    console.log(error)
+  }
+}
+ 
 const createOrder = async (req, res) => {
   const { user_id, cart } = req.body;
   console.log(cart);
@@ -59,12 +86,12 @@ const createOrder = async (req, res) => {
         // success: `https://karokids.onrender.com/payment/success?user_id=${user_id}`,
         // failure: `https://karokids.onrender.com/payment/failure?user_id=${user_id}`,
         // pending: `https://karokids.onrender.com/payment/pending?user_id=${user_id}`,
-         success: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/success?user_id=${user_id}`,
-         failure: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/failure?user_id=${user_id}`,
-         pending: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/pending?user_id=${user_id}`,
+         success: `https://0051-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/success?user_id=${user_id}`,
+         failure: `https://0051-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/failure?user_id=${user_id}`,
+         pending: `https://0051-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/pending?user_id=${user_id}`,
       },
      // notification_url: `https://karokids.onrender.com/payment/webhook?user_id=${user_id}`,
-      notification_url: `https://8094-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/webhook?user_id=${user_id}`,
+      notification_url: `https://0051-2800-810-5c2-524-4c9d-f6ff-e084-edf2.ngrok-free.app/payment/webhook?user_id=${user_id}`,
       payment_methods: {
         excluded_payment_types: [
           {
@@ -96,7 +123,7 @@ const receiveWebhook = async (req, res) => {
         approved: "aprobado",
         pending: "pendiente",
         in_process: "En proceso",
-        rejected: "Rechazado",
+        rejected: "cancelado",
         cancelled: "cancelado",
         refunded: "Reembolsado",
         charged_back: "Cargo revertido",
@@ -127,4 +154,4 @@ const receiveWebhook = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, receiveWebhook, success };
+module.exports = { createOrder, receiveWebhook, success, failure };
