@@ -1,21 +1,21 @@
 const { response } = require("express");
 const {
-  todasLasOrdenes,
+  // todasLasOrdenes,
   traerOrden,
   crearOrden,
   modificarOrden,
   traerOrdenPorId,
 } = require("../controllers/ordenesControllers");
-const ordenesFiltradas = require("../controllers/ordenesFiltradasControllers");
+// const ordenesFiltradas = require("../controllers/ordenesFiltradasControllers");
 
-const getOrdenes = async (req, res) => {
-  try {
-    const response = await ordenesFiltradas();
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+// const getOrdenes = async (req, res) => {
+//   try {
+//     const response = await ordenesFiltradas();
+//     res.status(200).json(response);
+//   } catch (error) {
+//     res.status(400).json({ error: error.message });
+//   }
+// };
 
 const getOrden = async (req, res) => {
   const { id } = req.params;
@@ -82,7 +82,7 @@ const getOrdenById = async (req, res) => {
 };
 
 module.exports = {
-  getOrdenes,
+  // getOrdenes,
   getOrden,
   postOrden,
   putOrden,

@@ -1,21 +1,21 @@
 const { Ordenes, Usuarios } = require("../db");
 
-const todasLasOrdenes = async () => {
-  try {
-    const ordenes = await Ordenes.findAll({
-      include: [
-        {
-          model: Usuarios,
-          attributes: ["nombre_usuario", "apellido_usuario"],
-        },
-      ],
-    });
+// const todasLasOrdenes = async () => {
+//   try {
+//     const ordenes = await Ordenes.findAll({
+//       include: [
+//         {
+//           model: Usuarios,
+//           attributes: ["nombre_usuario", "apellido_usuario"],
+//         },
+//       ],
+//     });
 
-    return ordenes;
-  } catch (error) {
-    throw new Error("Error al obtener todas las ordenes: " + error.message);
-  }
-};
+//     return ordenes;
+//   } catch (error) {
+//     throw new Error("Error al obtener todas las ordenes: " + error.message);
+//   }
+// };
 
 const traerOrden = async (id) => {
   const response = await Ordenes.findAll({
@@ -66,19 +66,16 @@ const crearOrden = async (
   );
 };
 
-const filtrarOrdenes = async () => {};
-
 const traerOrdenPorId = async (orden_id) => {
   const orden = await Ordenes.findByPk(orden_id);
   return orden;
 };
 
 module.exports = {
-  todasLasOrdenes,
+  // todasLasOrdenes,
   traerOrden,
   borrarOrden,
   modificarOrden,
   crearOrden,
-  filtrarOrdenes,
   traerOrdenPorId,
 };
