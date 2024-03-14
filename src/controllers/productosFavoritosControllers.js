@@ -1,4 +1,5 @@
-const { Usuarios, Productos } = require("../db");
+const { sequelize } = require("sequelize");
+const { Usuarios, Productos, Calificaciones } = require("../db");
 
 const traerProductosFavoritos = async (usuario_id) => {
   try {
@@ -15,6 +16,28 @@ const traerProductosFavoritos = async (usuario_id) => {
     });
 
     return productosFavoritos;
+  } catch (error) {
+    return error;
+  }
+};
+
+const topFavoritos = async (top) => {
+  try {
+    const favoritos = await Productos.findAll({
+      include: [
+        {
+          model: Usuarios,
+          through: "Productos_Favoritos",
+        },
+      ],
+      attributes: ["producto_id", "nombre", "imagen_principal", "precio"],
+    });
+
+    // const favoritosFilter = favoritos.filter(
+    //   (producto) => producto.Usuarios.length > 0
+    // );
+
+    return favoritos;
   } catch (error) {
     return error;
   }
@@ -85,4 +108,5 @@ module.exports = {
   traerProductosFavoritos,
   agregarProductoFavorito,
   eliminarProductoFavorito,
+  topFavoritos,
 };
