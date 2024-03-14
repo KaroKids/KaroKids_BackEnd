@@ -58,7 +58,7 @@ const failure = async (req, res) => {
      const nombre = "sebastian"
 
      await failureMailSender(nombre , email , orden_id)
-     res.redirect("http://localhost:5173/productos");
+     res.redirect("https://karokids.onrender.com/productos");
 
   }catch(error){
     console.log(error)
