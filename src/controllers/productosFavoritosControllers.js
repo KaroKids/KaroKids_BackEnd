@@ -1,5 +1,5 @@
 const { sequelize } = require("sequelize");
-const { Usuarios, Productos, Calificaciones } = require("../db");
+const { Usuarios, Productos, Calificaciones} = require("../db");
 
 const traerProductosFavoritos = async (usuario_id) => {
   try {
@@ -23,21 +23,34 @@ const traerProductosFavoritos = async (usuario_id) => {
 
 const topFavoritos = async (top) => {
   try {
-    const favoritos = await Productos.findAll({
-      include: [
-        {
-          model: Usuarios,
-          through: "Productos_Favoritos",
-        },
-      ],
-      attributes: ["producto_id", "nombre", "imagen_principal", "precio"],
-    });
-
-    // const favoritosFilter = favoritos.filter(
-    //   (producto) => producto.Usuarios.length > 0
-    // );
-
-    return favoritos;
+    let array = [];
+      const usuarios = await Usuarios.findAll()
+      for (const usuario of usuarios) {
+        const fav = await traerProductosFavoritos(usuario.usuario_id)
+        for (const f of fav) {
+          let esta = false
+          array = array.map((item) => {
+            if(item.producto.producto_id === f.producto_id){
+              item.cantidad += 1
+              esta = true
+            }
+            return item;
+          });
+          if (esta === false){
+            let nuevo = {
+              producto : f,
+              cantidad : 1
+            }
+            array.push(nuevo)
+          }
+        }
+      }
+      array.sort((a, b) => b.cantidad - a.cantidad);
+      if (array.length < top){
+        return array
+      }else{
+      return array.slice(0,top)
+      }
   } catch (error) {
     return error;
   }
