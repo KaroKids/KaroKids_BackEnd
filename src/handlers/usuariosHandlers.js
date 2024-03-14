@@ -1,30 +1,30 @@
 const {
   crearUsuario,
-  todosLosUsuarios,
+  // todosLosUsuarios,
   traerUsuario,
-  traerUsuarioNombre,
+  // traerUsuarioNombre,
   borrarUsuario,
   modificarUsuario,
   modificarRol,
 } = require("../controllers/usuariosControllers");
 
-const getUsuarios = async (req, res) => {
-  const { nombre_usuario, apellido_usuario } = req.query;
-  try {
-    if (nombre_usuario || apellido_usuario) {
-      const response = await traerUsuarioNombre(
-        nombre_usuario,
-        apellido_usuario
-      );
-      return res.status(200).json(response);
-    } else {
-      const response = await todosLosUsuarios();
-      return res.status(200).json(response);
-    }
-  } catch (error) {
-    return res.status(400).json({ error: error.message });
-  }
-};
+// const getUsuarios = async (req, res) => {
+//   const { nombre_usuario, apellido_usuario } = req.query;
+//   try {
+//     if (nombre_usuario || apellido_usuario) {
+//       const response = await traerUsuarioNombre(
+//         nombre_usuario,
+//         apellido_usuario
+//       );
+//       return res.status(200).json(response);
+//     } else {
+//       const response = await todosLosUsuarios();
+//       return res.status(200).json(response);
+//     }
+//   } catch (error) {
+//     return res.status(400).json({ error: error.message });
+//   }
+// };
 
 const getUsuario = async (req, res) => {
   const { email_usuario } = req.query;
@@ -93,7 +93,7 @@ const putUsuarioRol = async (req, res) => {
 };
 
 module.exports = {
-  getUsuarios,
+  // getUsuarios,
   getUsuario,
   postUsuario,
   putUsuario,

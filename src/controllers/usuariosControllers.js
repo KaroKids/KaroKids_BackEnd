@@ -1,32 +1,32 @@
 const { Usuarios, Carritos } = require("../db");
-const { Op } = require("sequelize");
+// const { Op } = require("sequelize");
 
-const todosLosUsuarios = async () => {
-  const response = await Usuarios.findAll();
-  return response;
-};
+// const todosLosUsuarios = async () => {
+//   const response = await Usuarios.findAll();
+//   return response;
+// };
 
-const traerUsuarioNombre = async (nombre_usuario, apellido_usuario) => {
-  if (nombre_usuario && apellido_usuario) {
-    const response = await Usuarios.findAll({
-      where: {
-        nombre_usuario: { [Op.iLike]: `%${nombre_usuario}%` },
-        apellido_usuario: { [Op.iLike]: `%${apellido_usuario}%` },
-      },
-    });
-    return response;
-  } else if (apellido_usuario) {
-    const response = await Usuarios.findAll({
-      where: { apellido_usuario: { [Op.iLike]: `%${apellido_usuario}%` } },
-    });
-    return response;
-  } else {
-    const response = await Usuarios.findAll({
-      where: { nombre_usuario: { [Op.iLike]: `%${nombre_usuario}%` } },
-    });
-    return response;
-  }
-};
+// const traerUsuarioNombre = async (nombre_usuario, apellido_usuario) => {
+//   if (nombre_usuario && apellido_usuario) {
+//     const response = await Usuarios.findAll({
+//       where: {
+//         nombre_usuario: { [Op.iLike]: `%${nombre_usuario}%` },
+//         apellido_usuario: { [Op.iLike]: `%${apellido_usuario}%` },
+//       },
+//     });
+//     return response;
+//   } else if (apellido_usuario) {
+//     const response = await Usuarios.findAll({
+//       where: { apellido_usuario: { [Op.iLike]: `%${apellido_usuario}%` } },
+//     });
+//     return response;
+//   } else {
+//     const response = await Usuarios.findAll({
+//       where: { nombre_usuario: { [Op.iLike]: `%${nombre_usuario}%` } },
+//     });
+//     return response;
+//   }
+// };
 
 const traerUsuario = async (email_usuario) => {
   const response = await Usuarios.findOne({
@@ -103,9 +103,9 @@ const modificarRol = async (usuario_id, roles) => {
 };
 
 module.exports = {
-  todosLosUsuarios,
+  // todosLosUsuarios,
   traerUsuario,
-  traerUsuarioNombre,
+  // traerUsuarioNombre,
   borrarUsuario,
   modificarUsuario,
   crearUsuario,

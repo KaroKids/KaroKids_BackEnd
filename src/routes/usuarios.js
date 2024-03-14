@@ -1,15 +1,17 @@
 const { Router } = require("express");
 const {
-  getUsuarios,
+  // getUsuarios,
   getUsuario,
   postUsuario,
   putUsuario,
   deleteUsuario,
   putUsuarioRol,
 } = require("../handlers/usuariosHandlers");
+const usuariosFiltrados = require('../controllers/usuariosFiltradosControllers');
+
 const usuarios = Router();
 
-usuarios.get("/", getUsuarios);
+usuarios.get("/", usuariosFiltrados);
 usuarios.get("/usuario", getUsuario);
 usuarios.post("/", postUsuario);
 usuarios.put("/", putUsuario);
