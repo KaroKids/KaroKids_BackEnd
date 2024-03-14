@@ -43,7 +43,7 @@ const success = async (req, res) => {
      await borrarCarrito(user_id);
      await successMailSender(nombre , email , orden_id, productosComprados, data)
      await reviewMailSender(nombre , email , orden_id, productosComprados, data)
-     res.redirect("http://localhost:5173/productos");
+     res.redirect("https://karokids-frontend.vercel.app/productos");
 
   }catch(error){
     console.log(error)
@@ -58,7 +58,7 @@ const failure = async (req, res) => {
      const nombre = "sebastian"
 
      await failureMailSender(nombre , email , orden_id)
-     res.redirect("http://localhost:5173/productos");
+     res.redirect("https://karokids-frontend.vercel.app/productos");
 
   }catch(error){
     console.log(error)
@@ -84,9 +84,10 @@ const createOrder = async (req, res) => {
     const body = {
       items: cartFixed,
       back_urls: {
-        success: `https://karokids.onrender.com/payment/success?user_id=${user_id}`,
-        failure: `https://karokids.onrender.com/payment/failure?user_id=${user_id}`,
-        pending: `https://karokids.onrender.com/payment/pending?user_id=${user_id}`,
+         success: `https://karokids.onrender.com/payment/success?user_id=${user_id}`,
+         failure: `https://karokids.onrender.com/payment/failure?user_id=${user_id}`,
+         pending: `https://karokids.onrender.com/payment/pending?user_id=${user_id}`,
+   
       },
       notification_url: `https://karokids.onrender.com/payment/webhook?user_id=${user_id}`,
       payment_methods: {
