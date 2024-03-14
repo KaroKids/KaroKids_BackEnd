@@ -43,7 +43,7 @@ const success = async (req, res) => {
      await borrarCarrito(user_id);
      await successMailSender(nombre , email , orden_id, productosComprados, data)
      await reviewMailSender(nombre , email , orden_id, productosComprados, data)
-     res.redirect("https://karokids.onrender.com/productos");
+     res.redirect("https://karokids-frontend.vercel.app/productos");
 
   }catch(error){
     console.log(error)
@@ -58,7 +58,7 @@ const failure = async (req, res) => {
      const nombre = "sebastian"
 
      await failureMailSender(nombre , email , orden_id)
-     res.redirect("https://karokids.onrender.com/productos");
+     res.redirect("https://karokids-frontend.vercel.app/productos");
 
   }catch(error){
     console.log(error)
