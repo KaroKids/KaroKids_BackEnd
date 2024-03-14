@@ -43,7 +43,7 @@ const success = async (req, res) => {
      await borrarCarrito(user_id);
      await successMailSender(nombre , email , orden_id, productosComprados, data)
      await reviewMailSender(nombre , email , orden_id, productosComprados, data)
-     res.redirect("http://localhost:5173/productos");
+     res.redirect("https://karokids.onrender.com/productos");
 
   }catch(error){
     console.log(error)
