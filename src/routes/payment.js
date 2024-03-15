@@ -2,9 +2,8 @@ const { Router } = require("express");
 const {
   createOrder,
   receiveWebhook,
-  success,
   failure,
-  pending
+  success
 } = require("../controllers/paymentController");
 
 const payment = Router();
