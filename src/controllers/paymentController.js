@@ -52,7 +52,7 @@ const success = async (req, res) => {
       await pendingMailSender(nombre, email, orden_id, productosComprados, data)
     }
 
-    res.redirect("https://karokids-tienda.vercel.app/productos");
+    res.redirect("https://karokids-frontend.vercel.app/productos");
 
   } catch(error){
     console.log(error)
@@ -161,4 +161,4 @@ const receiveWebhook = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, receiveWebhook, success, failure };
+module.exports = { createOrder, receiveWebhook, success};
