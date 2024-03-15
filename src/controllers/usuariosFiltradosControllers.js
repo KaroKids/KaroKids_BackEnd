@@ -46,36 +46,36 @@ const filtrarRol = (rol, arrayUsuarios) => {
 	}
 };
 
-const ordenarAlfabeUsuario = (ordenar, arrayUsuarios) => {
-    if (ordenar) {
+const ordenarAlfabeUsuario = (orden, arrayUsuarios) => {
+    if (orden) {
         let arr = [];
         arr = arrayUsuarios;
-        if (ordenar === 'apellido-asc') {
+        if (orden == 1) {
             arr.sort((a, b) => {
                  return a.apellido_usuario.localeCompare(b.apellido_usuario);
             });
         }
-        else if (ordenar === 'apellido-desc') {
+        else if (orden == 2) {
             arr.sort((a, b) => {
                 return b.apellido_usuario.localeCompare(a.apellido_usuario);
             });
         }
-        else if (ordenar === 'nombre-asc') {
+        else if (orden == 3) {
             arr.sort((a, b) => {
                 return a.nombre_usuario.localeCompare(b.nombre_usuario);
             });
         }
-        else if (ordenar === 'nombre-desc') {
+        else if (orden == 4) {
             arr.sort((a, b) => {
                 return b.nombre_usuario.localeCompare(a.nombre_usuario);
             });
         }
-        else if (ordenar === 'email-asc') {
+        else if (orden == 5) {
             arr.sort((a, b) => {
                 return a.email_usuario.localeCompare(b.email_usuario);
             });
         }
-        else if (ordenar === 'email-desc') {
+        else if (orden == 6) {
             arr.sort((a, b) => {
                 return b.email_usuario.localeCompare(a.email_usuario);
             });
@@ -91,7 +91,7 @@ const usuariosFiltrados = async (req, res) => {
     try{
         let {
             estado,
-            ordenar,
+            orden,
             rol,
             nombre,
         } = req.query;
@@ -139,7 +139,7 @@ const usuariosFiltrados = async (req, res) => {
         
         arrayUsuarios = filtrarEstado (estado, arrayUsuarios)
         arrayUsuarios = filtrarRol (rol,arrayUsuarios)
-        arrayUsuarios = ordenarAlfabeUsuario (ordenar,arrayUsuarios)
+        arrayUsuarios = ordenarAlfabeUsuario (orden,arrayUsuarios)
 
         const paginacion = await resultadosPaginados(paginaActual, 8, arrayUsuarios);
 
