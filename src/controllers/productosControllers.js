@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { Productos } = require("../db");
+const { Productos, Ordenes } = require("../db");
 const resultadosPaginados = require("../utils/paginacion");
 const cloudinary = require("cloudinary").v2;
 
@@ -394,6 +394,48 @@ const destacarProducto = async (producto_id) => {
   }
 };
 
+const topProductos = async (top) =>{
+  try {
+    const ordenes = await Ordenes.findAll();
+    let array = []
+    for(orden of ordenes){
+      for (prod of orden.productos_compra){
+        let esta = false
+          array = array.map((item) => {
+            if(item.producto.producto_id === prod.id){
+              item.cantidad = parseInt(item.cantidad)
+              item.cantidad += parseInt(prod.quantity)
+              esta = true
+            }
+            return item;
+          });
+          if (esta === false){
+            let nuevo = {
+              producto :{ 
+                producto_id : prod.id,
+                producto_nombre : prod.title,
+                producto_precio : prod.unit_price,
+                producto_imagen : prod.picture_url
+              },
+              cantidad : parseInt(prod.quantity)
+            }
+            array.push(nuevo)
+          }
+        }
+      } 
+      array.sort((a, b) => b.cantidad - a.cantidad);
+      if (array.length < top){
+        return array
+      }else{
+      return array.slice(0,top)
+      }
+  } catch (error) {
+    console.error("Error al obtener los productos más vendidos:", error);
+    throw error;
+  }
+
+}
+
 module.exports = {
   todosLosProductos,
   traerProducto,
@@ -404,4 +446,5 @@ module.exports = {
   destacarProducto,
   productosDestacados,
   decrementarCantidad,
+  topProductos
 };
