@@ -58,7 +58,24 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     } else if (mp_data.payment_type_id === 'crypto_transfer') {
         forma_pago = 'Criptomonedas'
     }
-    
+    for (producto of productos_compra){
+    let info = producto.description.split("-");
+      if(info[1] == "red") info[1] = 'Rojo'
+      if(info[1] == "blue") info[1] = 'Azul'
+      if(info[1] == "black") info[1] = 'Negro'
+      if(info[1] == "pink") info[1] = 'Rosa'
+      if(info[1] == "yellow") info[1] = 'Amarillo'
+      if(info[1] == "green") info[1] = 'Verde'
+      if(info[1] == "purple") info[1] = 'Morado'
+      if(info[1] == "orange") info[1] = 'Naranja'
+      if(info[1] == "gray") info[1] = 'Gris'
+      if(info[1] == "white") info[1] = 'Blanco'
+      if(info[1] == "teal") info[1] = 'Turquesa'
+      if(info[1] == "indigo") info[1] = 'Índigo'
+      if(info[1] == "sky") info[1] = 'Celeste'
+      if(info[1] == "beige") info[1] = 'Beige'
+      producto.description = info.join("-")
+    }
     //* Funcionalidad:    
     const transporter = nodeMailer.createTransport({
         service: 'gmail',
@@ -74,9 +91,9 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     const renderProductos = (productos_compra, moneda) => {
         return productos_compra.map((producto, index) => (
             `<tr key=${index}>
-                <td align="left">${producto.nombre}</td>
-                <td align="center">${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}</td>
-                <td align="right">${moneda} ${producto.precio}</td>
+                <td align="left">${producto.title}</td>
+                <td align="center">${producto.description.split("-")[0]} - ${producto.description.split("-")[1]} - ${producto.quantity}</td>
+                <td align="right">${moneda} ${producto.unit_price}</td>
             </tr>`
         )).join('');
     };
@@ -346,56 +363,7 @@ const reviewMailSender = async (nombre_usuario, usuario_email, numero_orden, pro
                 <tr>               
                     <td>&nbsp;</td>
                 </tr>
-    
-                <tr>
-                    <td style="text-align:center; margin:5px; padding: 5px;">
-                        <h2 style="margin: 5px; padding:5px;">Detalle de su última visita:</h2>
-                    </td>
-                </tr>
-    
-                <tr>               
-                    <td>&nbsp;</td>
-                </tr>
-    
-                <tr>
-                    <td style="text-align:center">
-                        <table align="center" border="0" cellpadding="0" style="background-color:#cde6eea0; border:0px solid #ffffffd0; border-radius:5px; font-family:arial,sans-serif; max-width:700px; width:100%">
-                            <tbody>
-                                <tr>               
-                                    <td style="text-align:center; font-size:17px; padding:16px; width:100%"">
-                                        <strong>Número de orden: ${numeroOrden}</strong>
-                                    </td>
-                                </tr>
-    
-                                <tr>
-                                    <td style="text-align:center; font-size:16px; padding:16px; width:100%">
-                                        <strong>
-                                            Listado de productos: 
-                                        </strong>
-                                    </td>
-                                </tr>
-    
-                                <tr>
-                                    <td style="text-align:center">
-                                        <table align="center" border="0" cellpadding="0" style="background-color:#cde6eea0; border:0px solid #ffffffd0; border-radius:5px; font-family:arial,sans-serif; max-width:700px; width:100%">
-                                            <tbody>
-                                                ${renderProductos(productos_compra, moneda)}
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-    
-                                <tr>
-                                    <td style="text-align:center; font-size:16px; padding:16px 5px 5px 5px; width:100%">
-                                        <strong>
-                                            Monto total de la compra: ${moneda} ${monto_total}
-                                        </strong>
-                                    </td>
-                                </tr> 
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
+
     
                 <tr> 
                     <td style="text-align:center; padding:10px"><br/>

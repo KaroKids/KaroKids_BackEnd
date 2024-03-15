@@ -2,7 +2,7 @@ const { MercadoPagoConfig, Preference, Payment } = require("mercadopago");
 const { borrarCarrito } = require("./carritosController");
 const { crearOrden } = require("./ordenesControllers");
 const { decrementarCantidad } = require("./productosControllers");
-const { successMailSender, reviewMailSender, failureMailSender, pendingMailSender } = require("./mailSenderControllers");
+const { successMailSender, reviewMailSender} = require("./mailSenderControllers");
 const {Usuarios, Ordenes} = require ("../db")
 const client = new MercadoPagoConfig({
   accessToken:
@@ -41,38 +41,31 @@ const success = async (req, res) => {
         );
     }
     await borrarCarrito(user_id);
-    await successMailSender(nombre, email, orden_id, productosComprados, data)
+   await successMailSender(nombre, email, orden_id, productosComprados, data)
     await reviewMailSender(nombre, email, orden_id, productosComprados, data)
 
-    if (data.status === 'rejected' || data.status === 'cancelled') {
-      await failureMailSender(nombre, email, orden_id, productosComprados, data)
-    }
 
-    if (data.status === 'pending') {
-      await pendingMailSender(nombre, email, orden_id, productosComprados, data)
-    }
-
-    res.redirect("https://karokids-frontend.vercel.app/productos");
+    res.redirect("https://karokids-tienda.vercel.app/productos");
 
   } catch(error){
     console.log(error)
   }
 };
 
-// const failure = async (req, res) => {
-//   try{
+const failure = async (req, res) => {
+  try{
  
-//      const orden_id = "asdasd"
-//      const email = "seyjoaluminio@gmail.com"
-//      const nombre = "sebastian"
+    //  const orden_id = "asdasd"
+    //  const email = "seyjoaluminio@gmail.com"
+    //  const nombre = "sebastian"
 
-//      await failureMailSender(nombre , email , orden_id)
-//      res.redirect("https://karokids-frontend.vercel.app/productos");
+    // await failureMailSender(nombre , email , orden_id)
+     res.redirect("https://karokids-tienda.vercel.app/productos");
 
-//   }catch(error){
-//     console.log(error)
-//   }
-// }
+  }catch(error){
+    console.log(error)
+  }
+}
  
 const createOrder = async (req, res) => {
   const { user_id, cart } = req.body;
@@ -161,4 +154,4 @@ const receiveWebhook = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, receiveWebhook, success};
+module.exports = { createOrder, receiveWebhook, success, failure};
