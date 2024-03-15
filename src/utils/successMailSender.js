@@ -57,7 +57,7 @@ const htmlAccredited = `<div>
         
         <tr>
             <td style="text-align:center">
-                <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709364802/Imagenes_Productos/Logos/Banner-logo2_vitkys.png" alt="banner_con_logo_Cloudinary" style="width:900px;height:260px" />
+                <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1710479306/Imagenes_Productos/Logos/Logo_centrado_jgzdve.png" alt="karoKids_logo" style="width:750px;height:225px" />
             </td>
         </tr>
 
@@ -67,7 +67,7 @@ const htmlAccredited = `<div>
 
         <tr>
             <td style="text-align:center; margin:5px; padding: 5px;">
-                <h1 style="margin: 5px; padding:5px;">¡Hola ${nombre_usuario}!</h1>
+                <h1 style="margin: 5px; padding:5px;">¡Hola ${nombreUsuario}!</h1>
             </td>
         </tr>
 
@@ -79,16 +79,15 @@ const htmlAccredited = `<div>
 
         <tr> 
             <td style="padding:16px">
-            <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709709855/Imagenes_Productos/Logos/Banner-Reviews-desenfocado_zcdjkp.png); background-position: center;background-repeat: no-repeat; background-size: cover; border-radius:5px; max-width:1000px; width:100%">
-                <tbody>
-                    <tr>
-                        <td style="text-align:center; margin:5px; padding: 5px;">
-                            <h3 style="margin: 20px 10px 20px 120px; padding:10px 10px 10px 80px;">Acabamos de registrar su compra con el siguiente detalle:</h3>
-
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1710469086/Imagenes_Productos/Logos/Banner-Reviews2-desenfocado_pmd3zb.png); background-position: center;background-repeat: no-repeat; background-size: cover; border-radius:7px; max-width:1000px; width:100%">
+                    <tbody>
+                        <tr>
+                            <td style="text-align:center; margin:5px; padding: 5px;">
+                                <h3 style="margin: 20px 10px 20px 120px; padding:10px 10px 10px 80px;">Acabamos de registrar su compra con el siguiente detalle:</h3>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </td>
         </tr>
 
@@ -98,7 +97,7 @@ const htmlAccredited = `<div>
 
         <tr>
             <td style="text-align:center">
-                <table align="center" border="0" cellpadding="0" style="background-color:#ddd7cf; border:1px solid #d9dbde; border-radius:3px; font-family:arial,sans-serif; max-width:700px; width:100%">
+                <table align="center" border="0" cellpadding="0" style="background-color:#cde6eea0; border:0px solid #ffffffd0; border-radius:5px; font-family:arial,sans-serif; max-width:700px; width:100%">
                     <tbody>
                         <tr>
                             <td style="text-align:center; font-size:17px; padding:16px; width:100%">
@@ -126,36 +125,7 @@ const htmlAccredited = `<div>
 
                         <tr>
                             <td>
-                                <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
-                                    <tbody>
-                                        <!-- Cada "<tr>"" podría renderizarse a partir de un map del array de productos comprados -->
-                                            <!-- productos_compra?.map((producto, index) => {
-                                                <tr key="index">
-                                                    <td align="left">{producto.nombre}</td>
-                                                    <td align="right">{producto.compra_talla, producto.compra_color, producto.compra_cantidad}</td>
-                                                </tr>
-                                            }) -->
-                                        <tr>
-                                            <td style="padding:5px 10px" align="left">Producto 1</td>
-                                            <td style="padding:5px 10px" align="right"> Detalle 1</td>
-                                            <!-- {/* <td align="center">Detalle 1</td>
-                                            <td align="right">COP Precio_unitario 1</td> */} -->
-                                        </tr>
-                                        <tr>
-                                            <td style="padding:5px 10px" align="left">Producto 2</td>
-                                            <td style="padding:5px 10px" align="right"> Detalle 2</td>
-                                            <!-- {/* <td align="center">Detalle 2</td>
-                                            <td align="right">COP Precio_unitario 2</td> */} -->
-                                        </tr>
-                                        <tr>
-                                            <td style="padding:5px 10px" align="left">Producto 3</td>
-                                            <td style="padding:5px 10px" align="right"> Detalle 3</td>
-                                            <!-- {/* <td align="center">Detalle 3</td>
-                                            <td align="right">COP Precio_unitario 3</td> */} -->
-
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                ${<RenderizadoProductos productos_compra={productos_compra} moneda={moneda}/>}
                             </td>
                         </tr>
 
@@ -170,7 +140,7 @@ const htmlAccredited = `<div>
                         <tr>
                             <td style="text-align:center; font-size:15px; padding:16px 5px 5px 5px; width:100%">
                                 <strong>
-                                    Método de pago: ${forma_pago} - ${forma_pago_detalle}
+                                    Método de pago: ${forma_pago}
                                 </strong>
                             </td>
                         </tr>
@@ -195,7 +165,7 @@ const htmlAccredited = `<div>
 
         <tr> 
             <td style="padding:16px">
-            <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709365873/Imagenes_Productos/Logos/fondo-redes-difuminado_nb1teq.png); background-repeat: no-repeat; background-size: cover; border-radius:3px; max-width:650px; width:100%">
+            <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709365873/Imagenes_Productos/Logos/fondo-redes-difuminado_nb1teq.png); background-repeat: no-repeat; background-size: cover; border-radius:7px; max-width:650px; width:100%">
                 <tbody>
                     <tr>
                         <td style="padding:10px; width:50px">

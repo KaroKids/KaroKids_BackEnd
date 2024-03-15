@@ -11,9 +11,9 @@ const client = new MercadoPagoConfig({
 
 const success = async (req, res) => {
   try{
-  const payment = new Payment(client);
-  const query = req.query;
-   const data = await payment.get({ id: query.payment_id });
+    const payment = new Payment(client);
+    const query = req.query;
+    const data = await payment.get({ id: query.payment_id });
     const user_id = req.query.user_id;
     let usuario = await Usuarios.findOne({where :{usuario_id : user_id},
       include: [
@@ -29,41 +29,50 @@ const success = async (req, res) => {
     const orden_id = usuario.Ordenes[0].dataValues.orden_id
     const email = usuario.email_usuario
     const nombre = usuario.nombre_usuario
-     const productosComprados = data.additional_info.items;  
-     for (const producto of productosComprados) {
-       const info = producto.description.split("-");
-       
-       await decrementarCantidad(
-         producto.id,
-         info[0],
-         info[1],
-         producto.quantity
-         );
-        }
-     await borrarCarrito(user_id);
-     await successMailSender(nombre , email , orden_id, productosComprados, data)
-     await reviewMailSender(nombre , email , orden_id, productosComprados, data)
-     res.redirect("https://karokids-frontend.vercel.app/productos");
+    const productosComprados = data.additional_info.items;  
+    for (const producto of productosComprados) {
+      const info = producto.description.split("-");
+      
+      await decrementarCantidad(
+        producto.id,
+        info[0],
+        info[1],
+        producto.quantity
+        );
+    }
+    await borrarCarrito(user_id);
+    await successMailSender(nombre , email , orden_id, productosComprados, data)
+    await reviewMailSender(nombre , email , orden_id, productosComprados, data)
 
-  }catch(error){
+    if (data.status === 'rejected' || data.status === 'cancelled') {
+      await failureMailSender(nombre , email , orden_id, productosComprados, data)
+    }
+
+    if (data.status === 'pending') {
+      await pendingMailSender(nombre , email , orden_id, productosComprados, data)
+    }
+
+    res.redirect("https://karokids-frontend.vercel.app/productos");
+
+  } catch(error){
     console.log(error)
   }
 };
 
-const failure = async (req, res) => {
-  try{
+// const failure = async (req, res) => {
+//   try{
  
-     const orden_id = "asdasd"
-     const email = "seyjoaluminio@gmail.com"
-     const nombre = "sebastian"
+//      const orden_id = "asdasd"
+//      const email = "seyjoaluminio@gmail.com"
+//      const nombre = "sebastian"
 
-     await failureMailSender(nombre , email , orden_id)
-     res.redirect("https://karokids-frontend.vercel.app/productos");
+//      await failureMailSender(nombre , email , orden_id)
+//      res.redirect("https://karokids-frontend.vercel.app/productos");
 
-  }catch(error){
-    console.log(error)
-  }
-}
+//   }catch(error){
+//     console.log(error)
+//   }
+// }
  
 const createOrder = async (req, res) => {
   const { user_id, cart } = req.body;
