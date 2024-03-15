@@ -41,15 +41,15 @@ const success = async (req, res) => {
         );
     }
     await borrarCarrito(user_id);
-    await successMailSender(nombre , email , orden_id, productosComprados, data)
-    await reviewMailSender(nombre , email , orden_id, productosComprados, data)
+    await successMailSender(nombre, email, orden_id, productosComprados, data)
+    await reviewMailSender(nombre, email, orden_id, productosComprados, data)
 
     if (data.status === 'rejected' || data.status === 'cancelled') {
-      await failureMailSender(nombre , email , orden_id, productosComprados, data)
+      await failureMailSender(nombre, email, orden_id, productosComprados, data)
     }
 
     if (data.status === 'pending') {
-      await pendingMailSender(nombre , email , orden_id, productosComprados, data)
+      await pendingMailSender(nombre, email, orden_id, productosComprados, data)
     }
 
     res.redirect("https://karokids-frontend.vercel.app/productos");

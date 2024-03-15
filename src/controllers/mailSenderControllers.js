@@ -73,21 +73,14 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     });
 
     const renderProductos = (productos_compra, moneda) => {
-        return (
-            <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
-                <tbody>
-                    {productos_compra && productos_compra.map((producto, index) => {
-                            <tr key={index}>
-                                <td align="left">{producto.nombre}</td>
-                                <td align="center">{`${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}`}</td>
-                                <td align="right">{`${moneda} ${producto.precio}`}</td>
-                            </tr>
-                        })
-                    }
-                </tbody>
-            </table>
-          )
-    }
+        return productos_compra.map((producto, index) => (
+            `<tr key=${index}>
+                <td align="left">${producto.nombre}</td>
+                <td align="center">${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}</td>
+                <td align="right">${moneda} ${producto.precio}</td>
+            </tr>`
+        )).join('');
+    };
 
     const htmlSuccessful = `
     <div>
@@ -164,7 +157,11 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
 
                                 <tr>
                                     <td style="text-align:center">
-                                        ${renderProductos(productos_compra, moneda)}
+                                        <table align="center" border="0" cellpadding="0" style="background-color:#cde6eea0; border:0px solid #ffffffd0; border-radius:5px; font-family:arial,sans-serif; max-width:700px; width:100%">
+                                            <tbody>
+                                                ${renderProductos(productos_compra, moneda)}
+                                            </tbody>
+                                        </table>
                                     </td>
                                 </tr>
 
@@ -293,21 +290,14 @@ const reviewMailSender = async (nombre_usuario, usuario_email, numero_orden, pro
     });
 
     const renderProductos = (productos_compra, moneda) => {
-        return (
-            <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
-                <tbody>
-                    {productos_compra && productos_compra.map((producto, index) => {
-                            <tr key={index}>
-                                <td align="left">{producto.nombre}</td>
-                                <td align="center">{`${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}`}</td>
-                                <td align="right">{`${moneda} ${producto.precio}`}</td>
-                            </tr>
-                        })
-                    }
-                </tbody>
-            </table>
-          )
-    }
+        return productos_compra.map((producto, index) => (
+            `<tr key=${index}>
+                <td align="left">${producto.nombre}</td>
+                <td align="center">${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}</td>
+                <td align="right">${moneda} ${producto.precio}</td>
+            </tr>`
+        )).join('');
+    };
     
     const htmlReview = `
     <div>
@@ -388,7 +378,11 @@ const reviewMailSender = async (nombre_usuario, usuario_email, numero_orden, pro
     
                                 <tr>
                                     <td style="text-align:center">
-                                        ${renderProductos(productos_compra, moneda)}
+                                        <table align="center" border="0" cellpadding="0" style="background-color:#cde6eea0; border:0px solid #ffffffd0; border-radius:5px; font-family:arial,sans-serif; max-width:700px; width:100%">
+                                            <tbody>
+                                                ${renderProductos(productos_compra, moneda)}
+                                            </tbody>
+                                        </table>
                                     </td>
                                 </tr>
     
@@ -521,21 +515,14 @@ const failureMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     });
 
     const renderProductos = (productos_compra, moneda) => {
-        return (
-            <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
-                <tbody>
-                    {productos_compra && productos_compra.map((producto, index) => {
-                            <tr key={index}>
-                                <td align="left">{producto.nombre}</td>
-                                <td align="center">{`${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}`}</td>
-                                <td align="right">{`${moneda} ${producto.precio}`}</td>
-                            </tr>
-                        })
-                    }
-                </tbody>
-            </table>
-          )
-    }
+        return productos_compra.map((producto, index) => (
+            `<tr key=${index}>
+                <td align="left">${producto.nombre}</td>
+                <td align="center">${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}</td>
+                <td align="right">${moneda} ${producto.precio}</td>
+            </tr>`
+        )).join('');
+    };
     
     const htmlFailure = `
     <div>
@@ -615,7 +602,11 @@ const failureMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     
                                 <tr>
                                     <td style="text-align:center">
-                                        ${renderProductos(productos_compra, moneda)}
+                                        <table align="center" border="0" cellpadding="0" style="background-color:#cde6eea0; border:0px solid #ffffffd0; border-radius:5px; font-family:arial,sans-serif; max-width:700px; width:100%">
+                                            <tbody>
+                                                ${renderProductos(productos_compra, moneda)}
+                                            </tbody>
+                                        </table>
                                     </td>
                                 </tr>
     
@@ -770,24 +761,17 @@ const pendingMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     });
 
     const renderProductos = (productos_compra, moneda) => {
-        return (
-            <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
-                <tbody>
-                    {productos_compra && productos_compra.map((producto, index) => {
-                            <tr key={index}>
-                                <td align="left">{producto.nombre}</td>
-                                <td align="center">{`${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}`}</td>
-                                <td align="right">{`${moneda} ${producto.precio}`}</td>
-                            </tr>
-                        })
-                    }
-                </tbody>
-            </table>
-          )
-    }
+        return productos_compra.map((producto, index) => (
+            `<tr key=${index}>
+                <td align="left">${producto.nombre}</td>
+                <td align="center">${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}</td>
+                <td align="right">${moneda} ${producto.precio}</td>
+            </tr>`
+        )).join('');
+    };
   
-  const htmlPending = `
-  <div>
+    const htmlPending = `
+    <div>
     <table align="center" border="0">
         <tbody style="text-align:center">
             
@@ -796,7 +780,7 @@ const pendingMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
                     <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1710479306/Imagenes_Productos/Logos/Logo_centrado_jgzdve.png" alt="karoKids_logo" style="width:750px;height:225px" />
                 </td>
             </tr>
- 
+
             <tr>               
                 <td>&nbsp;</td>
             </tr>
@@ -867,7 +851,11 @@ const pendingMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
 
                             <tr>
                                 <td style="text-align:center">
-                                    ${renderProductos(productos_compra, moneda)}
+                                    <table align="center" border="0" cellpadding="0" style="background-color:#cde6eea0; border:0px solid #ffffffd0; border-radius:5px; font-family:arial,sans-serif; max-width:700px; width:100%">
+                                        <tbody>
+                                            ${renderProductos(productos_compra, moneda)}
+                                        </tbody>
+                                    </table>
                                 </td>
                             </tr>
 
@@ -949,31 +937,31 @@ const pendingMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
 
         </tbody>
     </table>    
-</div>
-  `
+    </div>
+    `
   
-  const mailOptions = {
-      from: {
-          name: 'Karo Kids',
-          address: process.env.ADMIN_EMAIL
-      },
-      to: [emailUsuario, 'jgerfuentes@gmail.com'],
-      subject: "⛔ ¡Nueva compra en KaroKids registrada con inconvenientes! ⛔",
-      html: htmlPending
-  }
+    const mailOptions = {
+        from: {
+            name: 'Karo Kids',
+            address: process.env.ADMIN_EMAIL
+        },
+        to: [emailUsuario, 'jgerfuentes@gmail.com'],
+        subject: "⛔ ¡Nueva compra en KaroKids registrada con inconvenientes! ⛔",
+        html: htmlPending
+    }
   
-  const sendMail = async (transporter, mailOptions) => {
-      try {
-          await transporter.sendMail(mailOptions)
-          console.log('¡Email enviado con éxito!')
-      } catch (error) {
-          console.error(error)
-          throw new Error ('Error en el controlador pendingMailSender')
-      }
-  }
+    const sendMail = async (transporter, mailOptions) => {
+        try {
+            await transporter.sendMail(mailOptions)
+            console.log('¡Email enviado con éxito!')
+        } catch (error) {
+            console.error(error)
+            throw new Error ('Error en el controlador pendingMailSender')
+        }
+    }
   
-  //* Ejecución del envío
-  sendMail(transporter, mailOptions)
+    //* Ejecución del envío
+    sendMail(transporter, mailOptions)
 };
 
 module.exports = {

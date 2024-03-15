@@ -2,8 +2,8 @@ import React from 'react'
 
 const RenderizadoProductos = (productos_compra, moneda) => {
   return (
-    <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
-        <tbody>
+    <table align="center" border="0" cellpadding="0" style="background-color:#cde6eea0; border:0px solid #ffffffd0; border-radius:5px; font-family:arial,sans-serif; max-width:700px; width:100%">
+      <tbody>
             {productos_compra && productos_compra.map((producto, index) => {
                     <tr key={index}>
                         <td align="left">{producto.nombre}</td>

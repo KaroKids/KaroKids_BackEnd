@@ -8,7 +8,7 @@
                     <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1710479306/Imagenes_Productos/Logos/Logo_centrado_jgzdve.png" alt="karoKids_logo" style="width:750px;height:225px" />
                 </td>
             </tr>
- 
+
             <tr>               
                 <td>&nbsp;</td>
             </tr>
@@ -79,7 +79,11 @@
 
                             <tr>
                                 <td style="text-align:center">
-                                    ${<RenderizadoProductos productos_compra={productos_compra} moneda={moneda}/>}
+                                    <table align="center" border="0" cellpadding="0" style="background-color:#cde6eea0; border:0px solid #ffffffd0; border-radius:5px; font-family:arial,sans-serif; max-width:700px; width:100%">
+                                        <tbody>
+                                            ${renderProductos(productos_compra, moneda)}
+                                        </tbody>
+                                    </table>
                                 </td>
                             </tr>
 
@@ -109,7 +113,7 @@
 
             <tr>
                 <td style="text-align:center; margin:5px; padding: 5px;">
-                    <h2 style="margin: 5px; padding:5px;"> ⛔ Motivo del inconveniente: Pago pendiente ⛔</h2>
+                    <h2 style="margin: 5px; padding:5px;"> ⛔ Motivo del inconveniente: Pago pendiente de acreditación ⛔</h2>
                 </td>
             </tr>
 
