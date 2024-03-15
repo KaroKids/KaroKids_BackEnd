@@ -51,7 +51,17 @@ const transporter = nodeMailer.createTransport({
     },
 });
 
-const htmlAccredited = `<div>
+const renderProductos = (productos_compra, moneda) => {
+    return productos_compra.map((producto, index) => (
+        `<tr key=${index}>
+            <td align="left">${producto.nombre}</td>
+            <td align="center">${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}</td>
+            <td align="right">${moneda} ${producto.precio}</td>
+        </tr>`
+    )).join('');
+};
+
+const htmlAccredited = `    <div>
 <table align="center" border="0">
     <tbody style="text-align:center">
         
@@ -67,7 +77,7 @@ const htmlAccredited = `<div>
 
         <tr>
             <td style="text-align:center; margin:5px; padding: 5px;">
-                <h1 style="margin: 5px; padding:5px;">¡Hola ${nombreUsuario}!</h1>
+                <h1 style="margin: 5px; padding:5px;">¡Hola {nombreUsuario}!</h1>
             </td>
         </tr>
 
@@ -102,7 +112,7 @@ const htmlAccredited = `<div>
                         <tr>
                             <td style="text-align:center; font-size:17px; padding:16px; width:100%">
                                 <strong>
-                                    Número de orden: ${numeroOrden}
+                                    Número de orden: {numeroOrden}
                                 </strong>
                             </td>
                         </tr>
@@ -110,7 +120,7 @@ const htmlAccredited = `<div>
                         <tr>
                             <td style="text-align:center; font-size:17px; padding:16px; width:100%">
                                 <strong>
-                                    Estado: ${estado_compra} - ${estado_compra_detalle}
+                                    Estado: {estado_compra} - {estado_compra_detalle}
                                 </strong>
                             </td>
                         </tr>
@@ -124,15 +134,19 @@ const htmlAccredited = `<div>
                         </tr>
 
                         <tr>
-                            <td>
-                                ${<RenderizadoProductos productos_compra={productos_compra} moneda={moneda}/>}
+                            <td style="text-align:center">
+                                <table align="center" border="0" cellpadding="0" style="background-color:#cde6eea0; border:0px solid #ffffffd0; border-radius:5px; font-family:arial,sans-serif; max-width:700px; width:100%">
+                                    <tbody>
+                                        {renderProductos(productos_compra, moneda)}
+                                    </tbody>
+                                </table>
                             </td>
                         </tr>
 
                         <tr>
                             <td style="text-align:center; font-size:16px; padding:16px 5px 5px 5px; width:100%">
                                 <strong>
-                                    Monto total de la compra: ${moneda} ${monto_total}
+                                    Monto total de la compra: {moneda} {monto_total}
                                 </strong>
                             </td>
                         </tr>  
@@ -140,7 +154,7 @@ const htmlAccredited = `<div>
                         <tr>
                             <td style="text-align:center; font-size:15px; padding:16px 5px 5px 5px; width:100%">
                                 <strong>
-                                    Método de pago: ${forma_pago}
+                                    Método de pago: {forma_pago}
                                 </strong>
                             </td>
                         </tr>
