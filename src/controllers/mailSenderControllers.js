@@ -435,7 +435,7 @@ const reviewMailSender = async (nombre_usuario, usuario_email, numero_orden, pro
             name: 'Karo Kids',
             address: process.env.ADMIN_EMAIL
         },
-        to: [emailUsuario, 'jgerfuentes@gmail.com', 'lautykaufmann76@gmail.com', 'lisandroviedo@hotmail.com','seyjoaluminio@gmail.com', 'are3s.cs@gmail.com', 'enzo.dillmanntv@gmail.com'],
+        to: [emailUsuario, 'jgerfuentes@gmail.com'],
         subject: "¡Su compra en KaroKids pendiente de calificación! 🛒📭",
         html: htmlReview
     }

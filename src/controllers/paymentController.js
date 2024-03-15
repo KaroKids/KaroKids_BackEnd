@@ -59,20 +59,20 @@ const success = async (req, res) => {
   }
 };
 
-const failure = async (req, res) => {
-  try{
+// const failure = async (req, res) => {
+//   try{
  
-     const orden_id = "asdasd"
-     const email = "seyjoaluminio@gmail.com"
-     const nombre = "sebastian"
+//      const orden_id = "asdasd"
+//      const email = "seyjoaluminio@gmail.com"
+//      const nombre = "sebastian"
 
-     await failureMailSender(nombre , email , orden_id, productosComprados, data)
-     res.redirect("https://karokids-frontend.vercel.app/productos");
+//      await failureMailSender(nombre , email , orden_id)
+//      res.redirect("https://karokids-frontend.vercel.app/productos");
 
-  }catch(error){
-    console.log(error)
-  }
-}
+//   }catch(error){
+//     console.log(error)
+//   }
+// }
  
 const createOrder = async (req, res) => {
   const { user_id, cart } = req.body;
