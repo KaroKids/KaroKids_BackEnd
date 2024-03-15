@@ -1,6 +1,6 @@
 require('dotenv').config();
 const nodeMailer = require('nodemailer');
-const { RenderizadoProductos } = require('../utils/RenderizadoProductos')
+// const { RenderizadoProductos } = require('../utils/RenderizadoProductos')
 
   //* ------------------------NOTA:----------------------------------//
     // Al hacer el checkout en la pasarela de pagos, se obtiene un objeto "data" como respuesta. Este objeto (recibido como "mp_data") almacena:
@@ -26,7 +26,6 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     let estado_compra = ''
     let estado_compra_detalle = ''
     let forma_pago = ''
-    // let forma_pago_detalle = ''
 
     //* Validacion de estado, aprobacion y tipo del pago:
     if (mp_data.status === 'approved') {
@@ -72,6 +71,23 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
             pass: process.env.ADMIN_EMAIL_PASSWORD,
         },
     });
+
+    const renderProductos = (productos_compra, moneda) => {
+        return (
+            <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
+                <tbody>
+                    {productos_compra && productos_compra.map((producto, index) => {
+                            <tr key={index}>
+                                <td align="left">{producto.nombre}</td>
+                                <td align="center">{`${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}`}</td>
+                                <td align="right">{`${moneda} ${producto.precio}`}</td>
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </table>
+          )
+    }
 
     const htmlSuccessful = `
     <div>
@@ -148,7 +164,7 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
 
                                 <tr>
                                     <td style="text-align:center">
-                                        ${<RenderizadoProductos productos_compra={productos_compra} moneda={moneda}/>}
+                                        ${renderProductos(productos_compra, moneda)}
                                     </td>
                                 </tr>
 
@@ -275,6 +291,23 @@ const reviewMailSender = async (nombre_usuario, usuario_email, numero_orden, pro
             pass: process.env.ADMIN_EMAIL_PASSWORD,
         },
     });
+
+    const renderProductos = (productos_compra, moneda) => {
+        return (
+            <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
+                <tbody>
+                    {productos_compra && productos_compra.map((producto, index) => {
+                            <tr key={index}>
+                                <td align="left">{producto.nombre}</td>
+                                <td align="center">{`${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}`}</td>
+                                <td align="right">{`${moneda} ${producto.precio}`}</td>
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </table>
+          )
+    }
     
     const htmlReview = `
     <div>
@@ -355,7 +388,7 @@ const reviewMailSender = async (nombre_usuario, usuario_email, numero_orden, pro
     
                                 <tr>
                                     <td style="text-align:center">
-                                        ${<RenderizadoProductos productos_compra={productos_compra} moneda={moneda}/>}
+                                        ${renderProductos(productos_compra, moneda)}
                                     </td>
                                 </tr>
     
@@ -486,6 +519,23 @@ const failureMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
             pass: process.env.ADMIN_EMAIL_PASSWORD,
         },
     });
+
+    const renderProductos = (productos_compra, moneda) => {
+        return (
+            <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
+                <tbody>
+                    {productos_compra && productos_compra.map((producto, index) => {
+                            <tr key={index}>
+                                <td align="left">{producto.nombre}</td>
+                                <td align="center">{`${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}`}</td>
+                                <td align="right">{`${moneda} ${producto.precio}`}</td>
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </table>
+          )
+    }
     
     const htmlFailure = `
     <div>
@@ -565,7 +615,7 @@ const failureMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     
                                 <tr>
                                     <td style="text-align:center">
-                                        ${<RenderizadoProductos productos_compra={productos_compra} moneda={moneda}/>}
+                                        ${renderProductos(productos_compra, moneda)}
                                     </td>
                                 </tr>
     
@@ -718,6 +768,23 @@ const pendingMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
             pass: process.env.ADMIN_EMAIL_PASSWORD,
         },
     });
+
+    const renderProductos = (productos_compra, moneda) => {
+        return (
+            <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
+                <tbody>
+                    {productos_compra && productos_compra.map((producto, index) => {
+                            <tr key={index}>
+                                <td align="left">{producto.nombre}</td>
+                                <td align="center">{`${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}`}</td>
+                                <td align="right">{`${moneda} ${producto.precio}`}</td>
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </table>
+          )
+    }
   
   const htmlPending = `
   <div>
@@ -800,7 +867,7 @@ const pendingMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
 
                             <tr>
                                 <td style="text-align:center">
-                                    ${<RenderizadoProductos productos_compra={productos_compra} moneda={moneda}/>}
+                                    ${renderProductos(productos_compra, moneda)}
                                 </td>
                             </tr>
 
