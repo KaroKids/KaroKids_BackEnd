@@ -6,13 +6,15 @@ const {
   postProducto,
   standOutProducto,
   getProductosDestacados,
-  decrementarStock
+  decrementarStock,
+  getTopProductos
 } = require("../handlers/productosHandlers");
 const productosFiltrados = require("../controllers/productosFiltradosController");
 const productos = Router();
 
 productos.get("/", productosFiltrados);
 productos.get("/detalle/:id", getProducto);
+productos.get("/top", getTopProductos);
 productos.get("/destacados", getProductosDestacados);
 productos.post("/", postProducto);
 productos.put("/modificar", putProducto);

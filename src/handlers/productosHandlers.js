@@ -6,8 +6,20 @@ const {
   destacarProducto,
   productosDestacados,
   modificarProducto,
-  decrementarCantidad
+  decrementarCantidad,
+  topProductos
 } = require("../controllers/productosControllers");
+
+const getTopProductos = async (req, res) => {
+  const {top} = req.body
+  try {
+    const response = await topProductos(top)
+    res.json(response);
+  }catch(error){
+    res.status(400).json({ error: error.message });
+
+  }
+}
 
 const getProductos = async (req, res) => {
   const { paginaActual } = req.query;
@@ -156,5 +168,6 @@ module.exports = {
   deleteProducto,
   standOutProducto,
   getProductosDestacados,
-  decrementarStock
+  decrementarStock,
+  getTopProductos
 };

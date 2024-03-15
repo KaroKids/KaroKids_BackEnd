@@ -1,4 +1,4 @@
-const { Usuarios, Carritos } = require("../db");
+const { Usuarios, Carritos, Ordenes } = require("../db");
 // const { Op } = require("sequelize");
 
 // const todosLosUsuarios = async () => {
@@ -27,6 +27,57 @@ const { Usuarios, Carritos } = require("../db");
 //     return response;
 //   }
 // };
+
+const topUsuarios = async (top) =>{
+  try {
+    const ordenes = await Ordenes.findAll({
+            include: [
+              {
+                model: Usuarios,
+                attributes: ["nombre_usuario", "apellido_usuario"],
+              },
+            ],
+          });
+
+    let array = []
+    let cont = 0
+    for(orden of ordenes){
+      let esta = false
+      array = array.map((item) => {
+            console.log(item.usuario.usuario_id + "  ===  " + orden.usuario_id)
+            if(item.usuario.usuario_id === orden.usuario_id){
+              item.cantidad = parseFloat(item.cantidad)
+              item.cantidad += parseFloat(orden.coste_total)
+              esta = true
+            }
+            return item;
+          });
+          if (esta === false){
+            console.log("entro")
+            let nuevo = {
+              usuario : { 
+                usuario_id : orden.usuario_id,
+                 nombre_usuario : orden.Usuario.nombre_usuario,
+                 apellido_usuario : orden.Usuario.apellido_usuario
+              },
+              cantidad : parseFloat(orden.coste_total)
+            }
+            array.push(nuevo)
+          }
+        }
+        console.log(cont)
+      array.sort((a, b) => b.cantidad - a.cantidad);
+      if (array.length < top){
+        return array
+      }else{
+      return array.slice(0,top)
+      }
+  } catch (error) {
+    console.error("Error al obtener los productos más vendidos:", error);
+    throw error;
+  }
+
+}
 
 const traerUsuario = async (email_usuario) => {
   const response = await Usuarios.findOne({
@@ -110,4 +161,5 @@ module.exports = {
   modificarUsuario,
   crearUsuario,
   modificarRol,
+  topUsuarios
 };

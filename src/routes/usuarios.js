@@ -6,12 +6,14 @@ const {
   putUsuario,
   deleteUsuario,
   putUsuarioRol,
+  getTopUsuarios
 } = require("../handlers/usuariosHandlers");
 const usuariosFiltrados = require('../controllers/usuariosFiltradosControllers');
 
 const usuarios = Router();
 
 usuarios.get("/", usuariosFiltrados);
+usuarios.get("/top", getTopUsuarios);
 usuarios.get("/usuario", getUsuario);
 usuarios.post("/", postUsuario);
 usuarios.put("/", putUsuario);

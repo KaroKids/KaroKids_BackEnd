@@ -6,7 +6,19 @@ const {
   borrarUsuario,
   modificarUsuario,
   modificarRol,
+  topUsuarios
 } = require("../controllers/usuariosControllers");
+
+const getTopUsuarios = async(req, res) =>{
+  const {top} = req.body
+  try {
+    const response = await topUsuarios(top)
+    res.json(response);
+  }catch(error){
+    res.status(400).json({ error: error.message });
+
+  }
+}
 
 // const getUsuarios = async (req, res) => {
 //   const { nombre_usuario, apellido_usuario } = req.query;
@@ -99,4 +111,5 @@ module.exports = {
   putUsuario,
   deleteUsuario,
   putUsuarioRol,
+  getTopUsuarios
 };
