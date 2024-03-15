@@ -1,5 +1,6 @@
 require('dotenv').config();
 const nodeMailer = require('nodemailer');
+const { RenderizadoProductos } = require('../utils/RenderizadoProductos')
 
   //* ------------------------NOTA:----------------------------------//
     // Al hacer el checkout en la pasarela de pagos, se obtiene un objeto "data" como respuesta. Este objeto (recibido como "mp_data") almacena:
@@ -18,10 +19,10 @@ const nodeMailer = require('nodemailer');
 const successMailSender = async (nombre_usuario, usuario_email, numero_orden, productos_compra, mp_data) =>{
     //* Definicion de variables:
     const nombreUsuario = nombre_usuario
-    const emailUsuario  = usuario_email // Puede ser un array de strings con varios mails.
-    const numeroOrden = numero_orden //? ¿Va a ser el número de orden de la DB o el que envía MP?
+    const emailUsuario  = usuario_email
+    const numeroOrden = numero_orden
     const moneda = mp_data.currency_id
-    const monto_total = mp_data.transaction_amount //? O el valor de "total_compra" del objeto "productos_compra"?? 
+    const monto_total = mp_data.transaction_amount
     let estado_compra = ''
     let estado_compra_detalle = ''
     let forma_pago = ''
@@ -59,7 +60,7 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
             
             <tr>
                 <td style="text-align:center">
-                    <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709364802/Imagenes_Productos/Logos/Banner-logo2_vitkys.png" alt="banner_con_logo_Cloudinary" style="width:900px;height:260px" />
+                    <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709273490/Imagenes_Productos/Logos/Logo-webp_ihqwaj.webp" alt="logo" style="width:750px;height:200px" />
                 </td>
             </tr>
 
@@ -81,7 +82,7 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
 
             <tr> 
                 <td style="padding:16px">
-                <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709709855/Imagenes_Productos/Logos/Banner-Reviews-desenfocado_zcdjkp.png); background-position: center;background-repeat: no-repeat; background-size: cover; border-radius:5px; max-width:1000px; width:100%">
+                <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1710469086/Imagenes_Productos/Logos/Banner-Reviews2-desenfocado_pmd3zb.png); background-position: center;background-repeat: no-repeat; background-size: cover; border-radius:7px; max-width:1000px; width:100%">
                     <tbody>
                         <tr>
                             <td style="text-align:center; margin:5px; padding: 5px;">
@@ -100,7 +101,7 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
 
             <tr>
                 <td style="text-align:center">
-                    <table align="center" border="0" cellpadding="0" style="background-color:#ddd7cf; border:1px solid #d9dbde; border-radius:3px; font-family:arial,sans-serif; max-width:700px; width:100%">
+                    <table align="center" border="0" cellpadding="0" style="background-color:#cde6eea0; border:0px solid #ffffffd0; border-radius:5px; font-family:arial,sans-serif; max-width:700px; width:100%">
                         <tbody>
                             <tr>
                                 <td style="text-align:center; font-size:17px; padding:16px; width:100%">
@@ -128,36 +129,7 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
 
                             <tr>
                                 <td>
-                                    <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
-                                        <tbody>
-                                            <!-- Cada "<tr>"" podría renderizarse a partir de un map del array de productos comprados -->
-                                                <!-- productos_compra?.map((producto, index) => {
-                                                    <tr key="index">
-                                                        <td align="left">{producto.nombre}</td>
-                                                        <td align="right">{producto.compra_talla, producto.compra_color, producto.compra_cantidad}</td>
-                                                    </tr>
-                                                }) -->
-                                            <tr>
-                                                <td style="padding:5px 10px" align="left">Producto 1</td>
-                                                <td style="padding:5px 10px" align="right"> Detalle 1</td>
-                                                <!-- {/* <td align="center">Detalle 1</td>
-                                                <td align="right">COP Precio_unitario 1</td> */} -->
-                                            </tr>
-                                            <tr>
-                                                <td style="padding:5px 10px" align="left">Producto 2</td>
-                                                <td style="padding:5px 10px" align="right"> Detalle 2</td>
-                                                <!-- {/* <td align="center">Detalle 2</td>
-                                                <td align="right">COP Precio_unitario 2</td> */} -->
-                                            </tr>
-                                            <tr>
-                                                <td style="padding:5px 10px" align="left">Producto 3</td>
-                                                <td style="padding:5px 10px" align="right"> Detalle 3</td>
-                                                <!-- {/* <td align="center">Detalle 3</td>
-                                                <td align="right">COP Precio_unitario 3</td> */} -->
-
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    ${<RenderizadoProductos productos_compra={productos_compra} moneda={moneda}/>}
                                 </td>
                             </tr>
 
@@ -197,7 +169,7 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
 
             <tr> 
                 <td style="padding:16px">
-                <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709365873/Imagenes_Productos/Logos/fondo-redes-difuminado_nb1teq.png); background-repeat: no-repeat; background-size: cover; border-radius:3px; max-width:650px; width:100%">
+                <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709365873/Imagenes_Productos/Logos/fondo-redes-difuminado_nb1teq.png); background-repeat: no-repeat; background-size: cover; border-radius:7px; max-width:650px; width:100%">
                     <tbody>
                         <tr>
                             <td style="padding:10px; width:50px">

@@ -67,7 +67,7 @@ const htmlAccredited = `<div>
 
         <tr>
             <td style="text-align:center; margin:5px; padding: 5px;">
-                <h1 style="margin: 5px; padding:5px;">¡Hola ${nombre_usuario}!</h1>
+                <h1 style="margin: 5px; padding:5px;">¡Hola {nombre_usuario}!</h1>
             </td>
         </tr>
 
@@ -103,7 +103,7 @@ const htmlAccredited = `<div>
                         <tr>
                             <td style="text-align:center; font-size:17px; padding:16px; width:100%">
                                 <strong>
-                                    Número de orden: ${numeroOrden}
+                                    Número de orden: {numeroOrden}
                                 </strong>
                             </td>
                         </tr>
@@ -111,7 +111,7 @@ const htmlAccredited = `<div>
                         <tr>
                             <td style="text-align:center; font-size:17px; padding:16px; width:100%">
                                 <strong>
-                                    Estado: ${estado_compra} - ${estado_compra_detalle}
+                                    Estado: {estado_compra} - {estado_compra_detalle}
                                 </strong>
                             </td>
                         </tr>
@@ -127,34 +127,16 @@ const htmlAccredited = `<div>
                         <tr>
                             <td>
                                 <table border="0" cellspacing="5px" style="color:#4d4d4d; font-size:13px" width="100%">
-                                    <tbody>
-                                        <!-- Cada "<tr>"" podría renderizarse a partir de un map del array de productos comprados -->
-                                            <!-- productos_compra?.map((producto, index) => {
-                                                <tr key="index">
-                                                    <td align="left">{producto.nombre}</td>
-                                                    <td align="right">{producto.compra_talla, producto.compra_color, producto.compra_cantidad}</td>
-                                                </tr>
-                                            }) -->
-                                        <tr>
-                                            <td style="padding:5px 10px" align="left">Producto 1</td>
-                                            <td style="padding:5px 10px" align="right"> Detalle 1</td>
-                                            <!-- {/* <td align="center">Detalle 1</td>
-                                            <td align="right">COP Precio_unitario 1</td> */} -->
+                                <tbody>
+                                {productos_compra ? productos_compra.map((producto, index) => {
+                                        <tr key="index">
+                                            <td align="left">{producto.nombre}</td>
+                                            <td align="right">{producto.compra_talla, producto.compra_color, producto.compra_cantidad}</td>
+                                            
                                         </tr>
-                                        <tr>
-                                            <td style="padding:5px 10px" align="left">Producto 2</td>
-                                            <td style="padding:5px 10px" align="right"> Detalle 2</td>
-                                            <!-- {/* <td align="center">Detalle 2</td>
-                                            <td align="right">COP Precio_unitario 2</td> */} -->
-                                        </tr>
-                                        <tr>
-                                            <td style="padding:5px 10px" align="left">Producto 3</td>
-                                            <td style="padding:5px 10px" align="right"> Detalle 3</td>
-                                            <!-- {/* <td align="center">Detalle 3</td>
-                                            <td align="right">COP Precio_unitario 3</td> */} -->
-
-                                        </tr>
-                                    </tbody>
+                                    })
+                                }
+                            </tbody>
                                 </table>
                             </td>
                         </tr>
@@ -162,7 +144,7 @@ const htmlAccredited = `<div>
                         <tr>
                             <td style="text-align:center; font-size:16px; padding:16px 5px 5px 5px; width:100%">
                                 <strong>
-                                    Monto total de la compra: ${moneda} ${monto_total}
+                                    Monto total de la compra: {moneda} {monto_total}
                                 </strong>
                             </td>
                         </tr>  
@@ -170,7 +152,7 @@ const htmlAccredited = `<div>
                         <tr>
                             <td style="text-align:center; font-size:15px; padding:16px 5px 5px 5px; width:100%">
                                 <strong>
-                                    Método de pago: ${forma_pago} - ${forma_pago_detalle}
+                                    Método de pago: {forma_pago} - {forma_pago_detalle}
                                 </strong>
                             </td>
                         </tr>
