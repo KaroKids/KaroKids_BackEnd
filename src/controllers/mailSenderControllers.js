@@ -74,6 +74,7 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
       if(info[1] == "indigo") info[1] = 'Índigo'
       if(info[1] == "sky") info[1] = 'Celeste'
       if(info[1] == "beige") info[1] = 'Beige'
+      if(info[1] == "brown") info[1] = 'Marron'
       producto.description = info.join("-")
     }
     //* Funcionalidad:    
@@ -931,9 +932,149 @@ const pendingMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     await sendMail(transporter, mailOptions)
 };
 
+const inhabilatarRusuarioMail = async (nombre_usuario,usuario_email) =>{
+    //* Definicion de variables:
+    const nombreUsuario = nombre_usuario
+    const emailUsuario  = usuario_email
+
+    //* Funcionalidad
+    const transporter = nodeMailer.createTransport({
+        service: 'gmail',
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+            user: process.env.ADMIN_EMAIL,
+            pass: process.env.ADMIN_EMAIL_PASSWORD,
+        },
+    });
+
+
+    
+    const htmlReview = `
+    <div>
+        <table align="center" border="0">
+            <tbody style="text-align:center">
+                
+                <tr>
+                    <td style="text-align:center">
+                        <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1710479306/Imagenes_Productos/Logos/Logo_centrado_jgzdve.png" alt="karoKids_logo" style="width:750px;height:225px" />
+                    </td>
+                </tr>
+     
+                <tr>               
+                    <td>&nbsp;</td>
+                </tr>
+    
+                <tr>
+                    <td style="text-align:center; margin:5px; padding: 5px;">
+                        <h1 style="margin: 5px; padding:5px;">¡Hola ${nombreUsuario}!</h1>
+                    </td>
+                </tr>
+    
+                <tr>               
+                    <td>&nbsp;</td>
+                </tr>
+    
+                <tr> 
+                    <td style="padding:16px">
+                    <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1710469086/Imagenes_Productos/Logos/Banner-Reviews2-desenfocado_pmd3zb.png); background-position: center;background-repeat: no-repeat; background-size: cover; border-radius:7px; max-width:1000px; width:100%">
+                        <tbody>
+                            <tr>
+                                <td style="text-align:center; margin:5px; padding: 5px;">
+                                    <h1 style="margin: 20px 10px 20px 120px; padding:10px 10px 10px 80px;">Usted a sido inhabilitado para ingresar como usuario de KaroKids .</h1>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </td>
+                </tr>
+    
+                <tr>               
+                    <td>&nbsp;</td>
+                </tr>
+
+    
+                <tr>
+                    <td style="text-align:center; padding:10px"><br/>
+                        <h4>
+                            ¿Dudas o consultas? Puede comunicarse con nosotros a través de los siguientes canales de diálogo:
+                        </h4>
+                    </td>
+                </tr>
+    
+                <tr>
+                    <td style="text-align:center">
+                        <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709711700/Imagenes_Productos/Logos/Flechas_azules_viisgd.gif" alt="gif_flechas" style="width:120px;height:50px" />
+                    </td>
+                </tr>
+    
+                <tr> 
+                    <td style="padding:16px">
+                    <table border="0" align="center" width="100%" cellpadding="0" style="text-align:center; background-image:url(https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709365873/Imagenes_Productos/Logos/fondo-redes-difuminado_nb1teq.png); background-repeat: no-repeat; background-size: cover; border-radius:7px; max-width:650px; width:100%">
+                        <tbody>
+                            <tr>
+                                <td style="padding:10px; width:50px">
+                                    <a href="https://www.facebook.com/YosoyKaroKids/" style="display:contents; text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://www.facebook.com/YosoyKaroKids/">
+                                        <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709367030/Imagenes_Productos/Logos/1-FB_icon-no_background_wbjq0v.png" alt="FB_icon" width="50px" heigth="50px"/>
+                                    </a>
+                                </td>
+    
+                                <td style="width:4px;height:40px">&nbsp;</td>
+    
+                                <td style="padding:10px; width:50px">
+                                    <a href="https://www.instagram.com/yosoy.karokidsmoda/" style="display:contents;text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://www.instagram.com/yosoy.karokidsmoda/">
+                                        <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709528362/Imagenes_Productos/Logos/2-IG_icon-no_background_k3ajsy.png" alt="IG_icon" width="50px" heigth="50px"/>
+                                    </a>
+                                </td>
+    
+                                <td style="width:4px;height:40px">&nbsp;</td>
+    
+                                <td style="padding:10px; width:50px">
+                                    <a href="https://wa.link/fdh8yl" style="display:contents; text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://wa.link/fdh8yl">
+                                        <img src="https://res.cloudinary.com/dk4ysl2hw/image/upload/v1709367034/Imagenes_Productos/Logos/3-WSP_icon-no_background_fihi8y.png" alt="WSP_icon" width="55px" heigth="55px"/>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </td>
+                </tr>
+    
+            </tbody>
+        </table>    
+    </div>
+    `
+    
+    const mailOptions = {
+        from: {
+            name: 'Karo Kids',
+            address: process.env.ADMIN_EMAIL
+        },
+        to: [emailUsuario, 'jgerfuentes@gmail.com'],
+        subject: "Informe de estado",
+        html: htmlReview
+    }
+    
+    const sendMail = async (transporter, mailOptions) => {
+        try {
+            await transporter.sendMail(mailOptions)
+            console.log('¡Email enviado con éxito!')
+        } catch (error) {
+            console.error(error)
+            throw new Error ('Error en el controlador inhabilitarUsuarioMail')
+        }
+    }
+
+    //* Ejecución del envío
+    await sendMail(transporter, mailOptions)
+};
+
+
 module.exports = {
     successMailSender, 
     reviewMailSender, 
     failureMailSender,
-    pendingMailSender
+    pendingMailSender,
+    inhabilatarRusuarioMail
 }
