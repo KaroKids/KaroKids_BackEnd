@@ -1,32 +1,5 @@
 const { Usuarios, Carritos, Ordenes } = require("../db");
-// const { Op } = require("sequelize");
-
-// const todosLosUsuarios = async () => {
-//   const response = await Usuarios.findAll();
-//   return response;
-// };
-
-// const traerUsuarioNombre = async (nombre_usuario, apellido_usuario) => {
-//   if (nombre_usuario && apellido_usuario) {
-//     const response = await Usuarios.findAll({
-//       where: {
-//         nombre_usuario: { [Op.iLike]: `%${nombre_usuario}%` },
-//         apellido_usuario: { [Op.iLike]: `%${apellido_usuario}%` },
-//       },
-//     });
-//     return response;
-//   } else if (apellido_usuario) {
-//     const response = await Usuarios.findAll({
-//       where: { apellido_usuario: { [Op.iLike]: `%${apellido_usuario}%` } },
-//     });
-//     return response;
-//   } else {
-//     const response = await Usuarios.findAll({
-//       where: { nombre_usuario: { [Op.iLike]: `%${nombre_usuario}%` } },
-//     });
-//     return response;
-//   }
-// };
+const { inhabilatarRusuarioMail } = require("./mailSenderControllers");
 
 const topUsuarios = async (top) =>{
   try {
@@ -134,13 +107,16 @@ const modificarUsuario = async (
 
 const borrarUsuario = async (usuario_id) => {
   const user = await Usuarios.findByPk(usuario_id);
-  console.log(user);
+  if (user.inactivo == false){
+    inhabilatarRusuarioMail(user.nombre_usuario, user.email_usuario)
+  }
   await Usuarios.update(
     { inactivo: !user.inactivo },
     {
       where: { usuario_id: usuario_id },
     }
   );
+  
   return user;
 };
 
