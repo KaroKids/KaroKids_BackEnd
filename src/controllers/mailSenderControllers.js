@@ -258,7 +258,7 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
             name: 'Karo Kids',
             address: process.env.ADMIN_EMAIL
         },
-        to: [emailUsuario, 'jgerfuentes@gmail.com'],
+        to: emailUsuario,
         subject: "¡Nueva compra en KaroKids registrada con éxito! 🛒✔",
         html: htmlSuccessful,
         //? attachments: [
@@ -286,13 +286,10 @@ const successMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
 };
 
 
-const reviewMailSender = async (nombre_usuario, usuario_email, numero_orden, productos_compra, mp_data) =>{
+const reviewMailSender = async (nombre_usuario, usuario_email) =>{
     //* Definicion de variables:
     const nombreUsuario = nombre_usuario
     const emailUsuario  = usuario_email
-    const numeroOrden = numero_orden
-    const moneda = mp_data.currency_id
-    const monto_total = mp_data.transaction_amount
 
     //* Funcionalidad
     const transporter = nodeMailer.createTransport({
@@ -306,16 +303,6 @@ const reviewMailSender = async (nombre_usuario, usuario_email, numero_orden, pro
         },
     });
 
-    const renderProductos = (productos_compra, moneda) => {
-        return productos_compra.map((producto, index) => (
-            `<tr key=${index}>
-                <td align="left">${producto.nombre}</td>
-                <td align="center">${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}</td>
-                <td align="right">${moneda} ${producto.precio}</td>
-            </tr>`
-        )).join('');
-    };
-    
     const htmlReview = `
     <div>
         <table align="center" border="0">
@@ -430,7 +417,7 @@ const reviewMailSender = async (nombre_usuario, usuario_email, numero_orden, pro
             name: 'Karo Kids',
             address: process.env.ADMIN_EMAIL
         },
-        to: [emailUsuario, 'jgerfuentes@gmail.com'],
+        to: emailUsuario,
         subject: "¡Su compra en KaroKids pendiente de calificación! 🛒📭",
         html: htmlReview
     }
@@ -469,6 +456,25 @@ const failureMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
         estado_compra = 'Consultar con la tienda'
     }
 
+    for (producto of productos_compra){
+        let info = producto.description.split("-");
+        if(info[1] == "red") info[1] = 'Rojo'
+        if(info[1] == "blue") info[1] = 'Azul'
+        if(info[1] == "black") info[1] = 'Negro'
+        if(info[1] == "pink") info[1] = 'Rosa'
+        if(info[1] == "yellow") info[1] = 'Amarillo'
+        if(info[1] == "green") info[1] = 'Verde'
+        if(info[1] == "purple") info[1] = 'Morado'
+        if(info[1] == "orange") info[1] = 'Naranja'
+        if(info[1] == "gray") info[1] = 'Gris'
+        if(info[1] == "white") info[1] = 'Blanco'
+        if(info[1] == "teal") info[1] = 'Turquesa'
+        if(info[1] == "indigo") info[1] = 'Índigo'
+        if(info[1] == "sky") info[1] = 'Celeste'
+        if(info[1] == "beige") info[1] = 'Beige'
+        if(info[1] == "brown") info[1] = 'Marron'
+        producto.description = info.join("-")
+    }
 
     //* Funcionalidad
     const transporter = nodeMailer.createTransport({
@@ -485,9 +491,9 @@ const failureMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     const renderProductos = (productos_compra, moneda) => {
         return productos_compra.map((producto, index) => (
             `<tr key=${index}>
-                <td align="left">${producto.nombre}</td>
-                <td align="center">${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}</td>
-                <td align="right">${moneda} ${producto.precio}</td>
+            <td align="left">${producto.title}</td>
+            <td align="center">${producto.description.split("-")[0]} - ${producto.description.split("-")[1]} - ${producto.quantity}</td>
+            <td align="right">${moneda} ${producto.unit_price}</td>
             </tr>`
         )).join('');
     };
@@ -656,7 +662,7 @@ const failureMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
             name: 'Karo Kids',
             address: process.env.ADMIN_EMAIL
         },
-        to: [emailUsuario, 'jgerfuentes@gmail.com'],
+        to: emailUsuario,
         subject: "⛔ ¡Nueva compra en KaroKids registrada con inconvenientes! ⛔",
         html: htmlFailure,
     }
@@ -715,6 +721,25 @@ const pendingMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
         forma_pago = 'Criptomonedas'
     }
 
+    for (producto of productos_compra){
+        let info = producto.description.split("-");
+        if(info[1] == "red") info[1] = 'Rojo'
+        if(info[1] == "blue") info[1] = 'Azul'
+        if(info[1] == "black") info[1] = 'Negro'
+        if(info[1] == "pink") info[1] = 'Rosa'
+        if(info[1] == "yellow") info[1] = 'Amarillo'
+        if(info[1] == "green") info[1] = 'Verde'
+        if(info[1] == "purple") info[1] = 'Morado'
+        if(info[1] == "orange") info[1] = 'Naranja'
+        if(info[1] == "gray") info[1] = 'Gris'
+        if(info[1] == "white") info[1] = 'Blanco'
+        if(info[1] == "teal") info[1] = 'Turquesa'
+        if(info[1] == "indigo") info[1] = 'Índigo'
+        if(info[1] == "sky") info[1] = 'Celeste'
+        if(info[1] == "beige") info[1] = 'Beige'
+        if(info[1] == "brown") info[1] = 'Marron'
+        producto.description = info.join("-")
+    }
 
     //* Funcionalidad
     const transporter = nodeMailer.createTransport({
@@ -731,9 +756,9 @@ const pendingMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     const renderProductos = (productos_compra, moneda) => {
         return productos_compra.map((producto, index) => (
             `<tr key=${index}>
-                <td align="left">${producto.nombre}</td>
-                <td align="center">${producto.compra_talla} - ${producto.compra_color} - ${producto.compra_cantidad}</td>
-                <td align="right">${moneda} ${producto.precio}</td>
+                <td align="left">${producto.title}</td>
+                <td align="center">${producto.description.split("-")[0]} - ${producto.description.split("-")[1]} - ${producto.quantity}</td>
+                <td align="right">${moneda} ${producto.unit_price}</td>
             </tr>`
         )).join('');
     };
@@ -913,7 +938,7 @@ const pendingMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
             name: 'Karo Kids',
             address: process.env.ADMIN_EMAIL
         },
-        to: [emailUsuario, 'jgerfuentes@gmail.com'],
+        to: emailUsuario,
         subject: "⛔ ¡Nueva compra en KaroKids registrada con inconvenientes! ⛔",
         html: htmlPending
     }
@@ -932,7 +957,7 @@ const pendingMailSender = async (nombre_usuario, usuario_email, numero_orden, pr
     await sendMail(transporter, mailOptions)
 };
 
-const inhabilatarRusuarioMail = async (nombre_usuario,usuario_email) =>{
+const inhabilitarUsuarioMail = async (nombre_usuario,usuario_email) =>{
     //* Definicion de variables:
     const nombreUsuario = nombre_usuario
     const emailUsuario  = usuario_email
@@ -951,7 +976,7 @@ const inhabilatarRusuarioMail = async (nombre_usuario,usuario_email) =>{
 
 
     
-    const htmlReview = `
+    const htmlSuspended = `
     <div>
         <table align="center" border="0">
             <tbody style="text-align:center">
@@ -982,7 +1007,7 @@ const inhabilatarRusuarioMail = async (nombre_usuario,usuario_email) =>{
                         <tbody>
                             <tr>
                                 <td style="text-align:center; margin:5px; padding: 5px;">
-                                    <h1 style="margin: 20px 10px 20px 120px; padding:10px 10px 10px 80px;">Usted a sido inhabilitado para ingresar como usuario de KaroKids .</h1>
+                                    <h1 style="margin: 20px 10px 20px 120px; padding:10px 10px 10px 80px;">Lamentamos informarle que usted ha sido deshabilitado para ingresar a la web de KaroKids.</h1>
                                 </td>
                             </tr>
                         </tbody>
@@ -1051,9 +1076,9 @@ const inhabilatarRusuarioMail = async (nombre_usuario,usuario_email) =>{
             name: 'Karo Kids',
             address: process.env.ADMIN_EMAIL
         },
-        to: [emailUsuario, 'jgerfuentes@gmail.com'],
-        subject: "Informe de estado",
-        html: htmlReview
+        to: emailUsuario,
+        subject: "⛔ Informe de estado - Usuario suspendido ⛔",
+        html: htmlSuspended
     }
     
     const sendMail = async (transporter, mailOptions) => {
@@ -1076,5 +1101,5 @@ module.exports = {
     reviewMailSender, 
     failureMailSender,
     pendingMailSender,
-    inhabilatarRusuarioMail
+    inhabilitarUsuarioMail
 }

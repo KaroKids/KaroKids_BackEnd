@@ -12,9 +12,9 @@ const postSuccessMail = async (req, res) => {
 }
 
 const postReviewMail = async (req, res) => {
-    const {nombre_usuario, usuario_email, numero_orden, productos_compra, mp_data} = req.body;
+    const {nombre_usuario, usuario_email} = req.body;
     try{
-        const response = await reviewMailSender(nombre_usuario, usuario_email, numero_orden, productos_compra, mp_data)
+        const response = await reviewMailSender(nombre_usuario, usuario_email)
         res.status(200).json(response);
     }
     catch(error){
