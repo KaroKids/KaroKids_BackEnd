@@ -1,5 +1,5 @@
 const { Usuarios, Carritos, Ordenes } = require("../db");
-const { inhabilatarRusuarioMail } = require("./mailSenderControllers");
+const { inhabilitarUsuarioMail } = require("./mailSenderControllers");
 
 const topUsuarios = async (top) =>{
   try {
@@ -108,7 +108,7 @@ const modificarUsuario = async (
 const borrarUsuario = async (usuario_id) => {
   const user = await Usuarios.findByPk(usuario_id);
   if (user.inactivo == false){
-    inhabilatarRusuarioMail(user.nombre_usuario, user.email_usuario)
+    inhabilitarUsuarioMail(user.nombre_usuario, user.email_usuario)
   }
   await Usuarios.update(
     { inactivo: !user.inactivo },
